@@ -169,7 +169,23 @@ a {
 }
 
 .subtitle {
-  t
+}  
+/* ===== เส้นแบ่งแบบละมุนใต้หัวเว็บ ===== */
+.logo::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 3px;
+  margin: 14px auto 18px;
+  border-radius: 10px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    #f59e0b,
+    transparent
+  );
+  opacity: 0.6;
+}
 
   </style>
 </head>
