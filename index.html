@@ -6,8 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
-/* RESET */
 *{
 box-sizing:border-box;
 margin:0;
@@ -44,9 +42,7 @@ width:32px;
 margin-right:6px;
 }
 
-.logo .work{
-color:#6fa96f;
-}
+.logo .work{color:#6fa96f}
 
 nav a{
 margin:0 12px;
@@ -59,7 +55,6 @@ background:#5f8f5a;
 color:white;
 padding:10px 18px;
 border-radius:20px;
-text-decoration:none;
 }
 
 /* SEARCH */
@@ -91,30 +86,13 @@ border:none;
 padding:0 26px;
 }
 
-/* TAGS */
-.tags{
-display:flex;
-justify-content:center;
-gap:12px;
-margin-top:20px;
-flex-wrap:wrap;
-}
-
-.tags span{
-background:white;
-padding:8px 16px;
-border-radius:20px;
-box-shadow:0 4px 10px rgba(0,0,0,.05);
-}
-
-/* CATEGORY BOX */
+/* CATEGORY */
 .category-box{
 background:#fff;
 border-radius:20px;
 padding:20px;
 margin:20px;
 box-shadow:0 4px 10px rgba(0,0,0,.08);
-position:relative;
 }
 
 /* SLIDER */
@@ -158,57 +136,38 @@ font-size:13px;
 margin-top:6px;
 }
 
-/* ICON BASE */
+/* ICON */
 .icon{
 width:60px;
 height:60px;
 border:2px solid #222;
 border-radius:16px;
-position:relative;
-margin:auto;
-background:transparent;
+padding:10px;
+transition:.25s;
 }
 
-.icon::before,
-.icon::after{
-content:"";
-position:absolute;
-background:#222;
+.icon img{
+width:100%;
+height:100%;
+filter:brightness(0);
+transition:.25s;
 }
 
-/* ===== LINE ICONS ===== */
-
-.homework::before{width:20px;height:26px;border:2px solid #222;left:18px;top:14px;background:none}
-.summary::before{width:24px;height:18px;border:2px solid #222;left:16px;top:20px;background:none}
-.translate::before{width:24px;height:24px;border:2px solid #222;border-radius:50%;left:16px;top:16px;background:none}
-.poster::before{width:26px;height:26px;border:2px solid #222;left:14px;top:14px;background:none}
-.cartoon::before{width:22px;height:22px;border:2px solid #222;border-radius:50%;left:18px;top:18px;background:none}
-
-.video::before{width:28px;height:18px;border:2px solid #222;left:14px;top:22px;background:none}
-.video::after{
-border-left:10px solid #222;
-border-top:6px solid transparent;
-border-bottom:6px solid transparent;
-background:none;
-left:30px;top:25px;
+/* hover */
+.icon-item:hover .icon{
+border-color:#f59e0b;
+}
+.icon-item:hover img{
+filter:brightness(0) saturate(100%) invert(58%) sepia(90%) saturate(300%) hue-rotate(2deg);
 }
 
-.ppt::before{width:26px;height:16px;border:2px solid #222;left:15px;top:24px;background:none}
-.report::before{width:22px;height:28px;border:2px solid #222;left:18px;top:12px;background:none}
-.typing::before{width:28px;height:14px;border:2px solid #222;left:14px;top:26px;background:none}
-
-.tiktok::before{width:4px;height:26px;left:28px;top:14px}
-.tiktok::after{width:12px;height:12px;border:2px solid #222;border-radius:50%;left:22px;top:30px;background:none}
-
-.cover::before{width:22px;height:26px;border:2px solid #222;left:18px;top:16px;background:none}
-
-.infographic::before{width:5px;height:18px;left:18px;top:24px}
-.infographic::after{width:5px;height:28px;left:34px;top:14px}
-
-.article::before{width:22px;height:26px;border:2px solid #222;left:18px;top:16px;background:none}
-.resume::before{width:22px;height:28px;border:2px solid #222;left:18px;top:14px;background:none}
-.icon-draw::before{width:26px;height:26px;border:2px solid #222;left:16px;top:16px;background:none}
-.slide::before{width:28px;height:18px;border:2px solid #222;left:14px;top:22px;background:none}
+/* active */
+.icon-item.active .icon{
+border-color:#f59e0b;
+}
+.icon-item.active img{
+filter:brightness(0) saturate(100%) invert(58%) sepia(90%) saturate(300%) hue-rotate(2deg);
+}
 
 /* GREEN GRID */
 .green-grid{
@@ -226,7 +185,7 @@ border-radius:14px;
 text-align:center;
 }
 
-/* JOB LIST */
+/* JOB */
 .container{
 max-width:1100px;
 margin:auto;
@@ -275,57 +234,10 @@ padding:20px;
 font-size:13px;
 color:#777;
 }
-
-/* RESPONSIVE */
-@media(max-width:768px){
-.icon{width:46px;height:46px}
-.icon-item{min-width:72px}
-}
-
-@media(min-width:1024px){
-.icon{width:64px;height:64px}
-}
-/* ACTIVE ICON COLOR */
-.icon-item.active .icon{
-border-color:#f59e0b;
-}
-
-.icon-item.active .icon::before,
-.icon-item.active .icon::after{
-background:#f59e0b;
-border-color:#f59e0b;
-}
-
-/* hover effect */
-.icon-item:hover .icon{
-border-color:#f59e0b;
-}
-.icon-item:hover .icon::before,
-.icon-item:hover .icon::after{
-background:#f59e0b;
-border-color:#f59e0b;
-}
-
 </style>
 </head>
 
 <body>
-<img src="homework.svg" width="80">
-<img src="lesson-summary.svg" width="80">
-<img src="translation.svg" width="80">
-<img src="poster-design.svg" width="80">
-<img src="comic-drawing.svg" width="80">
-<img src="video-editing.svg" width="80">
-<img src="presentation.svg" width="80">
-<img src="report-writing.svg" width="80">
-<img src="typing.svg" width="80">
-<img src="short-video.svg" width="80">
-<img src="cover-design.svg" width="80">
-<img src="infographic.svg" width="80">
-<img src="article-writing.svg" width="80">
-<img src="resume.svg" width="80">
-<img src="icon-design.svg" width="80">
-<img src="slide-design.svg" width="80">
 
 <header>
 <div class="logo">
@@ -334,10 +246,10 @@ border-color:#f59e0b;
 </div>
 
 <nav>
-<a href="#">หางาน</a>
-<a href="#">หมวดหมู่</a>
-<a href="#">เกี่ยวกับเรา</a>
-<a href="#">บทความ</a>
+<a>หางาน</a>
+<a>หมวดหมู่</a>
+<a>เกี่ยวกับเรา</a>
+<a>บทความ</a>
 </nav>
 
 <a class="btn-primary">ติดต่อจ้างงาน</a>
@@ -351,14 +263,6 @@ border-color:#f59e0b;
 <input placeholder="ค้นหางานสำหรับนักเรียน...">
 <button>ค้นหา</button>
 </div>
-
-<div class="tags">
-<span>ทั้งหมด</span>
-<span>ออกแบบ</span>
-<span>เขียนคอนเทนต์</span>
-<span>พิมพ์งาน</span>
-<span>อื่น ๆ</span>
-</div>
 </section>
 
 <div class="category-box">
@@ -368,91 +272,89 @@ border-color:#f59e0b;
 
 <div class="icon-slider" id="slider">
 
+<!-- ICON LIST -->
+
 <div class="icon-item">
-    <img src="homework.svg" class="icon">
-    <p>ทำการบ้าน</p>
+<div class="icon"><img src="homework.svg"></div>
+<p>ทำการบ้าน</p>
 </div>
 
 <div class="icon-item">
-    <img src="homework.svg" class="icon">
-    <p>ทำการบ้าน</p>
+<div class="icon"><img src="lesson-summary.svg"></div>
+<p>สรุปบทเรียน</p>
 </div>
 
 <div class="icon-item">
-    <img src="lesson-summary.svg" class="icon">
-    <p>สรุปบทเรียน</p>
+<div class="icon"><img src="translation.svg"></div>
+<p>แปลภาษา</p>
 </div>
 
 <div class="icon-item">
-    <img src="translation.svg" class="icon">
-    <p>แปลภาษา</p>
+<div class="icon"><img src="poster-design.svg"></div>
+<p>ออกแบบโปสเตอร์</p>
 </div>
 
 <div class="icon-item">
-    <img src="poster-design.svg" class="icon">
-    <p>ออกแบบโปสเตอร์</p>
+<div class="icon"><img src="comic-drawing.svg"></div>
+<p>วาดการ์ตูน</p>
 </div>
 
 <div class="icon-item">
-    <img src="comic-drawing.svg" class="icon">
-    <p>วาดการ์ตูน</p>
+<div class="icon"><img src="video-editing.svg"></div>
+<p>ตัดต่อวิดีโอ</p>
 </div>
 
 <div class="icon-item">
-    <img src="video-editing.svg" class="icon">
-    <p>ตัดต่อวิดีโอ</p>
+<div class="icon"><img src="presentation.svg"></div>
+<p>พรีเซนต์</p>
 </div>
 
 <div class="icon-item">
-    <img src="presentation.svg" class="icon">
-    <p>พรีเซนเทชัน</p>
+<div class="icon"><img src="report-writing.svg"></div>
+<p>รายงาน</p>
 </div>
 
 <div class="icon-item">
-    <img src="report-writing.svg" class="icon">
-    <p>รายงาน</p>
+<div class="icon"><img src="typing.svg"></div>
+<p>พิมพ์งาน</p>
 </div>
 
 <div class="icon-item">
-    <img src="typing.svg" class="icon">
-    <p>พิมพ์งาน</p>
+<div class="icon"><img src="short-video.svg"></div>
+<p>วิดีโอสั้น</p>
 </div>
 
 <div class="icon-item">
-    <img src="short-video.svg" class="icon">
-    <p>วิดีโอสั้น</p>
+<div class="icon"><img src="cover-design.svg"></div>
+<p>ออกแบบปก</p>
 </div>
 
 <div class="icon-item">
-    <img src="cover-design.svg" class="icon">
-    <p>ออกแบบปก</p>
+<div class="icon"><img src="infographic.svg"></div>
+<p>อินโฟกราฟิก</p>
 </div>
 
 <div class="icon-item">
-    <img src="infographic.svg" class="icon">
-    <p>อินโฟกราฟิก</p>
+<div class="icon"><img src="article-writing.svg"></div>
+<p>เขียนบทความ</p>
 </div>
 
 <div class="icon-item">
-    <img src="article-writing.svg" class="icon">
-    <p>เขียนบทความ</p>
+<div class="icon"><img src="resume.svg"></div>
+<p>เรซูเม่</p>
 </div>
 
 <div class="icon-item">
-    <img src="resume.svg" class="icon">
-    <p>เรซูเม่</p>
+<div class="icon"><img src="icon-design.svg"></div>
+<p>ออกแบบไอคอน</p>
 </div>
 
 <div class="icon-item">
-    <img src="icon-design.svg" class="icon">
-    <p>ออกแบบไอคอน</p>
+<div class="icon"><img src="slide-design.svg"></div>
+<p>ออกแบบสไลด์</p>
 </div>
 
-<div class="icon-item">
-    <img src="slide-design.svg" class="icon">
-    <p>ออกแบบสไลด์</p>
 </div>
-
 
 <div class="arrow" onclick="slide(1)">›</div>
 </div>
@@ -462,135 +364,61 @@ border-color:#f59e0b;
 <div class="green-card">สอนออนไลน์</div>
 <div class="green-card">ทำไฟล์พรีเซนต์</div>
 <div class="green-card">ออกแบบโลโก้</div>
-<div class="green-card">คลิปสอนสั้น</div>
-<div class="green-card">จัดไฟล์เอกสาร</div>
+<div class="green-card">คลิปสอน</div>
+<div class="green-card">จัดเอกสาร</div>
 <div class="green-card">แต่งเพลง</div>
 <div class="green-card">อื่นๆ</div>
 </div>
 
 </div>
 
-<section class="container">
-<h2>หมวดหมู่งานยอดนิยม</h2>
-
-<div class="job-grid">
-
-<div class="job-card">
-รับถอดเสียง
-<div class="job-footer">
-<div>800 บาท</div>
-<button class="btn-contact">ติดต่อ</button>
-</div>
-</div>
-
-<div class="job-card">
-พิมพ์งานรายงาน
-<div class="job-footer">
-<div>900 บาท</div>
-<button class="btn-contact">ติดต่อ</button>
-</div>
-</div>
-
-<div class="job-card">
-เขียนบทความ
-<div class="job-footer">
-<div>900 บาท</div>
-<button class="btn-contact">ติดต่อ</button>
-</div>
-</div>
-
-<div class="job-card">
-สรุปเนื้อหา
-<div class="job-footer">
-<div>900 บาท</div>
-<button class="btn-contact">ติดต่อ</button>
-</div>
-</div>
-
-</div>
-</section>
-
-<footer>
-<div>
-<h4>หางาน</h4>
-<div>หางาน</div>
-<div>หมวดหมู่</div>
-</div>
-
-<div>
-<h4>SlowWork</h4>
-<div>เกี่ยวกับเรา</div>
-<div>บทความ</div>
-</div>
-
-<div>
-<h4>ติดต่อ</h4>
-<div>support@slowwork.com</div>
-</div>
-</footer>
-
-<div class="note">
-หมายเหตุ : เว็บไซต์นี้เป็นเว็บจำลองเพื่อการศึกษา ไม่ใช่เว็บไซต์จริง
-</div>
-
 <script>
 const slider = document.getElementById("slider");
-let isDown = false;
-let startX;
-let scrollLeft;
 
-/* ---------- ARROW ---------- */
-function slide(dir){
-slider.scrollLeft += dir * 200;
+/* arrow */
+function slide(d){
+slider.scrollLeft += d*200;
 }
 
-/* ---------- DRAG ---------- */
-slider.addEventListener("mousedown", e=>{
-isDown=true;
-startX = e.pageX - slider.offsetLeft;
-scrollLeft = slider.scrollLeft;
-});
-
-slider.addEventListener("mouseleave", ()=> isDown=false);
-slider.addEventListener("mouseup", ()=> isDown=false);
-
-slider.addEventListener("mousemove", e=>{
-if(!isDown) return;
-e.preventDefault();
-const x = e.pageX - slider.offsetLeft;
-const walk = (x - startX) * 1.5;
-slider.scrollLeft = scrollLeft - walk;
-});
-
-/* ---------- TOUCH ---------- */
-slider.addEventListener("touchstart", e=>{
-startX = e.touches[0].pageX;
-scrollLeft = slider.scrollLeft;
-});
-
-slider.addEventListener("touchmove", e=>{
-const x = e.touches[0].pageX;
-const walk = (x - startX) * 1.5;
-slider.scrollLeft = scrollLeft - walk;
-});
-
-/* ---------- AUTO SLIDE ---------- */
+/* auto */
 setInterval(()=>{
-slider.scrollLeft += 200;
+slider.scrollLeft+=200;
 if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
-slider.scrollLeft = 0;
+slider.scrollLeft=0;
 }
 },3000);
 
-/* ---------- ACTIVE CLICK ---------- */
+/* active click */
 document.querySelectorAll(".icon-item").forEach(item=>{
-item.addEventListener("click", ()=>{
+item.addEventListener("click",()=>{
 document.querySelectorAll(".icon-item").forEach(i=>i.classList.remove("active"));
 item.classList.add("active");
 });
 });
 </script>
+<footer>
+  <div>
+    <h4>SlowWork</h4>
+    <p>แพลตฟอร์มหางานสำหรับนักเรียน</p>
+  </div>
 
+  <div>
+    <h4>เมนู</h4>
+    <p>หางาน</p>
+    <p>หมวดหมู่</p>
+    <p>เกี่ยวกับเรา</p>
+  </div>
+
+  <div>
+    <h4>ติดต่อ</h4>
+    <p>slowwork@email.com</p>
+    <p>Line : @slowwork</p>
+  </div>
+</footer>
+
+<div class="note">
+  หมายเหตุ : SlowWork เป็นแพลตฟอร์มตัวอย่างเพื่อการศึกษาเท่านั้น ไม่ใช่เว็บไซต์จริง
+</div>
 
 </body>
 </html>
