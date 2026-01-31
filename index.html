@@ -285,6 +285,26 @@ color:#777;
 @media(min-width:1024px){
 .icon{width:64px;height:64px}
 }
+/* ACTIVE ICON COLOR */
+.icon-item.active .icon{
+border-color:#f59e0b;
+}
+
+.icon-item.active .icon::before,
+.icon-item.active .icon::after{
+background:#f59e0b;
+border-color:#f59e0b;
+}
+
+/* hover effect */
+.icon-item:hover .icon{
+border-color:#f59e0b;
+}
+.icon-item:hover .icon::before,
+.icon-item:hover .icon::after{
+background:#f59e0b;
+border-color:#f59e0b;
+}
 
 </style>
 </head>
@@ -431,11 +451,63 @@ color:#777;
 </div>
 
 <script>
+const slider = document.getElementById("slider");
+let isDown = false;
+let startX;
+let scrollLeft;
+
+/* ---------- ARROW ---------- */
 function slide(dir){
-const slider=document.getElementById("slider");
-slider.scrollLeft+=dir*200;
+slider.scrollLeft += dir * 200;
 }
+
+/* ---------- DRAG ---------- */
+slider.addEventListener("mousedown", e=>{
+isDown=true;
+startX = e.pageX - slider.offsetLeft;
+scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener("mouseleave", ()=> isDown=false);
+slider.addEventListener("mouseup", ()=> isDown=false);
+
+slider.addEventListener("mousemove", e=>{
+if(!isDown) return;
+e.preventDefault();
+const x = e.pageX - slider.offsetLeft;
+const walk = (x - startX) * 1.5;
+slider.scrollLeft = scrollLeft - walk;
+});
+
+/* ---------- TOUCH ---------- */
+slider.addEventListener("touchstart", e=>{
+startX = e.touches[0].pageX;
+scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener("touchmove", e=>{
+const x = e.touches[0].pageX;
+const walk = (x - startX) * 1.5;
+slider.scrollLeft = scrollLeft - walk;
+});
+
+/* ---------- AUTO SLIDE ---------- */
+setInterval(()=>{
+slider.scrollLeft += 200;
+if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
+slider.scrollLeft = 0;
+}
+},3000);
+
+/* ---------- ACTIVE CLICK ---------- */
+document.querySelectorAll(".icon-item").forEach(item=>{
+item.addEventListener("click", ()=>{
+document.querySelectorAll(".icon-item").forEach(i=>i.classList.remove("active"));
+item.classList.add("active");
+});
+});
 </script>
+
 
 </body>
 </html>
