@@ -519,6 +519,191 @@ footer{
   font-size:13px;
   margin-top:6px;
 }
+/* =============================
+   Fastwork style line icons
+   ============================= */
+
+.icon{
+  background:transparent;
+  border:2px solid #222;
+}
+
+/* ทำการบ้าน (สมุด+ดินสอ) */
+.homework::before{
+  width:18px;height:22px;
+  border:2px solid #222;
+  left:10px;top:6px;
+  background:none;
+}
+.homework::after{
+  width:12px;height:2px;
+  left:13px;top:30px;
+}
+
+/* สรุปบทเรียน (หนังสือเปิด) */
+.summary::before{
+  width:18px;height:18px;
+  border:2px solid #222;
+  left:9px;top:10px;
+  background:none;
+}
+
+/* แปลภาษา (โลก) */
+.translate::before{
+  width:20px;height:20px;
+  border:2px solid #222;
+  border-radius:50%;
+  left:8px;top:8px;
+  background:none;
+}
+
+/* โปสเตอร์ */
+.poster::before{
+  width:22px;height:22px;
+  border:2px solid #222;
+  left:7px;top:7px;
+  background:none;
+}
+
+/* การ์ตูน (หน้า) */
+.cartoon::before{
+  width:18px;height:18px;
+  border:2px solid #222;
+  border-radius:50%;
+  left:10px;top:10px;
+  background:none;
+}
+
+/* วิดีโอ */
+.video::before{
+  width:22px;height:14px;
+  border:2px solid #222;
+  left:7px;top:14px;
+  background:none;
+}
+.video::after{
+  width:0;height:0;
+  border-left:8px solid #222;
+  border-top:5px solid transparent;
+  border-bottom:5px solid transparent;
+  left:20px;top:17px;
+}
+
+/* PPT */
+.ppt::before{
+  width:20px;height:14px;
+  border:2px solid #222;
+  left:9px;top:14px;
+  background:none;
+}
+
+/* รายงาน */
+.report::before{
+  width:18px;height:24px;
+  border:2px solid #222;
+  left:10px;top:6px;
+  background:none;
+}
+
+/* พิมพ์งาน (คีย์บอร์ด) */
+.typing::before{
+  width:22px;height:12px;
+  border:2px solid #222;
+  left:7px;top:16px;
+  background:none;
+}
+
+/* TikTok (โน้ต) */
+.tiktok::before{
+  width:3px;height:20px;
+  left:18px;top:10px;
+}
+.tiktok::after{
+  width:10px;height:10px;
+  border:2px solid #222;
+  border-radius:50%;
+  left:14px;top:22px;
+  background:none;
+}
+
+/* ปกงาน */
+.cover::before{
+  width:18px;height:22px;
+  border:2px solid #222;
+  left:11px;top:9px;
+  background:none;
+}
+
+/* อินโฟกราฟิก */
+.infographic::before{
+  width:4px;height:14px;
+  left:12px;top:16px;
+}
+.infographic::after{
+  width:4px;height:22px;
+  left:22px;top:8px;
+}
+
+/* บทความ */
+.article::before{
+  width:18px;height:22px;
+  border:2px solid #222;
+  left:10px;top:8px;
+  background:none;
+}
+
+/* เรซูเม่ */
+.resume::before{
+  width:18px;height:24px;
+  border:2px solid #222;
+  left:10px;top:6px;
+  background:none;
+}
+
+/* วาดไอคอน */
+.icon-draw::before{
+  width:20px;height:20px;
+  border:2px solid #222;
+  left:8px;top:8px;
+  background:none;
+}
+
+/* สไลด์ */
+.slide::before{
+  width:22px;height:14px;
+  border:2px solid #222;
+  left:7px;top:14px;
+  background:none;
+}
+
+
+/* ===== Responsive เฉพาะไอคอน ===== */
+
+@media(max-width:768px){
+  .icon{
+    width:46px;
+    height:46px;
+  }
+  .icon-item{
+    min-width:70px;
+  }
+  .icon-item p{
+    font-size:12px;
+  }
+}
+
+@media(min-width:1024px){
+  .icon{
+    width:64px;
+    height:64px;
+  }
+  .icon-item{
+    min-width:95px;
+  }
+  .icon-item p{
+    font-size:14px;
+  }
+}
 
 </style>
 <script>
