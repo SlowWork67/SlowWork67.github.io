@@ -6,34 +6,365 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== RESET ===== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", sans-serif;
+
+/* RESET */
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:"Segoe UI",sans-serif;
 }
+
+body{
+  background:#fff3e3;
+  color:#333;
+}
+
+/* HEADER */
+
+header{
+  background:#fff;
+  padding:14px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #eee;
+  position:sticky;
+  top:0;
+}
+
 .logo{
-  display: flex;
-  align-items: center;
-
-  font-size: 22px;
-  font-weight: 600;
-}
-.logo {
-  gap: 0;
+  display:flex;
+  align-items:center;
+  font-size:24px;
+  font-weight:600;
 }
 
-.slow,
-.work {
-  margin: 0;
-  padding: 0;
-}
-
-/* ขนาดเต่า = ขนาดส้มเดิม */
 .logo img{
-  width: 22px;
-  height: 22px;
+  width:32px;
+  height:32px;
+  margin-right:4px;
+}
+
+.logo .work{
+  color:#6fa96f;
+}
+
+nav a{
+  margin:0 12px;
+  text-decoration:none;
+  color:#555;
+}
+
+.btn-primary{
+  background:#5f8f5a;
+  color:white;
+  padding:10px 18px;
+  border-radius:20px;
+  text-decoration:none;
+}
+
+/* SEARCH */
+
+.search-section{
+  text-align:center;
+  padding:50px 20px;
+}
+
+.search-section h1{
+  font-size:28px;
+}
+
+.search-section p{
+  color:#666;
+  margin:10px 0 25px;
+}
+
+.search-box{
+  max-width:600px;
+  margin:auto;
+  display:flex;
+  background:white;
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.search-box input{
+  flex:1;
+  border:none;
+  padding:16px;
+  font-size:15px;
+}
+
+.search-box button{
+  background:#f59e0b;
+  color:white;
+  border:none;
+  padding:0 26px;
+  cursor:pointer;
+}
+
+/* TAG CATEGORIES */
+
+.tags{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+
+.tags span{
+  background:white;
+  padding:8px 16px;
+  border-radius:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
+}
+
+/* BIG CATEGORY GRID */
+
+.category-grid{
+  max-width:1100px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:16px;
+  padding:0 20px;
+}
+
+.category-card{
+  background:#2f3a44;
+  color:white;
+  border-radius:14px;
+  height:110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+}
+
+/* SMALL GRID */
+
+.small-grid{
+  max-width:1100px;
+  margin:20px auto 60px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  padding:0 20px;
+}
+
+.small-card{
+  background:#5f8f5a;
+  color:white;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+}
+
+/* JOB LIST */
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:0 20px;
+}
+
+.section-title{
+  font-size:22px;
+  margin-bottom:20px;
+}
+
+.job-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+
+.job-card{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.job-card img{
+  width:52px;
+}
+
+.job-footer{
+  display:flex;
+  justify-content:space-between;
+}
+
+.btn-contact{
+  background:#5f8f5a;
+  color:white;
+  border:none;
+  padding:8px 16px;
+  border-radius:20px;
+}
+
+/* FOOTER */
+
+footer{
+  background:white;
+  padding:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:20px;
+  border-top:1px solid #eee;
+}
+
+.note{
+  text-align:center;
+  padding:20px;
+  font-size:13px;
+  color:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <img src="turtle.png">
+    <span>Slow</span><span class="work">Work</span>
+  </div>
+
+  <nav>
+    <a href="#">หางาน</a>
+    <a href="#">หมวดหมู่</a>
+    <a href="#">เกี่ยวกับเรา</a>
+    <a href="#">บทความ</a>
+  </nav>
+
+  <a class="btn-primary" href="#">ติดต่อจ้างงาน</a>
+</header>
+
+<section class="search-section">
+  <h1>เริ่มทำงานสำหรับนักเรียน</h1>
+  <p>โปรเจกต์จ้างงานง่าย ๆ แนว Fastwork</p>
+
+  <div class="search-box">
+    <input placeholder="ค้นหางานสำหรับนักเรียน...">
+    <button>ค้นหา</button>
+  </div>
+
+  <div class="tags">
+    <span>ทั้งหมด</span>
+    <span>ออกแบบ</span>
+    <span>เขียนคอนเทนต์</span>
+    <span>พิมพ์งาน</span>
+    <span>อื่น ๆ</span>
+  </div>
+</section>
+
+<div class="category-grid">
+  <div class="category-card">รับทำการบ้าน</div>
+  <div class="category-card">พิมพ์รายงาน</div>
+  <div class="category-card">ออกแบบโปสเตอร์</div>
+  <div class="category-card">ออกแบบปกงาน</div>
+  <div class="category-card">วาดรูป</div>
+  <div class="category-card">ตัดต่อวิดีโอ</div>
+  <div class="category-card">ทำสไลด์</div>
+  <div class="category-card">สรุปบทเรียน</div>
+  <div class="category-card">แปลภาษา</div>
+  <div class="category-card">อินโฟกราฟิก</div>
+  <div class="category-card">เขียนนิยาย</div>
+  <div class="category-card">การ์ตูนช่อง</div>
+  <div class="category-card">ออกแบบโลโก้</div>
+  <div class="category-card">แต่งรูป</div>
+  <div class="category-card">แพลนอ่านหนังสือ</div>
+  <div class="category-card">ทำใบงาน</div>
+</div>
+
+<div class="small-grid">
+  <div class="small-card">สอนการบ้านออนไลน์</div>
+  <div class="small-card">อ่านหนังสือให้ฟัง</div>
+  <div class="small-card">คลิปสอนสั้น</div>
+  <div class="small-card">แต่งเพลง</div>
+  <div class="small-card">พากย์เสียง</div>
+  <div class="small-card">รีวิวสินค้า</div>
+  <div class="small-card">ทำโพสต์เพจ</div>
+  <div class="small-card">จัดไฟล์เอกสาร</div>
+</div>
+
+<section class="container">
+  <h2 class="section-title">หมวดหมู่งานยอดนิยม</h2>
+
+  <div class="job-grid">
+
+    <div class="job-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/2920/2920063.png">
+      รับถอดเสียง
+      <div class="job-footer">
+        <div>800 บาท</div>
+        <button class="btn-contact">ติดต่อ</button>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/2920/2920058.png">
+      พิมพ์งานรายงาน
+      <div class="job-footer">
+        <div>900 บาท</div>
+        <button class="btn-contact">ติดต่อ</button>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/2920/2920084.png">
+      เขียนบทความ
+      <div class="job-footer">
+        <div>900 บาท</div>
+        <button class="btn-contact">ติดต่อ</button>
+      </div>
+    </div>
+
+    <div class="job-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/2920/2920077.png">
+      สรุปเนื้อหา
+      <div class="job-footer">
+        <div>900 บาท</div>
+        <button class="btn-contact">ติดต่อ</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div>
+    <h4>หางาน</h4>
+    <div>หางาน</div>
+    <div>หมวดหมู่</div>
+  </div>
+
+  <div>
+    <h4>SlowWork</h4>
+    <div>เกี่ยวกับเรา</div>
+    <div>บทความ</div>
+  </div>
+
+  <div>
+    <h4>ติดต่อ</h4>
+    <div>support@slowwork.com</div>
+  </div>
+</footer>
+
+<div class="note">
+หมายเหตุ : เว็บไซต์นี้เป็นเว็บจำลองเพื่อการศึกษา ไม่ใช่เว็บไซต์จริง
+</div>
+
+</body>
+</html>
   object-fit: contain;
 }
 
