@@ -265,36 +265,124 @@ footer{
     <span>อื่น ๆ</span>
   </div>
 </section>
+<style>
+.category-box{
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  margin:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
 
-<div class="category-grid">
-  <div class="category-card">รับทำการบ้าน</div>
-  <div class="category-card">พิมพ์รายงาน</div>
-  <div class="category-card">ออกแบบโปสเตอร์</div>
-  <div class="category-card">ออกแบบปกงาน</div>
-  <div class="category-card">วาดรูป</div>
-  <div class="category-card">ตัดต่อวิดีโอ</div>
-  <div class="category-card">ทำสไลด์</div>
-  <div class="category-card">สรุปบทเรียน</div>
-  <div class="category-card">แปลภาษา</div>
-  <div class="category-card">อินโฟกราฟิก</div>
-  <div class="category-card">เขียนนิยาย</div>
-  <div class="category-card">การ์ตูนช่อง</div>
-  <div class="category-card">ออกแบบโลโก้</div>
-  <div class="category-card">แต่งรูป</div>
-  <div class="category-card">แพลนอ่านหนังสือ</div>
-  <div class="category-card">ทำใบงาน</div>
+.icon-slider{
+  display:flex;
+  gap:18px;
+  overflow-x:auto;
+  padding-bottom:12px;
+}
+
+.icon-slider::-webkit-scrollbar{
+  height:6px;
+}
+.icon-slider::-webkit-scrollbar-thumb{
+  background:#ddd;
+  border-radius:10px;
+}
+
+.icon-item{
+  min-width:85px;
+  text-align:center;
+  font-size:13px;
+}
+
+.icon{
+  width:60px;
+  height:60px;
+  border-radius:16px;
+  background:#f2f2f2;
+  margin:auto;
+  position:relative;
+}
+
+/* ไอคอนแต่ละหมวด */
+
+.book::after{content:"📘";font-size:28px;position:absolute;top:14px;left:16px;}
+.video::after{content:"🎬";font-size:28px;position:absolute;top:14px;left:16px;}
+.design::after{content:"🎨";font-size:28px;position:absolute;top:14px;left:16px;}
+.translate::after{content:"🌐";font-size:28px;position:absolute;top:14px;left:16px;}
+.document::after{content:"📄";font-size:28px;position:absolute;top:14px;left:16px;}
+.photo::after{content:"📷";font-size:28px;position:absolute;top:14px;left:16px;}
+.web::after{content:"💻";font-size:28px;position:absolute;top:14px;left:16px;}
+.music::after{content:"🎵";font-size:28px;position:absolute;top:14px;left:16px;}
+
+.shop::after{content:"🛒";font-size:28px;position:absolute;top:14px;left:16px;}
+market::after{content:"📢";font-size:28px;position:absolute;top:14px;left:16px;}
+program::after{content:"⚙️";font-size:28px;position:absolute;top:14px;left:16px;}
+drawing::after{content:"✏️";font-size:28px;position:absolute;top:14px;left:16px;}
+animation::after{content:"🧩";font-size:28px;position:absolute;top:14px;left:16px;}
+seo::after{content:"📈";font-size:28px;position:absolute;top:14px;left:16px;}
+writing::after{content:"📝";font-size:28px;position:absolute;top:14px;left:16px;}
+other::after{content:"⭐";font-size:28px;position:absolute;top:14px;left:16px;}
+
+/* หมวดสีเขียว */
+
+.green-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+
+.green-card{
+  background:#38a169;
+  color:white;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+}
+</style>
+
+
+<div class="category-box">
+
+  <!-- หมวดสีดำ (ไอคอนเลื่อน) -->
+  <div class="icon-slider">
+
+    <div class="icon-item"><div class="icon book"></div><p>รับทำการบ้าน</p></div>
+    <div class="icon-item"><div class="icon video"></div><p>ตัดต่อวิดีโอ</p></div>
+    <div class="icon-item"><div class="icon design"></div><p>ออกแบบกราฟิก</p></div>
+    <div class="icon-item"><div class="icon translate"></div><p>แปลภาษา</p></div>
+    <div class="icon-item"><div class="icon document"></div><p>งานเอกสาร</p></div>
+    <div class="icon-item"><div class="icon photo"></div><p>ถ่ายภาพ</p></div>
+    <div class="icon-item"><div class="icon web"></div><p>ทำเว็บไซต์</p></div>
+    <div class="icon-item"><div class="icon music"></div><p>แต่งเพลง</p></div>
+
+    <div class="icon-item"><div class="icon shop"></div><p>ร้านค้าออนไลน์</p></div>
+    <div class="icon-item"><div class="icon market"></div><p>การตลาด</p></div>
+    <div class="icon-item"><div class="icon program"></div><p>เขียนโปรแกรม</p></div>
+    <div class="icon-item"><div class="icon drawing"></div><p>วาดภาพ</p></div>
+    <div class="icon-item"><div class="icon animation"></div><p>แอนิเมชัน</p></div>
+    <div class="icon-item"><div class="icon seo"></div><p>SEO</p></div>
+    <div class="icon-item"><div class="icon writing"></div><p>เขียนบทความ</p></div>
+    <div class="icon-item"><div class="icon other"></div><p>อื่นๆ</p></div>
+
+  </div>
+
+  <!-- หมวดสีเขียวด้านล่าง -->
+
+  <div class="green-grid">
+    <div class="green-card">รีวิวสินค้า</div>
+    <div class="green-card">สอนออนไลน์</div>
+    <div class="green-card">ทำไฟล์พรีเซนต์</div>
+    <div class="green-card">ออกแบบโลโก้</div>
+    <div class="green-card">คลิปสอนสั้น</div>
+    <div class="green-card">จัดไฟล์เอกสาร</div>
+    <div class="green-card">แต่งเพลง</div>
+    <div class="green-card">อื่นๆ</div>
+  </div>
+
 </div>
 
-<div class="small-grid">
-  <div class="small-card">สอนการบ้านออนไลน์</div>
-  <div class="small-card">อ่านหนังสือให้ฟัง</div>
-  <div class="small-card">คลิปสอนสั้น</div>
-  <div class="small-card">แต่งเพลง</div>
-  <div class="small-card">พากย์เสียง</div>
-  <div class="small-card">รีวิวสินค้า</div>
-  <div class="small-card">ทำโพสต์เพจ</div>
-  <div class="small-card">จัดไฟล์เอกสาร</div>
-</div>
 
 <section class="container">
   <h2 class="section-title">หมวดหมู่งานยอดนิยม</h2>
