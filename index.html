@@ -250,53 +250,123 @@ body{
   height: 32px;
 }
 <style>
-.categories {
-  padding: 40px;
-}
-
-.category-grid {
-  display: grid;
+<style>
+.categories{
+  display:grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap:16px;
+  padding:20px;
 }
 
-.category-card {
-  background: #2f2f2f;
-  color: white;
-  height: 120px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.2s;
+.category{
+  background:#2f3a44;
+  color:white;
+  border-radius:14px;
+  height:110px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  font-size:15px;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-.category-card:hover {
-  transform: scale(1.05);
-  background: #444;
+.category:hover{
+  transform:translateY(-4px);
+  background:#3b4752;
 }
 
-.small-grid {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+.category span{
+  margin-top:6px;
 }
+</style>
 
-.small-card {
-  background: #6fa96f;
-  color: white;
-  height: 100px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 16px;
-  cursor: pointer;
+<div class="categories">
+
+  <div class="category">
+    📚
+    <span>รับทำการบ้าน</span>
+  </div>
+
+  <div class="category">
+    📝
+    <span>พิมพ์รายงาน</span>
+  </div>
+
+  <div class="category">
+    🎨
+    <span>ออกแบบโปสเตอร์</span>
+  </div>
+
+  <div class="category">
+    🧾
+    <span>ออกแบบปกงาน</span>
+  </div>
+
+  <div class="category">
+    ✏️
+    <span>วาดรูป</span>
+  </div>
+
+  <div class="category">
+    🎬
+    <span>ตัดต่อวิดีโอ</span>
+  </div>
+
+  <div class="category">
+    📊
+    <span>ทำสไลด์</span>
+  </div>
+
+  <div class="category">
+    📖
+    <span>สรุปบทเรียน</span>
+  </div>
+
+  <div class="category">
+    🌐
+    <span>แปลภาษา</span>
+  </div>
+
+  <div class="category">
+    📈
+    <span>อินโฟกราฟิก</span>
+  </div>
+
+  <div class="category">
+    ✍️
+    <span>เขียนนิยาย</span>
+  </div>
+
+  <div class="category">
+    🎥
+    <span>การ์ตูนช่อง</span>
+  </div>
+
+  <div class="category">
+    🎨
+    <span>ออกแบบโลโก้</span>
+  </div>
+
+  <div class="category">
+    🖼️
+    <span>แต่งรูป</span>
+  </div>
+
+  <div class="category">
+    📚
+    <span>แปลบทอ่าน</span>
+  </div>
+
+  <div class="category">
+    📄
+    <span>ทำใบงาน</span>
+ 
+</div>
+
 }
 </style>
 
