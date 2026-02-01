@@ -6,7 +6,11 @@
 <title>Jobboard - SlowWork</title>
 
 <style>
-body{
+* {
+  box-sizing: border-box;
+}
+
+  body{
   margin:0;
   font-family: Arial, sans-serif;
   background:#f6f6f6;
@@ -265,6 +269,18 @@ body {
     gap: 20px;
     align-items: flex-start;
     flex-wrap: nowrap; /* บังคับไม่ให้ตกบรรทัด */
+}
+ .jobboard-container {
+  display: flex;
+  gap: 20px;   /* เว้นช่องว่างระหว่างตารางกับกล่องขวา */
+  padding: 20px;
+}
+.jobboard-table {
+  width: 70%;
+}
+.freelance-box {
+  width: 30%;
+  box-sizing: border-box;
 }
 
 </style>
