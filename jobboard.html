@@ -6,176 +6,232 @@
 <title>Jobboard - SlowWork</title>
 
 <style>
-* {
-  box-sizing: border-box;
+
+*{
+box-sizing:border-box;
 }
 
 body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:#f6f6f6;
+margin:0;
+font-family:Arial,sans-serif;
+background:#f6f6f6;
 }
 
-/* แถบสีด้านบน */
-.jobboard-header{
-  position: relative;
-  width: 100%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-}
+/* ===== TOP BAR ===== */
 
-.jobboard-bar{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, #ff9f1c, #2bb673);
-  z-index: 1;
+.top-header{
+width:100%;
+height:80px;
+background:linear-gradient(90deg,#ff9f1c,#2bb673);
+display:flex;
+align-items:center;
+padding:0 80px;
 }
 
 .logo{
-  position: relative;
-  z-index: 2;
-  padding-left: 20px;
-  font-size: 22px;
-  font-weight: bold;
-  color:white;
+font-size:26px;
+font-weight:bold;
+color:white;
 }
 
-/* ตาราง */
-.jobboard-table{
-  width:100%;
-  border-collapse:collapse;
-  background:white;
+.logo span{
+color:#4CAF50;
 }
 
-.jobboard-table th{
-  background:#f5f5f5;
-  padding:14px;
-  text-align:left;
-  border-bottom:2px solid #ddd;
+.header-jobboard{
+margin-left:20px;
+font-size:24px;
+font-weight:bold;
+color:#ff8a00;
 }
 
-.jobboard-table td{
-  padding:14px;
-  border-bottom:1px solid #eee;
-  color:#666;
+/* ===== HERO ===== */
+
+.hero{
+background:white;
+padding:50px 80px;
 }
 
-.jobboard-table tr:hover{
-  background:#fafafa;
+.hero-title{
+font-size:46px;
+font-weight:bold;
 }
 
-/* layout หลัก */
+.hero-title .job{
+color:#ff8a00;
+}
+
+.hero-title .board{
+color:#2bb673;
+}
+
+.hero-text{
+margin-top:10px;
+font-size:16px;
+color:black;
+max-width:600px;
+}
+
+/* ===== MAIN LAYOUT ===== */
+
 .jobboard-container{
-  max-width:1100px;
-  margin:40px auto;
-  display:flex;
-  gap:20px;
-  padding:20px;
+max-width:1100px;
+margin:40px auto;
+display:flex;
+gap:20px;
+padding:20px;
 }
 
-/* ตัวกรอง */
-.job-filters{
-  display:flex;
-  gap:10px;
+/* ===== TABLE ===== */
+
+.table-wrap{
+width:70%;
+background:white;
+border-radius:14px;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+padding:20px;
 }
 
-.job-filters select{
-  padding:10px;
-  border:2px solid #ddd;
-  border-radius:6px;
-  cursor:pointer;
+.table-title{
+font-size:26px;
+font-weight:bold;
+margin-bottom:15px;
+color:#ff8a00;
+}
+
+.filters{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+.filters select{
+padding:10px;
+border:2px solid #ddd;
+border-radius:8px;
+font-size:14px;
+cursor:pointer;
+transition:0.2s;
 }
 
 .filter-category:hover{
-  border-color:#ffcc80;
+border-color:#ffcc80;
 }
 
 .filter-type:hover{
-  border-color:#a5d6a7;
+border-color:#a5d6a7;
 }
 
 .filter-category:focus{
-  border-color:orange;
+border-color:orange;
 }
 
 .filter-type:focus{
-  border-color:green;
+border-color:green;
 }
 
-/* กล่องขวา */
+.jobboard-table{
+width:100%;
+border-collapse:collapse;
+}
+
+.jobboard-table th{
+background:#f5f5f5;
+padding:14px;
+text-align:left;
+border-bottom:2px solid #ddd;
+font-weight:bold;
+}
+
+.jobboard-table td{
+padding:14px;
+border-bottom:1px solid #eee;
+color:#666;
+}
+
+.jobboard-table tr:hover{
+background:#fafafa;
+}
+
+/* ===== SIDE BOX ===== */
+
 .freelance-box{
-  background:#f7f7f7;
-  padding:20px;
-  border-radius:12px;
-  width:30%;
+width:30%;
+border:2px solid #ff9f1c;
+border-radius:14px;
+padding:30px;
+background:white;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+color:#2bb673;
 }
 
-.post-btn{
-  background:green;
-  color:white;
-  border:none;
-  padding:10px 15px;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-.post-btn:hover{
-  opacity:0.8;
-}
-
-.table-area{
-  width:70%;
-}
 </style>
 </head>
 
 <body>
 
-<header class="jobboard-header">
-  <div class="jobboard-bar"></div>
+<!-- ===== TOP BAR ===== -->
+
+<div class="top-header">
   <div class="logo">
-    Slow<span style="color:#4CAF50;">Work</span>
+    Slow<span>Work</span>
   </div>
-</header>
+
+  <div class="header-jobboard">
+    Jobboard
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+
+<div class="hero">
+
+  <div class="hero-title">
+    <span class="job">Job</span><span class="board">board</span>
+  </div>
+
+  <div class="hero-text">
+    พื้นที่รวมงานสำหรับทุกความสามารถ มาลองหางานที่ใช่สำหรับคุณ
+  </div>
+
+</div>
+
+<!-- ===== MAIN ===== -->
 
 <div class="jobboard-container">
 
-  <!-- ฝั่งตาราง -->
-  <div class="table-area">
+  <!-- TABLE SIDE -->
+
+  <div class="table-wrap">
+
+    <div class="table-title">
+      Jobboard
+    </div>
+
+    <div class="filters">
+
+      <select class="filter-category">
+        <option>ค้นหาหมวดหมู่งาน</option>
+        <option>กราฟิก</option>
+        <option>เขียนบทความ</option>
+        <option>โปรแกรม</option>
+      </select>
+
+      <select class="filter-type">
+        <option>ลักษณะการจ้าง</option>
+        <option>ฟรีแลนซ์</option>
+        <option>สัญญาจ้าง</option>
+        <option>พาร์ไทม์</option>
+        <option>งานประจำ</option>
+      </select>
+
+    </div>
 
     <table class="jobboard-table">
 
-      <!-- แถวบนสุด = ตัวค้นหา -->
       <thead>
-
-        <tr>
-          <th colspan="6">
-            <div class="job-filters">
-
-              <select class="filter-category">
-                <option>ค้นหาหมวดหมู่งาน</option>
-                <option>กราฟิก</option>
-                <option>เขียนบทความ</option>
-                <option>โปรแกรม</option>
-              </select>
-
-              <select class="filter-type">
-                <option>ลักษณะการจ้าง</option>
-                <option>ฟรีแลนซ์</option>
-                <option>สัญญาจ้าง</option>
-                <option>พาร์ไทม์</option>
-                <option>งานประจำ</option>
-              </select>
-
-            </div>
-          </th>
-        </tr>
-
-        <!-- หัวตารางจริง -->
         <tr>
           <th>ชื่องาน</th>
           <th>หมวดหมู่งาน</th>
@@ -184,7 +240,6 @@ body{
           <th>ลงประกาศเมื่อ</th>
           <th>ส่งมอบงานภายใน</th>
         </tr>
-
       </thead>
 
       <tbody>
@@ -195,11 +250,10 @@ body{
 
   </div>
 
-  <!-- ฝั่งขวา -->
+  <!-- SIDE BOX -->
+
   <div class="freelance-box">
-    <h3>ประกาศหาฟรีแลนซ์</h3>
-    <p>หาคนทำงานคุณภาพได้ที่นี่</p>
-    <button class="post-btn">ลงประกาศ</button>
+    ประกาศหาฟรีแลนซ์
   </div>
 
 </div>
