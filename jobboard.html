@@ -177,6 +177,73 @@ body {
   border-collapse: collapse;
   background: white;
 }
+.jobboard-top {
+  padding: 20px;
+}
+
+.jobboard-title {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.job-orange {
+  color: orange;
+}
+
+.job-green {
+  color: green;
+}
+
+.job-filters {
+  display: flex;
+  gap: 10px;
+}
+
+.job-filters select {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* หมวดหมู่งาน hover สีส้มอ่อน */
+.filter-category:hover {
+  border-color: #ffcc80;
+}
+
+/* ลักษณะการจ้าง hover สีเขียวอ่อน */
+.filter-type:hover {
+  border-color: #a5d6a7;
+}
+
+/* ตอนคลิก */
+.filter-category:focus {
+  border-color: orange;
+}
+
+.filter-type:focus {
+  border-color: green;
+}
+.freelance-box {
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+}
+
+.post-btn {
+  background: green;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.post-btn:hover {
+  opacity: 0.8;
+}
 
 </style>
 </head>
@@ -198,6 +265,30 @@ body {
   <div class="jobboard-subtext">
     พื้นที่รวมงานสำหรับทุกความสามารถ มาลองหางานที่ใช่สำหรับคุณ
   </div>
+<div class="jobboard-top">
+
+  <h2 class="jobboard-title">
+    <span class="job-orange">Job</span><span class="job-green">board</span>
+  </h2>
+
+  <div class="job-filters">
+
+    <select class="filter-category">
+      <option>ค้นหาหมวดหมู่งาน</option>
+      <option>กราฟิก</option>
+      <option>เขียนบทความ</option>
+      <option>โปรแกรม</option>
+    </select>
+
+    <select class="filter-type">
+      <option>ลักษณะการจ้าง</option>
+      <option>งานระยะสั้น</option>
+      <option>งานประจำ</option>
+    </select>
+
+  </div>
+
+</div>
 
 
 </section>
@@ -218,8 +309,15 @@ body {
     <!-- ตอนนี้ยังไม่มีงาน จะว่างไว้ก่อน -->
   </tbody>
 
+
   </table>
+<div class="freelance-box">
+  <h3>ประกาศหาฟรีแลนซ์</h3>
+  <p>หาคนทำงานคุณภาพได้ที่นี่</p>
+  <button class="post-btn">ลงประกาศ</button>
 </div>
+
+ </div>
 
 <!-- ตรงนี้จะเป็นตารางงานทีหลัง -->
 
