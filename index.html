@@ -393,14 +393,6 @@ function slide(d){
 slider.scrollLeft += d*200;
 }
 
-/* auto */
-setInterval(()=>{
-slider.scrollLeft+=200;
-if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
-slider.scrollLeft=0;
-}
-},3000);
-
 /* active click */
 document.querySelectorAll(".icon-item").forEach(item=>{
 item.addEventListener("click",()=>{
