@@ -471,6 +471,12 @@ document.querySelectorAll(".icon-item").forEach(i=>i.classList.remove("active"))
 item.classList.add("active");
 });
 });
+ const toggle = document.querySelector('.menu-toggle');
+  const menu = document.querySelector('.nav-menu');
+
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('active');
+  });
 </script>
 <footer>
   <div>
