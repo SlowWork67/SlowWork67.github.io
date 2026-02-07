@@ -278,6 +278,7 @@ async function loadJobs() {
     `;
     return;
   }
+tbody.innerHTML = "";
 
   data.forEach(job => {
     const tr = document.createElement("tr");
