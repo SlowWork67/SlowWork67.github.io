@@ -244,6 +244,17 @@ body{
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://zjnwuujlpitsysetqqmv.supabase.co"; 
+  const SUPABASE_ANON_KEY = "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r";
+
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  console.log("Supabase ready");
+</script>
 
 </body>
 </html>
