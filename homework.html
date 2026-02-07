@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายละเอียดงาน - รับออกแบบโลโก้</title>
+    <title>รายละเอียดงาน - SlowWork</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --primary-color: #005DE8;
-            --secondary-color: #F0F2F5;
-            --text-color: #333;
-            --gray-text: #666;
-            --border-color: #ddd;
-            --success-color: #28a745;
+            --primary-color: #005DE8; /* สีน้ำเงิน Fastwork Style */
+            --secondary-color: #f4f7fa;
+            --text-dark: #333;
+            --text-gray: #666;
+            --logo-green: #28a745; /* สีเขียวสำหรับ Slow */
+            --logo-orange: #ff8a00; /* สีส้มสำหรับ Work */
+            --star-yellow: #ffc107;
         }
 
         * {
@@ -25,16 +26,16 @@
         }
 
         body {
-            background-color: #f9f9f9;
-            color: var(--text-color);
-            padding-bottom: 50px;
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
-        /* --- Navbar (ใช้เหมือนหน้าแรก) --- */
+        /* --- Navbar --- */
         nav {
             background: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            padding: 15px 5%;
+            padding: 12px 8%;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -43,300 +44,231 @@
             z-index: 1000;
         }
 
-   
-.logo {
-    font-size: 24px;
-    font-weight: 700;
-    color: #ff8a00 !important; 
-    text-decoration: none;
-}
+        /* แก้ไขสีโลโก้ที่นี่ */
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--logo-orange); /* สีของคำว่า Work */
+        }
 
-.logo span {
-    color: #28a745 !important; 
-}
-}
+        .logo span {
+            color: var(--logo-green); /* สีของคำว่า Slow */
+        }
+
         .nav-links a {
             text-decoration: none;
-            color: var(--text-color);
+            color: var(--text-dark);
             margin-left: 20px;
             font-size: 14px;
+            font-weight: 400;
         }
 
-        /* --- Breadcrumb --- */
-        .breadcrumb {
-            padding: 20px 5%;
-            font-size: 14px;
-            color: var(--gray-text);
-        }
-        .breadcrumb a { color: var(--gray-text); text-decoration: none; }
-        .breadcrumb span { margin: 0 5px; }
-
-        /* --- Main Layout --- */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* --- Layout --- */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
             display: grid;
-            grid-template-columns: 2fr 1fr; /* แบ่งซ้าย 2 ส่วน ขวา 1 ส่วน */
-            gap: 30px;
+            grid-template-columns: 1.8fr 1fr;
+            gap: 25px;
+            padding: 0 20px;
         }
 
-        /* --- Left Column Content --- */
-        .content-card {
+        /* --- Main Content (Left) --- */
+        .card {
             background: white;
-            border-radius: 10px;
-            padding: 25px;
-            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
             margin-bottom: 20px;
+            border: 1px solid #e1e4e8;
         }
 
         .main-image {
             width: 100%;
-            height: 400px;
-            object-fit: cover;
+            height: auto;
             border-radius: 8px;
             margin-bottom: 20px;
-            background-color: #eee;
         }
 
         .service-title {
             font-size: 24px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        .service-meta {
+        .freelancer-bar {
             display: flex;
-            gap: 20px;
-            font-size: 14px;
-            color: var(--gray-text);
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            align-items: center;
+            gap: 12px;
             padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
         }
 
-        .service-meta i { color: #ffc107; margin-right: 5px; }
+        .avatar-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+
+        .info-text p { font-size: 14px; color: var(--text-gray); }
+        .info-text strong { color: var(--text-dark); }
 
         .section-header {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--primary-color);
-            padding-left: 10px;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .description-text {
-            line-height: 1.8;
-            color: #444;
-            font-size: 15px;
-        }
+        .section-header i { color: var(--primary-color); }
 
-        /* --- Right Column (Sticky Sidebar) --- */
-        .sidebar-sticky {
-            position: sticky;
-            top: 90px; /* ให้ลอยต่ำกว่า Navbar นิดหน่อย */
-            height: fit-content;
-        }
-
-        .price-card {
+        /* --- Sidebar (Right) --- */
+        .sidebar-card {
             background: white;
+            border-radius: 12px;
             border: 1px solid var(--primary-color);
-            border-radius: 10px;
+            position: sticky;
+            top: 90px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .price-header {
-            background: var(--primary-color);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .price-body {
+            background: #f8faff;
             padding: 20px;
-        }
-
-        .price-amount {
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--primary-color);
             text-align: center;
-            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
         }
 
-        .package-details {
+        .price-tag {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .package-list {
+            padding: 20px;
             list-style: none;
-            margin-bottom: 20px;
         }
 
-        .package-details li {
-            margin-bottom: 10px;
+        .package-list li {
             font-size: 14px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
+            gap: 10px;
         }
 
-        .package-details li i {
-            color: var(--success-color);
-            margin-right: 10px;
-            width: 20px;
-        }
+        .package-list li i { color: #28a745; }
 
-        .btn-hire {
+        .btn-main {
             display: block;
-            width: 100%;
-            padding: 12px;
+            width: calc(100% - 40px);
+            margin: 0 auto 10px auto;
+            padding: 14px;
             background: var(--primary-color);
             color: white;
             text-align: center;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
             transition: 0.3s;
-            margin-bottom: 10px;
         }
 
-        .btn-hire:hover { background: #004bb5; }
+        .btn-main:hover { background: #004bb5; }
 
-        .btn-chat {
+        .btn-outline {
             display: block;
-            width: 100%;
-            padding: 10px;
-            background: white;
+            width: calc(100% - 40px);
+            margin: 0 auto 20px auto;
+            padding: 12px;
+            border: 1px solid var(--primary-color);
             color: var(--primary-color);
             text-align: center;
-            border: 1px solid var(--primary-color);
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
         }
-
-        .btn-chat:hover { background: #f0f7ff; }
-
-        /* --- Freelancer Mini Profile --- */
-        .freelancer-mini {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-
-        .mini-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-            background: #ddd;
-        }
-
-        .mini-info h4 { font-size: 16px; margin-bottom: 2px; }
-        .mini-info p { font-size: 12px; color: var(--gray-text); }
 
         /* --- Responsive --- */
         @media (max-width: 768px) {
-            .main-container {
-                grid-template-columns: 1fr; /* มือถือให้เรียงเดี่ยว */
-            }
-            .main-image {
-                height: 250px;
-            }
-            .sidebar-sticky {
-                position: static; /* ในมือถือไม่ต้องลอย */
-            }
+            .container { grid-template-columns: 1fr; }
+            nav { padding: 12px 5%; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class=<a href="index.html" class="logo"><span>Slow</span>Work</a>
+        <a href="#" class="logo"><span>Slow</span>Work</a>
         <div class="nav-links">
-            <a href="#">กลับหน้าแรก</a>
-            <a href="#">เข้าสู่ระบบ</a>
+            <a href="#">หาความรู้</a>
+            <a href="#">สมัครเป็นฟรีแลนซ์</a>
+            <a href="#" style="color: var(--primary-color); font-weight: 600;">เข้าสู่ระบบ</a>
         </div>
     </nav>
 
-    <div class="breadcrumb">
-        <a href="#">หน้าแรก</a> <span>/</span> 
-        <a href="#">ออกแบบกราฟิก</a> <span>/</span> 
-        <span>ออกแบบโลโก้</span>
-    </div>
-
-    <div class="main-container">
-
+    <div class="container">
+        
         <div class="left-col">
-            <div class="content-card">
-                <img src="https://via.placeholder.com/800x400?text=Portfolio+Showcase" alt="Main Work" class="main-image">
+            <div class="card">
+                <img src="https://via.placeholder.com/800x450" alt="Work Example" class="main-image">
                 
-                <h1 class="service-title">รับออกแบบโลโก้ สไตล์มินิมอล ทันสมัย แก้ไขได้ไม่จำกัดครั้ง</h1>
+                <h1 class="service-title">รับออกแบบโลโก้ธุรกิจ/SME สไตล์มินิมอล เรียบหรู ดูแพง</h1>
                 
-                <div class="service-meta">
-                    <span><i class="fas fa-star"></i> 5.0 (120 รีวิว)</span>
-                    <span><i class="fas fa-check-circle"></i> ส่งงานไวใน 2 วัน</span>
-                    <span><i class="fas fa-comment-dots"></i> ตอบกลับภายใน 1 ชม.</span>
+                <div class="freelancer-bar">
+                    <div class="avatar-circle"></div>
+                    <div class="info-text">
+                        <p>ออกแบบโดย <strong>DesignMaster_TH</strong></p>
+                        <p><i class="fas fa-star" style="color: var(--star-yellow);"></i> 5.0 | ขายแล้ว 154 งาน</p>
+                    </div>
                 </div>
 
-                <h3 class="section-header">รายละเอียดบริการ</h3>
-                <div class="description-text">
-                    <p>สวัสดีครับ ผมเชี่ยวชาญด้านการออกแบบโลโก้สไตล์ Minimal, Modern, และ Luxury ที่จะช่วยยกระดับแบรนด์ของคุณให้ดูน่าเชื่อถือและจดจำได้ง่าย</p>
-                    <br>
-                    <strong>สิ่งที่คุณจะได้รับ:</strong>
-                    <ul>
-                        <li>- ไฟล์ .AI, .PDF, .JPG, .PNG (พื้นหลังใส)</li>
-                        <li>- ออกแบบให้เลือก 3 แบบ</li>
-                        <li>- แก้ไขงานได้ไม่จำกัด จนกว่าจะพอใจ (ในโครงสร้างเดิม)</li>
-                        <li>- ให้คำปรึกษาเรื่องโทนสีและ Branding ฟรี</li>
-                    </ul>
-                    <br>
-                    <p>เหมาะสำหรับ: ธุรกิจ SME, ร้านค้าออนไลน์, คาเฟ่, หรือ Start-up ที่ต้องการภาพลักษณ์ที่ชัดเจน</p>
-                </div>
+                <h3 class="section-header"><i class="fas fa-info-circle"></i> รายละเอียดงาน</h3>
+                <p>ยินดีต้อนรับครับ! หากคุณกำลังมองหาโลโก้ที่ช่วยสร้างภาพลักษณ์ที่ดีให้กับแบรนด์ ผมพร้อมดูแลคุณด้วยประสบการณ์กว่า 5 ปี</p>
+                <br>
+                <p><strong>สิ่งที่คุณจะได้รับ:</strong></p>
+                <ul style="margin-left: 20px; font-size: 15px;">
+                    <li>ร่างแบบให้เลือก 3 สไตล์</li>
+                    <li>แก้ไขงานได้จนกว่าจะพอใจ</li>
+                    <li>ไฟล์ต้นฉบับ .AI .PNG .JPG .PDF</li>
+                    <li>คู่มือการใช้สี (Brand Color Guide)</li>
+                </ul>
             </div>
 
-            <div class="content-card">
-                <h3 class="section-header">ขั้นตอนการทำงาน</h3>
-                <div class="description-text">
-                    1. ลูกค้าบรีฟรายละเอียด (ชื่อแบรนด์, สไตล์ที่ชอบ, โทนสี)<br>
-                    2. เสนอแบบร่าง 3 แบบ ภายใน 24 ชม.<br>
-                    3. ลูกค้าเลือกแบบที่ชอบที่สุด เพื่อนำมาพัฒนาต่อ<br>
-                    4. ปรับแก้ไขงานตามคอมเมนต์<br>
-                    5. ส่งมอบไฟล์งานที่สมบูรณ์
-                </div>
+            <div class="card">
+                <h3 class="section-header"><i class="fas fa-list-ol"></i> ขั้นตอนการทำงาน</h3>
+                <p>1. พูดคุยบรีฟงานและสรุปความต้องการ</p>
+                <p>2. ชำระเงินผ่านระบบ SlowWork เพื่อเริ่มงาน</p>
+                <p>3. ส่งแบบร่างครั้งแรกภายใน 48 ชม.</p>
+                <p>4. ปรับแก้ตามคอมเมนต์ลูกค้า</p>
+                <p>5. ส่งมอบไฟล์งานสมบูรณ์</p>
             </div>
         </div>
 
         <div class="right-col">
-            <div class="sidebar-sticky">
-                <div class="price-card">
-                    <div class="price-header">แพ็กเกจแนะนำ</div>
-                    <div class="price-body">
-                        <div class="price-amount">฿1,500</div>
-                        
-                        <ul class="package-details">
-                            <li><i class="fas fa-check"></i> ออกแบบ 3 สไตล์</li>
-                            <li><i class="fas fa-check"></i> แก้ไขไม่จำกัดครั้ง</li>
-                            <li><i class="fas fa-check"></i> ไฟล์ความละเอียดสูง</li>
-                            <li><i class="fas fa-check"></i> ไฟล์ต้นฉบับ (Source File)</li>
-                            <li><i class="fas fa-clock"></i> ส่งงานใน 2 วัน</li>
-                        </ul>
-
-                        <button class="btn-hire">จ้างงาน</button>
-                        <button class="btn-chat"><i class="far fa-comment-alt"></i> ทักแชทสอบถาม</button>
-
-                        <div class="freelancer-mini">
-                            <img src="https://via.placeholder.com/50" alt="Avatar" class="mini-avatar">
-                            <div class="mini-info">
-                                <h4>DesignStudio_TH</h4>
-                                <p>นักออกแบบกราฟิกมืออาชีพ</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="sidebar-card">
+                <div class="price-header">
+                    <p style="font-size: 14px; color: var(--text-gray);">ราคาเริ่มต้น</p>
+                    <div class="price-tag">฿1,500</div>
                 </div>
+                
+                <ul class="package-list">
+                    <li><i class="fas fa-check-circle"></i> แก้ไขได้ไม่จำกัดครั้ง</li>
+                    <li><i class="fas fa-check-circle"></i> ไฟล์ต้นฉบับครบถ้วน</li>
+                    <li><i class="fas fa-check-circle"></i> นำไปใช้จดเครื่องหมายการค้าได้</li>
+                    <li><i class="fas fa-clock"></i> ระยะเวลาทำงาน 3 วัน</li>
+                </ul>
+
+                <a href="#" class="btn-main">จ้างงาน</a>
+                <a href="#" class="btn-outline"><i class="far fa-comment-dots"></i> สอบถามฟรีแลนซ์</a>
+                
+                <p style="text-align: center; font-size: 12px; color: var(--text-gray); margin-bottom: 20px;">
+                    รับประกันการคืนเงินหากไม่ได้รับงาน
+                </p>
             </div>
         </div>
 
