@@ -85,7 +85,7 @@ padding:20px;
 /* ===== TABLE ===== */
 
 .table-wrap{
-width:70%;
+width:100%;
 background:white;
 border-radius:14px;
 box-shadow:0 4px 10px rgba(0,0,0,0.05);
@@ -149,44 +149,33 @@ border-bottom:1px solid #eee;
 color:#666;
 }
 
-.jobboard-table tr:hover{
-background:#fafafa;
-}
-
-/* ===== SIDE BOX ===== */
+/* ===== EMPTY STATE (FASTWORK STYLE) ===== */
 
 .freelance-box{
-width:30%;
-border:2px solid #ff9f1c;
-border-radius:14px;
-padding:30px;
-background:white;
+width:100%;
+padding:40px 0;
 text-align:center;
-font-size:18px;
-font-weight:bold;
-color:#2bb673;
 }
+
 .post-btn{
-  margin-top:20px;
-  width:100%;
-  background:white;
-  color:#2bb673;
-  border:2px solid #2bb673;
-  padding:14px;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:all 0.25s ease;
+background:white;
+color:#2bb673;
+border:2px solid #2bb673;
+padding:14px 36px;
+border-radius:12px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:all 0.25s ease;
 }
 
 .post-btn:hover{
-  background:#2bb673;
-  color:white;
+background:#2bb673;
+color:white;
 }
 
 .post-btn:active{
-  transform:scale(0.96);
+transform:scale(0.96);
 }
 
 </style>
@@ -266,22 +255,20 @@ color:#2bb673;
 
       <tbody>
         <!-- ตอนนี้ยังไม่มีงาน -->
-     <tr>
-        <td colspan="6">
+        <tr>
+          <td colspan="6">
             <div class="freelance-box">
-                <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
+              <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
             </div>
-        </td>
-    </tr>
+          </td>
+        </tr>
       </tbody>
 
     </table>
 
   </div>
 
-  <!-- SIDE BOX -->
-
-
+</div>
 
 </body>
 </html>
