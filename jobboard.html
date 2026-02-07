@@ -236,9 +236,10 @@ body{
           <th>ส่งมอบงานภายใน</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- ยังไม่มีงาน -->
-      </tbody>
+     <tbody id="jobs-table-body">
+  <!-- งานจะมาโผล่ตรงนี้ -->
+</tbody>
+
     </table>
 
   </div>
@@ -255,6 +256,43 @@ body{
   );
 
   console.log("Supabase ready");
+async function loadJobs() {
+  const { data, error } = await supabase
+    .from("jobs")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error loading jobs:", error);
+    return;
+  }
+
+  const tbody = document.getElementById("jobs-table-body");
+  tbody.innerHTML = "";
+
+  if (data.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" style="text-align:center;">ยังไม่มีงาน</td>
+      </tr>
+    `;
+    return;
+  }
+
+  data.forEach(job => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${job.title}</td>
+      <td>${job.description}</td>
+      <td>${job.price ?? "-"}</td>
+      <td>${job.status ?? "เปิดรับงาน"}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+loadJobs();
+
 </script>
 
 
