@@ -8,6 +8,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+
+
+        /* --- แผนกำปั้นทุบดิน: เปลี่ยนพื้นหลังเป็นสีส้ม --- */
+body {
+    background-color: #FF8A00 !important; /* เปลี่ยนพื้นหลังทั้งหน้าเป็นสีส้ม */
+}
+
+/* ปรับสีกล่องเนื้อหาให้ตัดกับพื้นหลังส้ม */
+.card, .sidebar-card {
+    background: white !important; /* ให้กล่องเป็นสีขาวเพื่อให้ตัวหนังสืออ่านง่าย */
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; /* เพิ่มเงาให้กล่องดูลอยเด่นขึ้นมา */
+}
+
+/* ปรับสีตัวหนังสือในหน้าเว็บให้คมชัด */
+.service-title, .section-header {
+    color: #333 !important;
+}
+
+/* ถ้าสีโลโก้ Work มันกลืนกับพื้นหลังส้ม ให้ใช้ขอบขาวช่วย */
+.logo {
+    text-shadow: 1px 1px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white;
+}
         :root {
             --primary-color: #005DE8; /* สีน้ำเงิน Fastwork Style */
             --secondary-color: #f4f7fa;
