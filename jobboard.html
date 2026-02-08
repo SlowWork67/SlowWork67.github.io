@@ -199,6 +199,8 @@ body{
     <input id="jobDeadline" type="date" style="width:100%; padding:10px; margin:6px 0;">
 
     <button id="submitJob" style="margin-top:10px;">โพสต์งาน</button>
+  <button type="button" id="cancelPost">ยกเลิก</button>
+
   </div>
 </div>
 
@@ -309,6 +311,11 @@ const postModal = document.getElementById("postModal");
 postBtn.addEventListener("click", () => {
   postModal.style.display =
     postModal.style.display === "none" ? "block" : "none";
+});
+const cancelPostBtn = document.getElementById("cancelPost");
+
+cancelPostBtn.addEventListener("click", () => {
+  postModal.style.display = "none";
 });
 
 </script>
