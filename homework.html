@@ -426,37 +426,36 @@ body {
 </div>
 
 
-    function confirmHire() { 
-    // 1. ดึงข้อความบรีฟที่ลูกค้าพิมพ์
-    const brief = document.querySelector('#hireModal textarea').value;
-    
-    // 2. ใส่ Username ของ Facebook หรือชื่อเพจของคุณ (ตรงหลัง m.me/)
-    // วิธีหา: เข้าไปที่หน้าโปรไฟล์/เพจ ลิงก์จะเป็น facebook.com/ชื่อของคุณ ให้เอาชื่อนั้นมาใส่
-    const fbUsername = "Student job marketplace"; 
-    
-    // 3. สร้างข้อความที่จะส่ง (สำหรับ FB Messenger อาจจะไม่ได้ส่งบรีฟไปในช่องพิมพ์โดยตรงเหมือน LINE 
-    // แต่มันจะเปิดหน้าแชทให้ลูกค้าเริ่มคุยได้ทันที)
-    const fbUrl = "https://m.me/"Student job marketplace;
-    
-    // 4. แจ้งเตือนและเปิด Messenger
-    alert('กำลังพาท่านไปที่ Facebook Messenger เพื่อคุยรายละเอียดงานครับ');
-    window.location.href = fbUrl;
-    
-    closeModal(); 
-}
-</script>
-
 <script>
-function openModal() { document.getElementById('hireModal').style.display = 'flex'; }
-function closeModal() { document.getElementById('hireModal').style.display = 'none'; }
-function confirmHire() { alert('ส่งข้อมูลเรียบร้อย!'); closeModal(); }
+    // ฟังก์ชันเปิดหน้าต่างเด้ง
+    function openModal() { 
+        document.getElementById('hireModal').style.display = 'flex'; 
+    }
+
+    // ฟังก์ชันปิดหน้าต่างเด้ง
+    function closeModal() { 
+        document.getElementById('hireModal').style.display = 'none'; 
+    }
+
+    // ฟังก์ชันเวลายืนยันจ้างงาน
+    function confirmHire() { 
+        // 1. ดึงข้อความบรีฟที่ลูกค้าพิมพ์
+        const brief = document.querySelector('#hireModal textarea').value;
+        
+        // 2. ID เพจของคุณที่ดึงมาจากลิงก์ (61586735639400)
+        const fbPageID = "61586735639400"; 
+        
+        // 3. สร้างลิงก์ Messenger ตรงเข้าเพจ
+        const fbUrl = "https://m.me/" + fbPageID;
+        
+        // 4. แจ้งเตือนและเด้งไปที่ Messenger
+        alert('กำลังพาท่านไปที่ Messenger ของเพจเพื่อคุยรายละเอียดงานครับ');
+        window.location.href = fbUrl;
+        
+        closeModal(); 
+    }
+
 </script>
-
-</body>
-</html>
-
-</body>
-</html>
 
 </body>
 </html>
