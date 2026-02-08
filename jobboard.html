@@ -219,18 +219,32 @@ async function loadJobs(){
     return;
   }
 
-  data.forEach(job=>{
-    tbody.innerHTML += `
-      <tr>
-        <td>${job.title}</td>
-        <td>${job.category || "-"}</td>
-        <td>${job.hire_type || "-"}</td>
-        <td>${job.price ?? "-"}</td>
-        <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
-        <td>${job.deadline ? new Date(job.deadline).toLocaleDateString("th-TH") : "-"}</td>
-      </tr>
-    `;
-  });
+ data.forEach(job => {
+  tbody.innerHTML += `
+    <tr>
+      <td>${job.title}</td>
+
+      <td>${job.category || "-"}</td>
+
+      <td>${job.hire_type || "-"}</td>
+
+      <td>${job.price ?? 0}</td>
+
+      <td>
+        ${new Date(job.created_at).toLocaleDateString("th-TH")}
+      </td>
+
+      <td>
+        ${
+          job.deadline
+            ? new Date(job.deadline).toLocaleDateString("th-TH")
+            : "-"
+        }
+      </td>
+    </tr>
+  `;
+});
+
 }
 
 loadJobs();
