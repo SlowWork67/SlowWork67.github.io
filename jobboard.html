@@ -1,229 +1,237 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jobboard - SlowWork</title>
-
-<style>
-*{ box-sizing:border-box; }
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f6f6f6;
-}
-
-/* ===== TOP BAR ===== */
-.top-header{
-  width:100%;
-  height:80px;
-  background:linear-gradient(90deg,#ff9f1c,#2bb673);
-  display:flex;
-  align-items:center;
-  padding:0 80px;
-}
-.logo{
-  font-size:26px;
-  font-weight:bold;
-  color:white;
-}
-.logo span{ color:#4CAF50; }
-
-/* ===== HERO ===== */
-.hero{
-  background:white;
-  padding:50px 80px;
-}
-.hero-title{
-  font-size:46px;
-  font-weight:bold;
-}
-.hero-title .job{ color:#ff8a00; }
-.hero-title .board{ color:#2bb673; }
-.hero-text{
-  margin-top:10px;
-  font-size:16px;
-  max-width:600px;
-}
-
-/* ===== MAIN ===== */
-.jobboard-container{
-  max-width:1100px;
-  margin:40px auto;
-  padding:20px;
-}
-.table-wrap{
-  background:white;
-  border-radius:14px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.05);
-  padding:24px;
-}
-.table-title{
-  font-size:26px;
-  font-weight:bold;
-  color:#ff8a00;
-}
-
-/* ===== FILTERS ===== */
-.filters{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:20px;
-}
-.filters select{
-  padding:10px 14px;
-  border:2px solid #ddd;
-  border-radius:10px;
-  font-size:14px;
-  background:white;
-}
-.post-btn{
-  margin-left:auto;
-  padding:10px 26px;
-  border-radius:10px;
-  border:2px solid #2bb673;
-  background:white;
-  color:#2bb673;
-  font-size:15px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-/* ===== TABLE ===== */
-.jobboard-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-}
-.jobboard-table th, .jobboard-table td{
-  padding:14px;
-  border-bottom:1px solid #eee;
-}
-.jobboard-table thead{ background:#f9fafb; }
-
-/* ===== MODAL ===== */
-#postModal{
-  display:none;
-  margin-bottom:20px;
-}
-#postModal input{
-  width:100%;
-  padding:10px;
-  margin:6px 0;
-}
-</style>
-</head>
-
-<body>
-
-<div class="top-header">
-  <div class="logo">Slow<span>Work</span></div>
-</div>
-
-<div class="hero">
-  <div class="hero-title">
-    <span class="job">Job</span><span class="board">board</span>
-  </div>
-  <div class="hero-text">
-    พื้นที่รวมงานสำหรับทุกความสามารถ มาลองหางานที่ใช่สำหรับคุณ
-  </div>
-</div>
-
-<div class="jobboard-container">
-  <div class="table-wrap">
-
-<!-- POST JOB -->
-<div id="postModal">
-  <h3>ประกาศหาฟรีแลนซ์</h3>
-  <input id="jobTitle" placeholder="ชื่องาน">
-  <input id="jobDesc" placeholder="รายละเอียดงาน">
-  <input id="jobPrice" type="number" placeholder="งบประมาณ">
-    <input id="jobDate"type="date"
-  <button id="submitJob">โพสต์งาน</button>
-  <button id="cancelPost">ยกเลิก</button>
-</div>
-
-<div class="table-title">Jobboard</div>
-
-<div class="filters">
-  <select><option>ค้นหาหมวดหมู่งาน</option></select>
-  <select><option>ลักษณะการจ้าง</option></select>
-  <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
-</div>
-
-<table class="jobboard-table">
-  <thead>
-    <tr>
-      <th>ชื่องาน</th>
-      <th>รายละเอียด</th>
-      <th>งบประมาณ</th>
-      <th>สถานะ</th>
-      <th>ลงประกาศเมื่อ</th>
-    </tr>
-  </thead>
-  <tbody id="jobs-table-body"></tbody>
-</table>
-
-</div>
-</div>
-
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-const supabase = createClient(
-  "https://zjnwuujlpitsysetqqmv.supabase.co",
-  "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r"
-);
-
-async function loadJobs(){
-  const { data } = await supabase
-    .from("jobs")
-    .select("*")
-    .order("created_at",{ascending:false});
-
-  const tbody = document.getElementById("jobs-table-body");
-  tbody.innerHTML = "";
-
-  if(!data || data.length===0){
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center">ยังไม่มีงาน</td></tr>`;
-    return;
-  }
-
-  data.forEach(job=>{
-    tbody.innerHTML += `
-      <tr>
-        <td>${job.title}</td>
-        <td>${job.description ?? "-"}</td>
-        <td>${job.price ?? "-"}</td>
-        <td>${job.status ?? "เปิดรับ"}</td>
-        <td>${new Date(job.created_at).toLocaleDateString()}</td>
-      </tr>
-    `;
-  });
-}
-
-loadJobs();
-
-/* ===== EVENTS ===== */
-const postBtn = document.querySelector(".post-btn");
-const postModal = document.getElementById("postModal");
-postBtn.onclick = ()=> postModal.style.display="block";
-cancelPost.onclick = ()=> postModal.style.display="none";
-
-submitJob.onclick = async ()=>{
-  await supabase.from("jobs").insert({
-    title: jobTitle.value,
-    description: jobDesc.value,
-    price: jobPrice.value,
-    status: "เปิดรับ"
-  });
-
-  postModal.style.display="none";
-  jobTitle.value = jobDesc.value = jobPrice.value = "";
-  loadJobs(); // 🔥 real-time แบบทันที
-};
-</script>
-
-</body>
+<!DOCTYPE html>  
+<html lang="th">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Jobboard - SlowWork</title>  
+  
+<style>  
+*{ box-sizing:border-box; }  
+body{  
+  margin:0;  
+  font-family:Arial,sans-serif;  
+  background:#f6f6f6;  
+}  
+  
+/* ===== TOP BAR ===== */  
+.top-header{  
+  width:100%;  
+  height:80px;  
+  background:linear-gradient(90deg,#ff9f1c,#2bb673);  
+  display:flex;  
+  align-items:center;  
+  padding:0 80px;  
+}  
+.logo{  
+  font-size:26px;  
+  font-weight:bold;  
+  color:white;  
+}  
+.logo span{ color:#4CAF50; }  
+  
+/* ===== HERO ===== */  
+.hero{  
+  background:white;  
+  padding:50px 80px;  
+}  
+.hero-title{  
+  font-size:46px;  
+  font-weight:bold;  
+}  
+.hero-title .job{ color:#ff8a00; }  
+.hero-title .board{ color:#2bb673; }  
+.hero-text{  
+  margin-top:10px;  
+  font-size:16px;  
+  max-width:600px;  
+}  
+  
+/* ===== MAIN ===== */  
+.jobboard-container{  
+  max-width:1100px;  
+  margin:40px auto;  
+  padding:20px;  
+}  
+.table-wrap{  
+  background:white;  
+  border-radius:14px;  
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);  
+  padding:24px;  
+}  
+.table-title{  
+  font-size:26px;  
+  font-weight:bold;  
+  color:#ff8a00;  
+}  
+  
+/* ===== FILTERS ===== */  
+.filters{  
+  display:flex;  
+  align-items:center;  
+  gap:12px;  
+  margin-bottom:20px;  
+}  
+.filters select{  
+  padding:10px 14px;  
+  border:2px solid #ddd;  
+  border-radius:10px;  
+  font-size:14px;  
+  background:white;  
+}  
+.post-btn{  
+  margin-left:auto;  
+  padding:10px 26px;  
+  border-radius:10px;  
+  border:2px solid #2bb673;  
+  background:white;  
+  color:#2bb673;  
+  font-size:15px;  
+  font-weight:bold;  
+  cursor:pointer;  
+}  
+  
+/* ===== TABLE ===== */  
+.jobboard-table{  
+  width:100%;  
+  border-collapse:collapse;  
+  font-size:14px;  
+}  
+.jobboard-table th, .jobboard-table td{  
+  padding:14px;  
+  border-bottom:1px solid #eee;  
+}  
+.jobboard-table thead{ background:#f9fafb; }  
+  
+/* ===== MODAL ===== */  
+#postModal{  
+  display:none;  
+  margin-bottom:20px;  
+}  
+#postModal input{  
+  width:100%;  
+  padding:10px;  
+  margin:6px 0;  
+}  
+</style>  
+</head>  
+  
+<body>  
+  
+<div class="top-header">  
+  <div class="logo">Slow<span>Work</span></div>  
+</div>  
+  
+<div class="hero">  
+  <div class="hero-title">  
+    <span class="job">Job</span><span class="board">board</span>  
+  </div>  
+  <div class="hero-text">  
+    พื้นที่รวมงานสำหรับทุกความสามารถ มาลองหางานที่ใช่สำหรับคุณ  
+  </div>  
+</div>  
+  
+<div class="jobboard-container">  
+  <div class="table-wrap">  
+  
+<!-- POST JOB -->  
+<div id="postModal">  
+  <h3>ประกาศหาฟรีแลนซ์</h3>  
+  <input id="jobTitle" placeholder="ชื่องาน">  
+  <input id="jobDesc" placeholder="รายละเอียดงาน">  
+  <input id="jobPrice" type="number" placeholder="งบประมาณ">  
+  <input id="jobDate" type="date">  
+  <button id="submitJob">โพสต์งาน</button>  
+  <button id="cancelPost">ยกเลิก</button>  
+</div>  
+  
+<div class="table-title">Jobboard</div>  
+  
+<div class="filters">  
+  <select><option>ค้นหาหมวดหมู่งาน</option></select>  
+  <select><option>ลักษณะการจ้าง</option></select>  
+  <button class="post-btn">ประกาศหาฟรีแลนซ์</button>  
+</div>  
+  
+<table class="jobboard-table">  
+  <thead>  
+    <tr>  
+      <th>ชื่องาน</th>  
+      <th>รายละเอียด</th>  
+      <th>งบประมาณ(บาท)</th>  
+      <th>สถานะ</th>  
+      <th>ลงประกาศเมื่อ</th>  
+    </tr>  
+  </thead>  
+  <tbody id="jobs-table-body"></tbody>  
+</table>  
+  
+</div>  
+</div>  
+  
+<script type="module">  
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";  
+  
+const supabase = createClient(  
+  "https://zjnwuujlpitsysetqqmv.supabase.co",  
+  "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r"  
+);  
+  
+async function loadJobs(){  
+  const { data } = await supabase  
+    .from("jobs")  
+    .select("*")  
+    .order("created_at",{ascending:false});  
+  
+  const tbody = document.getElementById("jobs-table-body");  
+  tbody.innerHTML = "";  
+  
+  if(!data || data.length===0){  
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center">ยังไม่มีงาน</td></tr>`;  
+    return;  
+  }  
+  
+  data.forEach(job=>{  
+    tbody.innerHTML += `  
+      <tr>  
+        <td>${job.title}</td>  
+        <td>${job.description ?? "-"}</td>  
+        <td>${job.price ?? "-"}</td>  
+        <td>${job.status ?? "เปิดรับ"}</td>  
+        <td>${new Date(job.created_at).toLocaleDateString()}</td>  
+      </tr>  
+    `;  
+  });  
+}  
+  
+loadJobs();  
+  
+/* ===== EVENTS ===== */  
+const postBtn = document.querySelector(".post-btn");  
+const postModal = document.getElementById("postModal");  
+const submitJob = document.getElementById("submitJob");  
+const cancelPost = document.getElementById("cancelPost");  
+  
+postBtn.onclick = ()=> postModal.style.display="block";  
+cancelPost.onclick = ()=> postModal.style.display="none";  
+  
+submitJob.onclick = async ()=>{  
+  await supabase.from("jobs").insert({  
+    title: jobTitle.value,  
+    description: jobDesc.value,  
+    price: jobPrice.value,  
+    status: "เปิดรับ",  
+    created_at: jobDate.value  
+  });  
+  
+  postModal.style.display="none";  
+  jobTitle.value = "";  
+  jobDesc.value = "";  
+  jobPrice.value = "";  
+  jobDate.value = "";  
+  
+  loadJobs();  
+};  
+</script>  
+  
+</body>  
 </html>
