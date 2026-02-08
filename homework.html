@@ -425,6 +425,34 @@ body {
     </div>
 </div>
 
+
+    <script>
+function openModal() { 
+    document.getElementById('hireModal').style.display = 'flex'; 
+}
+
+function closeModal() { 
+    document.getElementById('hireModal').style.display = 'none'; 
+}
+
+function confirmHire() { 
+    // 1. ดึงข้อความบรีฟที่ลูกค้าพิมพ์
+    const brief = document.querySelector('#hireModal textarea').value;
+    
+    // 2. ใส่ LINE ID หรือลิงก์ LINE OA ของคุณตรงนี้ (เช่น https://line.me/ti/p/ชื่อไอดีคุณ)
+    const lineUrl = "https://line.me/ti/p/1179527090"; 
+    
+    // 3. สร้างข้อความที่จะส่ง (Encode สำหรับ URL)
+    const message = encodeURIComponent("สนใจจ้างงานออกแบบโลโก้ครับ\nบรีฟงาน: " + brief);
+    
+    // 4. แจ้งเตือนและเปิดหน้า LINE
+    alert('กำลังพาท่านไปที่ LINE เพื่อส่งรายละเอียดงานครับ');
+    window.location.href = lineUrl + "?text=" + message;
+    
+    closeModal(); 
+}
+</script>
+
 <script>
 function openModal() { document.getElementById('hireModal').style.display = 'flex'; }
 function closeModal() { document.getElementById('hireModal').style.display = 'none'; }
