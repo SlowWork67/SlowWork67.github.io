@@ -372,7 +372,7 @@ body {
                 </ul>
 
                 <a href="#" class="btn-main" onclick="openModal()">จ้างงาน</a>
-                <a href="#" class="btn-outline"><i class="far fa-comment-dots"></i> สอบถามฟรีแลนซ์</a>
+                <a href="#" class="btn-outline" onclick="window.location.href='https://m.me/Student job marketplace'">สอบถาม</button>
                 
                 <p style="text-align: center; font-size: 12px; color: var(--text-gray); margin-bottom: 20px;">
                     รับประกันการคืนเงินหากไม่ได้รับงาน
@@ -426,28 +426,21 @@ body {
 </div>
 
 
-    <script>
-function openModal() { 
-    document.getElementById('hireModal').style.display = 'flex'; 
-}
-
-function closeModal() { 
-    document.getElementById('hireModal').style.display = 'none'; 
-}
-
-function confirmHire() { 
+    function confirmHire() { 
     // 1. ดึงข้อความบรีฟที่ลูกค้าพิมพ์
     const brief = document.querySelector('#hireModal textarea').value;
     
-    // 2. ใส่ LINE ID หรือลิงก์ LINE OA ของคุณตรงนี้ (เช่น https://line.me/ti/p/ชื่อไอดีคุณ)
-    const lineUrl = "https://line.me/ti/p/1179627090"; 
+    // 2. ใส่ Username ของ Facebook หรือชื่อเพจของคุณ (ตรงหลัง m.me/)
+    // วิธีหา: เข้าไปที่หน้าโปรไฟล์/เพจ ลิงก์จะเป็น facebook.com/ชื่อของคุณ ให้เอาชื่อนั้นมาใส่
+    const fbUsername = "Student job marketplace"; 
     
-    // 3. สร้างข้อความที่จะส่ง (Encode สำหรับ URL)
-    const message = encodeURIComponent("สนใจจ้างงานออกแบบโลโก้ครับ\nบรีฟงาน: " + brief);
+    // 3. สร้างข้อความที่จะส่ง (สำหรับ FB Messenger อาจจะไม่ได้ส่งบรีฟไปในช่องพิมพ์โดยตรงเหมือน LINE 
+    // แต่มันจะเปิดหน้าแชทให้ลูกค้าเริ่มคุยได้ทันที)
+    const fbUrl = "https://m.me/" + fbUsername;
     
-    // 4. แจ้งเตือนและเปิดหน้า LINE
-    alert('กำลังพาท่านไปที่ LINE เพื่อส่งรายละเอียดงานครับ');
-    window.location.href = lineUrl + "?text=" + message;
+    // 4. แจ้งเตือนและเปิด Messenger
+    alert('กำลังพาท่านไปที่ Facebook Messenger เพื่อคุยรายละเอียดงานครับ');
+    window.location.href = fbUrl;
     
     closeModal(); 
 }
