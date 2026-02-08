@@ -10,6 +10,25 @@
     <style>
 
 
+        /* วางต่อท้ายในส่วน <style> */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none; /* ซ่อนไว้ก่อน รอปุ่มกด */
+    align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+}
+
+
         /* --- ส่วนหมวดหมู่การจ้างงาน --- */
 .category-container {
     display: grid;
@@ -393,7 +412,29 @@ body {
                 <div class="category-desc">เริ่มต้น 500.-</div>
             </div>
         </div>
-        </div> </body>
+        </div>
+    <div id="hireModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>📄 สรุปการจ้างงาน</h3>
+        <p>บริการ: ออกแบบโลโก้ (1,500.-)</p>
+        <textarea placeholder="พิมพ์บรีฟงานตรงนี้..." style="width:100%; height:80px; margin:10px 0; padding:10px; border-radius:8px; border:1px solid #ddd;"></textarea>
+        <div style="display:flex; gap:10px;">
+            <button onclick="closeModal()" class="btn-outline" style="flex:1">ยกเลิก</button>
+            <button onclick="confirmHire()" class="btn-main" style="flex:1">ยืนยัน</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function openModal() { document.getElementById('hireModal').style.display = 'flex'; }
+function closeModal() { document.getElementById('hireModal').style.display = 'none'; }
+function confirmHire() { alert('ส่งข้อมูลเรียบร้อย!'); closeModal(); }
+</script>
+
+</body>
+</html>
+
+</body>
 </html>
 
 </body>
