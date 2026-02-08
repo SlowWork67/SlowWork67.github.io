@@ -12,6 +12,8 @@ body{
   font-family:Arial,sans-serif;
   background:#f6f6f6;
 }
+
+/* ===== TOP BAR ===== */
 .top-header{
   width:100%;
   height:80px;
@@ -26,6 +28,8 @@ body{
   color:white;
 }
 .logo span{ color:#4CAF50; }
+
+/* ===== HERO ===== */
 .hero{
   background:white;
   padding:50px 80px;
@@ -41,6 +45,8 @@ body{
   font-size:16px;
   max-width:600px;
 }
+
+/* ===== MAIN ===== */
 .jobboard-container{
   max-width:1100px;
   margin:40px auto;
@@ -57,22 +63,41 @@ body{
   font-weight:bold;
   color:#ff8a00;
 }
+
+/* ===== FILTERS ===== */
 .filters{
   display:flex;
   align-items:center;
   gap:12px;
   margin-bottom:20px;
 }
+
 .filters select.category{
   padding:10px 14px;
   border:2px solid #2bb673;
   border-radius:10px;
+  background:white;
 }
+.filters select.category:hover{ background:#e6f6ef; }
+.filters select.category:focus{
+  background:#2bb673;
+  color:white;
+  outline:none;
+}
+
 .filters select.type{
   padding:10px 14px;
   border:2px solid #ff9f1c;
   border-radius:10px;
+  background:white;
 }
+.filters select.type:hover{ background:#fff1e0; }
+.filters select.type:focus{
+  background:#ff9f1c;
+  color:white;
+  outline:none;
+}
+
 .post-btn{
   margin-left:auto;
   padding:10px 26px;
@@ -83,15 +108,26 @@ body{
   font-weight:bold;
   cursor:pointer;
 }
+.post-btn:hover{ background:#e6f6ef; }
+.post-btn:active{
+  background:#2bb673;
+  color:white;
+}
+
+/* ===== TABLE ===== */
 .jobboard-table{
   width:100%;
   border-collapse:collapse;
   font-size:14px;
 }
-.jobboard-table th, .jobboard-table td{
+.jobboard-table th,
+.jobboard-table td{
   padding:14px;
   border-bottom:1px solid #eee;
 }
+.jobboard-table thead{ background:#f9fafb; }
+
+/* ===== MODAL ===== */
 #postModal{
   display:none;
   margin-bottom:20px;
@@ -122,11 +158,15 @@ body{
 <div class="jobboard-container">
 <div class="table-wrap">
 
+<!-- POST JOB -->
 <div id="postModal">
   <h3>ประกาศหาฟรีแลนซ์</h3>
   <input id="jobTitle" placeholder="ชื่องาน">
   <input id="jobDesc" placeholder="รายละเอียดงาน">
+  <input id="jobCategory" placeholder="หมวดหมู่งาน">
+  <input id="jobHireType" placeholder="ลักษณะการจ้าง">
   <input id="jobPrice" type="number" placeholder="งบประมาณ">
+  <input id="jobDeadline" type="date">
   <input id="jobDate" type="date">
   <button id="submitJob">โพสต์งาน</button>
   <button id="cancelPost">ยกเลิก</button>
@@ -146,8 +186,7 @@ body{
   <th>ชื่องาน</th>
   <th>หมวดหมู่</th>
   <th>ลักษณะการจ้าง</th>
-  <th>งบประมาณ (บาท)</th>
-  <th>สถานะ</th>
+  <th>งบประมาณ(บาท)</th>
   <th>ลงประกาศเมื่อ</th>
   <th>ส่งมอบงานภายใน</th>
 </tr>
@@ -176,22 +215,19 @@ async function loadJobs(){
   tbody.innerHTML = "";
 
   if(!data || data.length===0){
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center">ยังไม่มีงาน</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center">ยังไม่มีงาน</td></tr>`;
     return;
   }
 
-  data.forEach(job => {
+  data.forEach(job=>{
     tbody.innerHTML += `
       <tr>
         <td>${job.title}</td>
-        <td>${job.category}</td>
-        <td>${job.hire_type}</td>
-        <td>${job.price}</td>
-        <td>${job.status}</td>
+        <td>${job.category || "-"}</td>
+        <td>${job.hire_type || "-"}</td>
+        <td>${job.price ?? "-"}</td>
         <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
-        <td>${job.deadline
-          ? new Date(job.deadline).toLocaleDateString("th-TH")
-          : "-"}</td>
+        <td>${job.deadline ? new Date(job.deadline).toLocaleDateString("th-TH") : "-"}</td>
       </tr>
     `;
   });
@@ -199,6 +235,7 @@ async function loadJobs(){
 
 loadJobs();
 
+/* ===== EVENTS ===== */
 const postBtn = document.querySelector(".post-btn");
 const postModal = document.getElementById("postModal");
 const submitJob = document.getElementById("submitJob");
@@ -211,7 +248,10 @@ submitJob.onclick = async ()=>{
   await supabase.from("jobs").insert({
     title: jobTitle.value,
     description: jobDesc.value,
-    price: jobPrice.value,
+    category: jobCategory.value,
+    hire_type: jobHireType.value,
+    price: jobPrice.value || null,
+    deadline: jobDeadline.value || null,
     status: "เปิดรับ",
     created_at: jobDate.value
       ? new Date(jobDate.value).toISOString()
@@ -219,6 +259,14 @@ submitJob.onclick = async ()=>{
   });
 
   postModal.style.display="none";
+  jobTitle.value = "";
+  jobDesc.value = "";
+  jobCategory.value = "";
+  jobHireType.value = "";
+  jobPrice.value = "";
+  jobDeadline.value = "";
+  jobDate.value = "";
+
   loadJobs();
 };
 </script>
