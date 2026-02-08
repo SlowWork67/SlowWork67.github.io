@@ -71,33 +71,16 @@ body{
   gap:12px;
   margin-bottom:20px;
 }
-
+.filters select{
+  padding:10px 14px;
+  border-radius:10px;
+}
 .filters select.category{
-  padding:10px 14px;
   border:2px solid #2bb673;
-  border-radius:10px;
-  background:white;
 }
-.filters select.category:hover{ background:#e6f6ef; }
-.filters select.category:focus{
-  background:#2bb673;
-  color:white;
-  outline:none;
-}
-
 .filters select.type{
-  padding:10px 14px;
   border:2px solid #ff9f1c;
-  border-radius:10px;
-  background:white;
 }
-.filters select.type:hover{ background:#fff1e0; }
-.filters select.type:focus{
-  background:#ff9f1c;
-  color:white;
-  outline:none;
-}
-
 .post-btn{
   margin-left:auto;
   padding:10px 26px;
@@ -107,11 +90,6 @@ body{
   color:#2bb673;
   font-weight:bold;
   cursor:pointer;
-}
-.post-btn:hover{ background:#e6f6ef; }
-.post-btn:active{
-  background:#2bb673;
-  color:white;
 }
 
 /* ===== TABLE ===== */
@@ -125,7 +103,9 @@ body{
   padding:14px;
   border-bottom:1px solid #eee;
 }
-.jobboard-table thead{ background:#f9fafb; }
+.jobboard-table thead{
+  background:#f9fafb;
+}
 
 /* ===== MODAL ===== */
 #postModal{
@@ -167,7 +147,6 @@ body{
   <input id="jobHireType" placeholder="ลักษณะการจ้าง">
   <input id="jobPrice" type="number" placeholder="งบประมาณ">
   <input id="jobDeadline" type="date">
-  <input id="jobDate" type="date">
   <button id="submitJob">โพสต์งาน</button>
   <button id="cancelPost">ยกเลิก</button>
 </div>
@@ -175,8 +154,12 @@ body{
 <div class="table-title">Jobboard</div>
 
 <div class="filters">
-  <select class="category"><option>ค้นหาหมวดหมู่งาน</option></select>
-  <select class="type"><option>ลักษณะการจ้าง</option></select>
+  <select class="category">
+    <option>ค้นหาหมวดหมู่งาน</option>
+  </select>
+  <select class="type">
+    <option>ลักษณะการจ้าง</option>
+  </select>
   <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
 </div>
 
@@ -205,37 +188,39 @@ const supabase = createClient(
   "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r"
 );
 
-/* ===== FIX: bind input elements (แก้เฉพาะจุดที่บอก) ===== */
+/* ===== INPUTS ===== */
 const jobTitle = document.getElementById("jobTitle");
 const jobDesc = document.getElementById("jobDesc");
 const jobCategory = document.getElementById("jobCategory");
 const jobHireType = document.getElementById("jobHireType");
 const jobPrice = document.getElementById("jobPrice");
 const jobDeadline = document.getElementById("jobDeadline");
-const jobDate = document.getElementById("jobDate");
-/* ===== END FIX ===== */
 
+/* ===== LOAD JOBS ===== */
 async function loadJobs(){
   const { data } = await supabase
     .from("jobs")
     .select("*")
-    .order("created_at",{ascending:false});
+    .order("created_at",{ ascending:false });
 
   const tbody = document.getElementById("jobs-table-body");
   tbody.innerHTML = "";
 
-  if(!data || data.length===0){
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center">ยังไม่มีงาน</td></tr>`;
+  if(!data || data.length === 0){
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center">ยังไม่มีงาน</td>
+      </tr>`;
     return;
   }
 
-  data.forEach(job => {
+  data.forEach(job=>{
     tbody.innerHTML += `
       <tr>
         <td>${job.title}</td>
         <td>${job.category || "-"}</td>
         <td>${job.hire_type || "-"}</td>
-        <td>${job.price ?? 0}</td>
+        <td>${job.price ?? "-"}</td>
         <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
         <td>${job.deadline ? new Date(job.deadline).toLocaleDateString("th-TH") : "-"}</td>
       </tr>
@@ -273,7 +258,6 @@ submitJob.onclick = async ()=>{
   jobHireType.value = "";
   jobPrice.value = "";
   jobDeadline.value = "";
-  jobDate.value = "";
 
   loadJobs();
 };
