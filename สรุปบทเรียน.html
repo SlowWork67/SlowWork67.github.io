@@ -2,105 +2,75 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>สรุปเนื้อหาการเรียน BY SLOWWORK</title>
+    <title>FastJob | เว็บรับจ้างงานออนไลน์</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #FFF8DC;
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
         }
+
         header {
-            background: #228B22;
+            background: #1e88e5;
             color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 14px;
+        }
+
+        .search-box {
+            background: white;
             padding: 20px;
             text-align: center;
         }
-        section {
-            background: white;
-            margin: 20px auto;
+
+        .search-box input {
+            width: 70%;
+            max-width: 500px;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
             padding: 20px;
-            max-width: 900px;
+        }
+
+        .title {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .freelance-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
             border-radius: 10px;
+            padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        h2 {
-            color: #1e88e5;
-            border-left: 5px solid #1e88e5;
-            padding-left: 10px;
-        }
-        ul {
-            line-height: 1.8;
-        }
-        .formula {
-            background: #eef3f8;
-            padding: 10px;
-            border-radius: 6px;
-            font-family: "Courier New", monospace;
-            margin: 10px 0;
-        }
-        footer {
-            text-align: center;
-            padding: 15px;
-            color: #777;
-        }
-    </style>
-</head>
-<body>
 
-<header>
-    <h1>สรุปเนื้อหาการเรียน</h1>
-    <p>วิชาคณิตศาสตร์</p>
-</header>
-
-<section>
-    <h2>บทที่ 1: จำนวนจริง</h2>
-    <ul>
-        <li>จำนวนเต็ม (Integer)</li>
-        <li>จำนวนตรรกยะ (Rational Number)</li>
-        <li>จำนวนอตรรกยะ (Irrational Number)</li>
-        <li>สมบัติของจำนวนจริง</li>
-    </ul>
-</section>
-
-<section>
-    <h2>บทที่ 2: สมการเชิงเส้น</h2>
-    <p>สมการเชิงเส้นตัวแปรเดียวอยู่ในรูป</p>
-    <div class="formula">
-        ax + b = 0
-    </div>
-    <p>วิธีทำ:</p>
-    <ul>
-        <li>ย้ายข้างค่าคงที่</li>
-        <li>หารด้วยสัมประสิทธิ์ของตัวแปร</li>
-    </ul>
-</section>
-
-<section>
-    <h2>บทที่ 3: ความน่าจะเป็น</h2>
-    <p>สูตรพื้นฐาน</p>
-    <div class="formula">
-        P(A) = จำนวนกรณีที่สนใจ / จำนวนกรณีทั้งหมด
-    </div>
-    <ul>
-        <li>ค่า P อยู่ระหว่าง 0 ถึง 1</li>
-        <li>P = 0 หมายถึง เป็นไปไม่ได้</li>
-        <li>P = 1 หมายถึง เกิดขึ้นแน่นอน</li>
-    </ul>
-</section>
-
-<section>
-    <h2>สรุปท้ายบท</h2>
-    <ul>
-        <li>เข้าใจแนวคิดพื้นฐานก่อนจำสูตร</li>
-        <li>ฝึกทำโจทย์สม่ำเสมอ</li>
-        <li>ทบทวนบทเรียนทุกครั้งหลังเรียน</li>
-    </ul>
-</section>
-
-<footer>
-    <p>จัดทำเพื่อการเรียนรู้ 📘</p>
-</footer>
-
-</body>
-</html>
+        .card img {
+            width: 60
