@@ -13,44 +13,21 @@
             --primary-orange: #FF8A00;
             --text-dark: #333;
             --text-gray: #666;
-            --bg-light: #f4f7fa;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
-
         body { background-color: var(--primary-orange) !important; color: var(--text-dark); line-height: 1.6; }
 
-        /* --- Navbar (แบบ Fastwork) --- */
-        nav { 
-            background: white; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-            padding: 10px 8%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-        }
+        /* --- Navbar --- */
+        nav { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 10px 8%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 24px; font-weight: 700; text-decoration: none; color: var(--primary-orange); }
         .logo span { color: var(--primary-green); }
-
         .nav-links { display: flex; align-items: center; gap: 20px; }
-        .nav-item { text-decoration: none; color: var(--text-dark); font-size: 14px; cursor: pointer; transition: 0.2s; }
-        .nav-item:hover { color: var(--primary-green); }
-        .nav-divider { width: 1px; height: 20px; background: #ddd; }
-        .nav-login { 
-            text-decoration: none; 
-            color: var(--primary-green); 
-            font-weight: 600; 
-            border: 1.5px solid var(--primary-green); 
-            padding: 5px 15px; 
-            border-radius: 6px; 
-            transition: 0.3s; 
-        }
+        .nav-item { text-decoration: none; color: var(--text-dark); font-size: 14px; cursor: pointer; }
+        .nav-login { text-decoration: none; color: var(--primary-green); font-weight: 600; border: 1.5px solid var(--primary-green); padding: 5px 15px; border-radius: 6px; transition: 0.3s; cursor: pointer; }
         .nav-login:hover { background: var(--primary-green); color: white; }
 
-        /* --- Layout & Cards --- */
+        /* --- Layout --- */
         .container { max-width: 1100px; margin: 20px auto; display: grid; grid-template-columns: 1.8fr 1fr; gap: 25px; padding: 0 20px; }
         .card, .sidebar-card { background: white !important; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px; }
         .main-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 20px; }
@@ -59,24 +36,15 @@
         .btn-main { background: var(--primary-green) !important; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; display: block; margin-bottom: 10px; text-align: center; text-decoration: none; }
         .btn-outline { border: 1px solid var(--primary-green) !important; color: var(--primary-green) !important; background: white; padding: 12px; border-radius: 8px; font-weight: 500; width: 100%; cursor: pointer; display: block; text-align: center; text-decoration: none; }
 
-        /* --- Modals (หน้าต่างเด้งทั้งหมด) --- */
-        .modal-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.7); display: none; align-items: center; 
-            justify-content: center; z-index: 10001; 
-        }
-        .modal-content { 
-            background: white; padding: 30px; border-radius: 20px; 
-            width: 90%; max-width: 400px; text-align: center; 
-        }
-        .modal-content input { 
-            width: 100%; padding: 12px; margin: 10px 0; 
-            border: 1px solid #ddd; border-radius: 8px; 
-        }
-
-        /* --- Footer Styles --- */
+        /* --- Categories --- */
         .category-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px auto; max-width: 1100px; padding: 0 20px; }
-        .category-card { background: white; border-radius: 15px; padding: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .category-card { background: white; border-radius: 15px; padding: 25px; text-align: center; transition: 0.3s; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid transparent; }
+        .category-card:hover { transform: translateY(-5px); border-color: var(--primary-green); }
+
+        /* --- Modals --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 10001; }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
+        .modal-content input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
 
         @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
     </style>
@@ -88,7 +56,7 @@
         <div class="nav-links">
             <a onclick="openModal('knowledgeModal')" class="nav-item">หาความรู้</a>
             <a onclick="openModal('freelanceModal')" class="nav-item">สมัครเป็นฟรีแลนซ์</a>
-            <div class="nav-divider"></div>
+            <div style="width:1px; height:20px; background:#ddd;"></div>
             <a onclick="openModal('loginModal')" class="nav-login">เข้าสู่ระบบ</a>
         </div>
     </nav>
@@ -98,90 +66,61 @@
             <div class="card">
                 <img src="https://i.ibb.co/6810/your-image.jpg" alt="Work" class="main-image">
                 <h1 style="margin-bottom:15px;">รับทำงานหรือการบ้านของโรงเรียนฯลฯ</h1>
-                <p>ยินดีต้อนรับครับ! หากคุณกำลังมองหาคนที่ช่วยทำการบ้านของคุณ ผมพร้อมดูแลคุณด้วยใจ</p>
-                <ul style="margin: 15px 0 0 20px;">
-                    <li>แก้ไขงานได้จนกว่าจะพอใจ</li>
-                    <li>ส่งไฟล์งานต้นฉบับครบถ้วน</li>
+                <div style="display:flex; align-items:center; gap:12px; border-bottom:1px solid #eee; padding-bottom:15px; margin-bottom:15px;">
+                    <div style="width:45px; height:45px; border-radius:50%; background:#ddd;"></div>
+                    <div><p>โดย <strong>Student</strong></p><p><i class="fas fa-star" style="color:#ffc107;"></i> 5.0 | ขายแล้ว 154 งาน</p></div>
+                </div>
+                <h3><i class="fas fa-info-circle"></i> รายละเอียดงาน</h3>
+                <p>ช่วยแบ่งเบาภาระการบ้าน ให้คุณมีเวลาไปทำอย่างอื่นที่สำคัญกว่า!</p>
+                <ul style="margin:10px 0 0 20px;">
+                    <li>ร่างแบบหลายสไตล์ตามกำหนด</li>
+                    <li>แก้ไขงานจนกว่าจะพอใจ</li>
                 </ul>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-list-ol"></i> ขั้นตอนการทำงาน</h3>
+                <p style="margin-top:10px;">1. คุยบรีฟและสรุปงาน</p>
+                <p>2. ชำระเงินผ่านระบบ SlowWork</p>
+                <p>3. ส่งมอบงานและแก้ไขตามสั่ง</p>
             </div>
         </div>
 
         <div class="right-col">
             <div class="sidebar-card">
-                <div style="text-align:center; padding-bottom: 15px; border-bottom:1px solid #eee;">
-                    <p style="color:var(--text-gray); font-size:14px;">ราคาเริ่มต้น</p>
+                <div style="text-align:center; padding-bottom:15px; border-bottom:1px solid #eee;">
+                    <p style="color:#666; font-size:14px;">ราคาเริ่มต้น</p>
                     <div style="color:var(--primary-green); font-size:32px; font-weight:700;">฿200</div>
                 </div>
-                <div style="padding-top: 20px;">
-                    <button class="btn-main" onclick="openModal('hireModal')">จ้างงาน</button>
-                    <button class="btn-outline" onclick="window.location.href='https://m.me/61586735639400'">สอบถาม</button>
-                </div>
+                <ul style="list-style:none; padding:15px 0;">
+                    <li><i class="fas fa-check-circle" style="color:var(--primary-green);"></i> แก้ไขไม่จำกัด</li>
+                    <li><i class="fas fa-clock" style="color:var(--primary-green);"></i> งานเสร็จใน 3 วัน</li>
+                </ul>
+                <button class="btn-main" onclick="openModal('hireModal')">จ้างงาน</button>
+                <button class="btn-outline" onclick="window.location.href='https://m.me/61586735639400'">สอบถาม</button>
             </div>
         </div>
     </div>
 
-    <div id="loginModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2>ยินดีต้อนรับกลับมา</h2>
-            <p style="font-size:14px; color:#666; margin-bottom:10px;">กรุณาเข้าสู่ระบบเพื่อใช้งานต่อ</p>
-            <input type="email" placeholder="อีเมลของคุณ">
-            <input type="password" placeholder="รหัสผ่าน">
-            <button class="btn-main">เข้าสู่ระบบ</button>
-            <p style="font-size:12px; margin-top:10px;">ลืมรหัสผ่าน? | <span style="color:var(--primary-green); cursor:pointer;">สมัครสมาชิก</span></p>
-            <button onclick="closeAllModals()" class="btn-outline" style="margin-top:15px; border:none;">ยกเลิก</button>
-        </div>
+    <div class="category-container">
+        <div class="category-card"><span style="font-size:40px;">🎨</span><h4>ออกแบบ</h4><p>เริ่ม 400.-</p></div>
+        <div class="category-card"><span style="font-size:40px;">💻</span><h4>จดเขียน</h4><p>เริ่ม 300.-</p></div>
+        <div class="category-card"><span style="font-size:40px;">✍️</span><h4>บทความ</h4><p>เริ่ม 500.-</p></div>
+        <div class="category-card"><span style="font-size:40px;">📸</span><h4>ตัดต่อ</h4><p>เริ่ม 500.-</p></div>
     </div>
 
-    <div id="freelanceModal" class="modal-overlay">
-        <div class="modal-content">
-            <i class="fas fa-rocket" style="font-size:40px; color:var(--primary-orange);"></i>
-            <h2 style="margin-top:15px;">เริ่มขายงานกับเรา</h2>
-            <p style="font-size:14px; color:#666;">สร้างรายได้จากทักษะที่คุณถนัด</p>
-            <div style="text-align:left; margin:20px 0; font-size:14px;">
-                <p>✅ ลงประกาศงานฟรี</p>
-                <p>✅ ระบบชำระเงินที่ปลอดภัย</p>
-                <p>✅ ทีมงานช่วยเหลือ 24 ชม.</p>
-            </div>
-            <button class="btn-main">สมัครเป็นฟรีแลนซ์</button>
-            <button onclick="closeAllModals()" class="btn-outline" style="margin-top:10px; border:none;">ไว้ทีหลัง</button>
-        </div>
-    </div>
+    <div id="loginModal" class="modal-overlay"><div class="modal-content"><h2>เข้าสู่ระบบ</h2><input type="email" placeholder="อีเมล"><input type="password" placeholder="รหัสผ่าน"><button class="btn-main">เข้าสู่ระบบ</button><button onclick="closeAllModals()" class="btn-outline" style="border:none;">ปิด</button></div></div>
+    
+    <div id="freelanceModal" class="modal-overlay"><div class="modal-content"><i class="fas fa-rocket" style="font-size:40px; color:var(--primary-orange);"></i><h2>สมัครฟรีแลนซ์</h2><p>ลงประกาศงานของคุณได้ที่นี่</p><button class="btn-main" style="margin-top:20px;">เริ่มเลย</button><button onclick="closeAllModals()" class="btn-outline" style="border:none;">ปิด</button></div></div>
 
-    <div id="hireModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3>📄 สรุปการจ้างงาน</h3>
-            <p style="margin-top:10px;">บริการ: รับทำการบ้าน (200.-)</p>
-            <textarea id="briefText" placeholder="พิมพ์รายละเอียดงาน..." style="width:100%; height:80px; margin:15px 0; padding:10px; border-radius:8px; border:1px solid #ddd;"></textarea>
-            <div style="display:flex; gap:10px;">
-                <button onclick="closeAllModals()" class="btn-outline" style="flex:1">ยกเลิก</button>
-                <button onclick="confirmHire()" class="btn-main" style="flex:1; margin-bottom:0;">ยืนยัน</button>
-            </div>
-        </div>
-    </div>
+    <div id="hireModal" class="modal-overlay"><div class="modal-content"><h3>📄 สรุปการจ้างงาน</h3><p>ราคา: 200.-</p><textarea id="briefText" placeholder="บรีฟงานตรงนี้..." style="width:100%; height:80px; margin:15px 0; padding:10px; border-radius:8px; border:1px solid #ddd;"></textarea><div style="display:flex; gap:10px;"><button onclick="closeAllModals()" class="btn-outline" style="flex:1">ยกเลิก</button><button onclick="confirmHire()" class="btn-main" style="flex:1; margin-bottom:0;">ยืนยัน</button></div></div></div>
 
     <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-
-        function closeAllModals() {
-            const modals = document.querySelectorAll('.modal-overlay');
-            modals.forEach(m => m.style.display = 'none');
-        }
-
-        function confirmHire() {
-            const fbID = "61586735639400";
-            alert('กำลังพาคุณไปที่ Messenger ครับ');
-            window.location.href = "https://m.me/" + fbID;
-            closeAllModals();
-        }
-
-        // ปิดเมื่อคลิกนอกหน้าต่าง
-        window.onclick = function(event) {
-            if (event.target.className === 'modal-overlay') {
-                closeAllModals();
-            }
-        }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+        function confirmHire() { alert('กำลังไปที่ Messenger ครับ'); window.location.href = "https://m.me/61586735639400"; closeAllModals(); }
+        window.onclick = function(e) { if(e.target.className === 'modal-overlay') closeAllModals(); }
     </script>
+
 </body>
 </html>
