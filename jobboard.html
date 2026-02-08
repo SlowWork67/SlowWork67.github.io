@@ -12,8 +12,6 @@ body{
   font-family:Arial,sans-serif;
   background:#f6f6f6;
 }
-
-/* ===== TOP BAR ===== */
 .top-header{
   width:100%;
   height:80px;
@@ -28,8 +26,6 @@ body{
   color:white;
 }
 .logo span{ color:#4CAF50; }
-
-/* ===== HERO ===== */
 .hero{
   background:white;
   padding:50px 80px;
@@ -45,8 +41,6 @@ body{
   font-size:16px;
   max-width:600px;
 }
-
-/* ===== MAIN ===== */
 .jobboard-container{
   max-width:1100px;
   margin:40px auto;
@@ -63,45 +57,22 @@ body{
   font-weight:bold;
   color:#ff8a00;
 }
-
-/* ===== FILTERS ===== */
 .filters{
   display:flex;
   align-items:center;
   gap:12px;
   margin-bottom:20px;
 }
-
-/* หมวดหมู่งาน (เขียว) */
 .filters select.category{
   padding:10px 14px;
   border:2px solid #2bb673;
   border-radius:10px;
-  font-size:14px;
-  background:white;
 }
-.filters select.category:hover{ background:#e6f6ef; }
-.filters select.category:focus{
-  background:#2bb673;
-  color:white;
-  outline:none;
-}
-
-/* ลักษณะการจ้าง (ส้ม) */
 .filters select.type{
   padding:10px 14px;
   border:2px solid #ff9f1c;
   border-radius:10px;
-  font-size:14px;
-  background:white;
 }
-.filters select.type:hover{ background:#fff1e0; }
-.filters select.type:focus{
-  background:#ff9f1c;
-  color:white;
-  outline:none;
-}
-
 .post-btn{
   margin-left:auto;
   padding:10px 26px;
@@ -109,12 +80,9 @@ body{
   border:2px solid #2bb673;
   background:white;
   color:#2bb673;
-  font-size:15px;
   font-weight:bold;
   cursor:pointer;
 }
-
-/* ===== TABLE ===== */
 .jobboard-table{
   width:100%;
   border-collapse:collapse;
@@ -124,14 +92,11 @@ body{
   padding:14px;
   border-bottom:1px solid #eee;
 }
-.jobboard-table thead{ background:#f9fafb; }
-
-/* ===== MODAL ===== */
 #postModal{
   display:none;
   margin-bottom:20px;
 }
-#postModal input, #postModal select{
+#postModal input{
   width:100%;
   padding:10px;
   margin:6px 0;
@@ -155,24 +120,14 @@ body{
 </div>
 
 <div class="jobboard-container">
-  <div class="table-wrap">
+<div class="table-wrap">
 
-<!-- POST JOB -->
 <div id="postModal">
   <h3>ประกาศหาฟรีแลนซ์</h3>
   <input id="jobTitle" placeholder="ชื่องาน">
   <input id="jobDesc" placeholder="รายละเอียดงาน">
-
-  <input id="jobCategory" placeholder="หมวดหมู่งาน">
-  <input id="jobHireType" placeholder="ลักษณะการจ้าง">
-
-  <input id="jobPrice" type="number" placeholder="งบประมาณ (บาท)">
-  <label>ส่งมอบงานภายใน</label>
-  <input id="jobDeadline" type="date">
-
-  <label>วันที่ลงประกาศ</label>
+  <input id="jobPrice" type="number" placeholder="งบประมาณ">
   <input id="jobDate" type="date">
-
   <button id="submitJob">โพสต์งาน</button>
   <button id="cancelPost">ยกเลิก</button>
 </div>
@@ -180,27 +135,24 @@ body{
 <div class="table-title">Jobboard</div>
 
 <div class="filters">
-  <select class="category">
-    <option>ค้นหาหมวดหมู่งาน</option>
-  </select>
-  <select class="type">
-    <option>ลักษณะการจ้าง</option>
-  </select>
+  <select class="category"><option>ค้นหาหมวดหมู่งาน</option></select>
+  <select class="type"><option>ลักษณะการจ้าง</option></select>
   <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
 </div>
 
 <table class="jobboard-table">
-  <thead>
-    <tr>
-      <th>ชื่องาน</th>
-      <th>หมวดหมู่</th>
-      <th>ลักษณะการจ้าง</th>
-      <th>งบประมาณ</th>
-      <th>ลงประกาศเมื่อ</th>
-      <th>ส่งมอบงานภายใน</th>
-    </tr>
-  </thead>
-  <tbody id="jobs-table-body"></tbody>
+<thead>
+<tr>
+  <th>ชื่องาน</th>
+  <th>หมวดหมู่</th>
+  <th>ลักษณะการจ้าง</th>
+  <th>งบประมาณ (บาท)</th>
+  <th>สถานะ</th>
+  <th>ลงประกาศเมื่อ</th>
+  <th>ส่งมอบงานภายใน</th>
+</tr>
+</thead>
+<tbody id="jobs-table-body"></tbody>
 </table>
 
 </div>
@@ -224,31 +176,29 @@ async function loadJobs(){
   tbody.innerHTML = "";
 
   if(!data || data.length===0){
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center">ยังไม่มีงาน</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center">ยังไม่มีงาน</td></tr>`;
     return;
   }
 
- data.forEach(job => {
-  tbody.innerHTML += `
-    <tr>
-      <td>${job.title}</td>
-      <td>${job.category}</td>
-      <td>${job.hire_type}</td>
-      <td>${job.price ?? "-"}</td>
-      <td>${job.status}</td>
-      <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
-      <td>${job.deadline
-        ? new Date(job.deadline).toLocaleDateString("th-TH")
-        : "-"}</td>
-    </tr>
-  `;
-});
-
+  data.forEach(job => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${job.title}</td>
+        <td>${job.category}</td>
+        <td>${job.hire_type}</td>
+        <td>${job.price}</td>
+        <td>${job.status}</td>
+        <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
+        <td>${job.deadline
+          ? new Date(job.deadline).toLocaleDateString("th-TH")
+          : "-"}</td>
+      </tr>
+    `;
+  });
 }
 
 loadJobs();
 
-/* ===== EVENTS ===== */
 const postBtn = document.querySelector(".post-btn");
 const postModal = document.getElementById("postModal");
 const submitJob = document.getElementById("submitJob");
@@ -261,27 +211,14 @@ submitJob.onclick = async ()=>{
   await supabase.from("jobs").insert({
     title: jobTitle.value,
     description: jobDesc.value,
-    category: jobCategory.value,
-    hire_type: jobHireType.value,
-    price: jobPrice.value || null,
-    status: "open",
+    price: jobPrice.value,
+    status: "เปิดรับ",
     created_at: jobDate.value
       ? new Date(jobDate.value).toISOString()
-      : new Date().toISOString(),
-    deadline: jobDeadline.value
-      ? new Date(jobDeadline.value).toISOString()
-      : null
+      : new Date().toISOString()
   });
 
   postModal.style.display="none";
-  jobTitle.value = "";
-  jobDesc.value = "";
-  jobCategory.value = "";
-  jobHireType.value = "";
-  jobPrice.value = "";
-  jobDate.value = "";
-  jobDeadline.value = "";
-
   loadJobs();
 };
 </script>
