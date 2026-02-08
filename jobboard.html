@@ -215,13 +215,14 @@ postBtn.onclick = ()=> postModal.style.display="block";
 cancelPost.onclick = ()=> postModal.style.display="none";  
   
 submitJob.onclick = async ()=>{  
-  await supabase.from("jobs").insert({  
-    title: jobTitle.value,  
-    description: jobDesc.value,  
-    price: jobPrice.value,  
-    status: "เปิดรับ",  
-    created_at: jobDate.value  
-  });  
+ await supabase.from("jobs").insert({
+  title: jobTitle.value,
+  description: jobDesc.value,
+  price: jobPrice.value || null,
+  status: "เปิดรับ",
+  created_at: jobDate.value ? new Date(jobDate.value).toISOString() : undefined
+});
+
   
   postModal.style.display="none";  
   jobTitle.value = "";  
