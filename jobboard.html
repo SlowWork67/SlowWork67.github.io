@@ -187,6 +187,20 @@ body{
 
 <div class="jobboard-container">
   <div class="table-wrap">
+<!-- POST JOB MODAL -->
+<div id="postModal" style="display:none; margin-bottom:20px;">
+  <div style="background:#f9f9f9; padding:20px; border-radius:12px;">
+    <h3>ประกาศหาฟรีแลนซ์</h3>
+
+    <input id="jobTitle" placeholder="ชื่องาน" style="width:100%; padding:10px; margin:6px 0;">
+    <input id="jobCategory" placeholder="หมวดหมู่งาน" style="width:100%; padding:10px; margin:6px 0;">
+    <input id="jobPrice" placeholder="งบประมาณ" type="number" style="width:100%; padding:10px; margin:6px 0;">
+    <input id="jobType" placeholder="ลักษณะการจ้าง" style="width:100%; padding:10px; margin:6px 0;">
+    <input id="jobDeadline" type="date" style="width:100%; padding:10px; margin:6px 0;">
+
+    <button id="submitJob" style="margin-top:10px;">โพสต์งาน</button>
+  </div>
+</div>
 
     <div class="table-title">Jobboard</div>
 
@@ -289,6 +303,14 @@ data.forEach(job => {
 }
 
 loadJobs();
+const postBtn = document.querySelector(".post-btn");
+const postModal = document.getElementById("postModal");
+
+postBtn.addEventListener("click", () => {
+  postModal.style.display =
+    postModal.style.display === "none" ? "block" : "none";
+});
+
 </script>
 <!-- ===== POST JOB MODAL ===== -->
 <div id="postModal"
