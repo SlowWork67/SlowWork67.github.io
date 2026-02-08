@@ -317,6 +317,31 @@ const cancelPostBtn = document.getElementById("cancelPost");
 cancelPostBtn.addEventListener("click", () => {
   postModal.style.display = "none";
 });
+const submitJobBtn = document.getElementById("submitJob");
+
+submitJobBtn.addEventListener("click", () => {
+  const title = document.getElementById("jobTitle").value;
+  const category = document.getElementById("jobCategory").value;
+  const price = document.getElementById("jobPrice").value;
+  const type = document.getElementById("jobType").value;
+  const deadline = document.getElementById("jobDeadline").value;
+
+  const tbody = document.querySelector("tbody");
+  const tr = document.createElement("tr");
+
+  tr.innerHTML = `
+    <td>${title}</td>
+    <td>${category}</td>
+    <td>${price || "-"}</td>
+    <td>${type}</td>
+    <td>${new Date().toLocaleDateString()}</td>
+    <td>${deadline || "-"}</td>
+  `;
+
+  tbody.appendChild(tr);
+
+  postModal.style.display = "none";
+});
 
 </script>
 <!-- ===== POST JOB MODAL ===== -->
