@@ -8,36 +8,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- CSS Layout & UI --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 9999; }
-        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 380px; text-align: center; }
-        .category-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px auto; max-width: 1100px; padding: 0 20px; }
-        .category-card { background: white !important; border-radius: 15px !important; padding: 25px; text-align: center; transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent !important; box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; }
-        .category-card:hover { border-color: #28a745 !important; transform: translateY(-5px); }
-        .category-icon { font-size: 40px; margin-bottom: 15px; display: block; }
-        .category-title { font-weight: bold; color: #333; font-size: 1.1rem; }
-        .category-desc { font-size: 0.9rem; color: #666; margin-top: 8px; }
-        
-        body { background-color: #FF8A00 !important; margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
-        .card, .sidebar-card { background: white !important; border-radius: 12px; padding: 24px; border: none !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; margin-bottom: 20px; }
-        .price-tag { color: #28a745 !important; font-size: 32px; font-weight: 700; }
-        
-        .btn-main { background: #28a745 !important; border: none !important; color: white; padding: 14px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; display: block; margin-bottom: 10px; text-align: center; text-decoration: none; }
-        .btn-outline { border: 1px solid #28a745 !important; color: #28a745 !important; background: transparent; padding: 12px; border-radius: 8px; font-weight: 500; width: 100%; cursor: pointer; display: block; text-align: center; text-decoration: none; }
-        
-        nav { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 12px 8%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 26px; font-weight: 700; text-decoration: none; color: #ff8a00; }
-        .logo span { color: #28a745; }
-        .nav-links a { text-decoration: none; color: #333; margin-left: 20px; font-size: 14px; }
-        
+        :root {
+            --primary-green: #28a745;
+            --primary-orange: #FF8A00;
+            --text-dark: #333;
+            --text-gray: #666;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
+
+        body { background-color: var(--primary-orange) !important; color: var(--text-dark); line-height: 1.6; }
+
+        /* --- Navbar --- */
+        nav { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 12px 8%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 26px; font-weight: 700; text-decoration: none; color: var(--primary-orange); text-shadow: 1px 1px 0px white; }
+        .logo span { color: var(--primary-green); }
+        .nav-links a { text-decoration: none; color: var(--text-dark); margin-left: 20px; font-size: 14px; }
+
+        /* --- Layout --- */
         .container { max-width: 1100px; margin: 20px auto; display: grid; grid-template-columns: 1.8fr 1fr; gap: 25px; padding: 0 20px; }
+
+        /* --- Cards --- */
+        .card, .sidebar-card { background: white !important; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px; border: none; }
         .main-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 20px; }
+        .service-title { font-size: 24px; font-weight: 600; margin-bottom: 15px; }
+
+        /* --- Freelancer Bar --- */
         .freelancer-bar { display: flex; align-items: center; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid #eee; margin-bottom: 20px; }
         .avatar-circle { width: 45px; height: 45px; border-radius: 50%; background: #ddd; }
-        .section-header { font-size: 18px; font-weight: 600; margin: 25px 0 15px 0; display: flex; align-items: center; gap: 10px; }
-        .package-list { list-style: none; padding: 0; margin-bottom: 20px; }
-        .package-list li { font-size: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-        .package-list li i { color: #28a745; }
+
+        /* --- Buttons --- */
+        .btn-main { background: var(--primary-green) !important; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; display: block; margin-bottom: 10px; text-align: center; text-decoration: none; transition: 0.3s; }
+        .btn-main:hover { background: #218838 !important; }
+        .btn-outline { border: 1px solid var(--primary-green) !important; color: var(--primary-green) !important; background: white; padding: 12px; border-radius: 8px; font-weight: 500; width: 100%; cursor: pointer; display: block; text-align: center; text-decoration: none; }
+
+        /* --- Sidebar Special --- */
+        .price-tag { color: var(--primary-green); font-size: 32px; font-weight: 700; }
+        .package-list { list-style: none; padding: 15px 0; }
+        .package-list li { font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .package-list li i { color: var(--primary-green); }
+
+        /* --- Categories --- */
+        .category-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px auto; max-width: 1100px; padding: 0 20px; }
+        .category-card { background: white; border-radius: 15px; padding: 25px; text-align: center; transition: 0.3s; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .category-card:hover { transform: translateY(-5px); border: 2px solid var(--primary-green); }
+
+        /* --- Modal System --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 10001; }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; position: relative; }
 
         @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
     </style>
@@ -49,14 +67,14 @@
         <div class="nav-links">
             <a href="#">หาความรู้</a>
             <a href="#">สมัครเป็นฟรีแลนซ์</a>
-            <a href="#" style="color: #28a745; font-weight: 600;">เข้าสู่ระบบ</a>
+            <a href="#" style="color: var(--primary-green); font-weight: 600;">เข้าสู่ระบบ</a>
         </div>
     </nav>
 
     <div class="container">
         <div class="left-col">
             <div class="card">
-                <img src="https://i.ibb.co/6810/your-image.jpg" alt="Work" class="main-image">
+                <img src="https://i.ibb.co/6810/your-image.jpg" alt="Work Example" class="main-image">
                 <h1 class="service-title">รับทำงานหรือการบ้านของโรงเรียนฯลฯ</h1>
                 <div class="freelancer-bar">
                     <div class="avatar-circle"></div>
@@ -65,56 +83,49 @@
                         <p><i class="fas fa-star" style="color: #ffc107;"></i> 5.0 | ขายแล้ว 154 งาน</p>
                     </div>
                 </div>
-                <h3 class="section-header"><i class="fas fa-info-circle"></i> รายละเอียดงาน</h3>
-                <p>ยินดีต้อนรับครับ! หากคุณกำลังมองหาคนที่ช่วยทำการบ้านของคุณ ผมพร้อมดูแลคุณ</p>
-                <ul style="margin-left: 20px; font-size: 15px; margin-top:10px;">
-                    <li>ร่างแบบหลายสไตล์ตามที่คุณกำหนด</li>
+                <h3>รายละเอียดงาน</h3>
+                <p>ยินดีต้อนรับครับ! หากคุณกำลังมองหาคนที่ช่วยทำการบ้านของคุณ ผมพร้อมดูแลคุณด้วยใจ</p>
+                <ul style="margin-top:10px; padding-left:20px;">
+                    <li>ร่างแบบหลายสไตล์ตามกำหนด</li>
                     <li>แก้ไขงานได้จนกว่าจะพอใจ</li>
-                    <li>ไฟล์งานต้นฉบับครบถ้วน</li>
+                    <li>ส่งไฟล์งานต้นฉบับครบถ้วน</li>
                 </ul>
-            </div>
-            
-            <div class="card">
-                <h3 class="section-header"><i class="fas fa-list-ol"></i> ขั้นตอนการทำงาน</h3>
-                <p>1. พูดคุยบรีฟงานและสรุปความต้องการ</p>
-                <p>2. ชำระเงินผ่านระบบ SlowWork เพื่อเริ่มงาน</p>
-                <p>3. ส่งมอบไฟล์งานสมบูรณ์</p>
             </div>
         </div>
 
         <div class="right-col">
             <div class="sidebar-card">
-                <div style="text-align:center; padding: 20px; background:#f8faff; border-bottom:1px solid #eee;">
-                    <p style="font-size: 14px; color: #666;">ราคาเริ่มต้น</p>
+                <div style="text-align:center; padding-bottom: 20px; border-bottom:1px solid #eee;">
+                    <p style="color:var(--text-gray); font-size:14px;">ราคาเริ่มต้น</p>
                     <div class="price-tag">฿200</div>
                 </div>
-                <div style="padding: 20px;">
-                    <ul class="package-list">
-                        <li><i class="fas fa-check-circle"></i> แก้ไขได้ไม่จำกัดครั้ง</li>
-                        <li><i class="fas fa-clock"></i> ระยะเวลาทำงาน 3 วัน</li>
-                    </ul>
-                    <button class="btn-main" onclick="openModal()">จ้างงาน</button>
-                    <button class="btn-outline" onclick="window.location.href='https://m.me/61586735639400'">สอบถาม</button>
-                    <p style="text-align: center; font-size: 12px; color: #666; margin-top: 15px;">
-                        รับประกันการคืนเงินหากไม่ได้รับงาน
-                    </p>
-                </div>
+                <ul class="package-list">
+                    <li><i class="fas fa-check-circle"></i> แก้ไขได้ไม่จำกัดครั้ง</li>
+                    <li><i class="fas fa-check-circle"></i> นำไปส่งได้อย่างแน่นอน</li>
+                    <li><i class="fas fa-clock"></i> ระยะเวลาทำงาน 3 วัน</li>
+                </ul>
+                <button type="button" class="btn-main" onclick="openModal()">จ้างงาน</button>
+                <button type="button" class="btn-outline" onclick="window.location.href='https://m.me/61586735639400'">สอบถาม</button>
+                
+                <p style="text-align: center; font-size: 11px; color: var(--text-gray); margin-top: 15px;">
+                    รับประกันการคืนเงินหากไม่ได้รับงาน
+                </p>
             </div>
         </div>
     </div>
 
     <div class="category-container">
-        <div class="category-card"><span class="category-icon">🎨</span><div class="category-title">ออกแบบงาน</div><div class="category-desc">เริ่มต้น 400.-</div></div>
-        <div class="category-card"><span class="category-icon">💻</span><div class="category-title">การบ้านจดเขียน</div><div class="category-desc">เริ่มต้น 300.-</div></div>
-        <div class="category-card"><span class="category-icon">✍️</span><div class="category-title">เขียนบทความ</div><div class="category-desc">เริ่มต้น 500.-</div></div>
-        <div class="category-card"><span class="category-icon">📸</span><div class="category-title">ตัดวิดีโอ</div><div class="category-desc">เริ่มต้น 500.-</div></div>
+        <div class="category-card">🎨 <h4>ออกแบบ</h4><p>เริ่ม 400.-</p></div>
+        <div class="category-card">💻 <h4>เขียนจด</h4><p>เริ่ม 300.-</p></div>
+        <div class="category-card">✍️ <h4>บทความ</h4><p>เริ่ม 500.-</p></div>
+        <div class="category-card">📸 <h4>วิดีโอ</h4><p>เริ่ม 500.-</p></div>
     </div>
 
     <div id="hireModal" class="modal-overlay">
         <div class="modal-content">
-            <h3>📄 สรุปการจ้างงาน</h3>
-            <p style="margin-top:10px;">บริการ: รับทำการบ้าน (200.-)</p>
-            <textarea id="userBrief" placeholder="พิมพ์บรีฟงานตรงนี้..." style="width:100%; height:80px; margin:15px 0; padding:10px; border-radius:8px; border:1px solid #ddd;"></textarea>
+            <h3 style="margin-bottom:15px;">📄 สรุปการจ้างงาน</h3>
+            <p>บริการ: รับทำการบ้าน (200.-)</p>
+            <textarea id="briefText" placeholder="พิมพ์รายละเอียดงานที่ต้องการให้ทำ..." style="width:100%; height:100px; margin:15px 0; padding:10px; border-radius:10px; border:1px solid #ddd;"></textarea>
             <div style="display:flex; gap:10px;">
                 <button onclick="closeModal()" class="btn-outline" style="flex:1">ยกเลิก</button>
                 <button onclick="confirmHire()" class="btn-main" style="flex:1; margin-bottom:0;">ยืนยัน</button>
@@ -123,16 +134,33 @@
     </div>
 
     <script>
+        // ฟังก์ชันเปิด Modal
         function openModal() {
             document.getElementById('hireModal').style.display = 'flex';
         }
 
+        // ฟังก์ชันปิด Modal
         function closeModal() {
             document.getElementById('hireModal').style.display = 'none';
         }
 
+        // ฟังก์ชันยืนยันจ้างงาน
         function confirmHire() {
-            // ดึงค่าบรีฟ
-            const brief = document.getElementById('userBrief').value;
-            // ไอดีเพจ
-            const fbPageID = "61586735639400";
+            const brief = document.getElementById('briefText').value;
+            const fbID = "61586735639400";
+            alert('ระบบบันทึกบรีฟแล้ว กำลังพาคุณไปที่ Messenger ของเพจครับ');
+            window.location.href = "https://m.me/" + fbID;
+            closeModal();
+        }
+
+        // ปิด Modal เมื่อคลิกพื้นหลังมืด
+        window.onclick = function(event) {
+            var modal = document.getElementById('hireModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>
