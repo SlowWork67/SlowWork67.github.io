@@ -72,7 +72,7 @@ body{
   margin-bottom:20px;
 }
 
-/* ค้นหาหมวดหมู่งาน (เขียว) */
+/* หมวดหมู่งาน (เขียว) */
 .filters select.category{
   padding:10px 14px;
   border:2px solid #2bb673;
@@ -80,9 +80,7 @@ body{
   font-size:14px;
   background:white;
 }
-.filters select.category:hover{
-  background:#e6f6ef;
-}
+.filters select.category:hover{ background:#e6f6ef; }
 .filters select.category:focus{
   background:#2bb673;
   color:white;
@@ -97,9 +95,7 @@ body{
   font-size:14px;
   background:white;
 }
-.filters select.type:hover{
-  background:#fff1e0;
-}
+.filters select.type:hover{ background:#fff1e0; }
 .filters select.type:focus{
   background:#ff9f1c;
   color:white;
@@ -135,7 +131,7 @@ body{
   display:none;
   margin-bottom:20px;
 }
-#postModal input{
+#postModal input, #postModal select{
   width:100%;
   padding:10px;
   margin:6px 0;
@@ -166,8 +162,17 @@ body{
   <h3>ประกาศหาฟรีแลนซ์</h3>
   <input id="jobTitle" placeholder="ชื่องาน">
   <input id="jobDesc" placeholder="รายละเอียดงาน">
-  <input id="jobPrice" type="number" placeholder="งบประมาณ">
+
+  <input id="jobCategory" placeholder="หมวดหมู่งาน">
+  <input id="jobHireType" placeholder="ลักษณะการจ้าง">
+
+  <input id="jobPrice" type="number" placeholder="งบประมาณ (บาท)">
+  <label>ส่งมอบงานภายใน</label>
+  <input id="jobDeadline" type="date">
+
+  <label>วันที่ลงประกาศ</label>
   <input id="jobDate" type="date">
+
   <button id="submitJob">โพสต์งาน</button>
   <button id="cancelPost">ยกเลิก</button>
 </div>
@@ -188,10 +193,11 @@ body{
   <thead>
     <tr>
       <th>ชื่องาน</th>
-      <th>รายละเอียด</th>
+      <th>หมวดหมู่</th>
+      <th>ลักษณะการจ้าง</th>
       <th>งบประมาณ</th>
-      <th>สถานะ</th>
       <th>ลงประกาศเมื่อ</th>
+      <th>ส่งมอบงานภายใน</th>
     </tr>
   </thead>
   <tbody id="jobs-table-body"></tbody>
@@ -218,22 +224,22 @@ async function loadJobs(){
   tbody.innerHTML = "";
 
   if(!data || data.length===0){
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center">ยังไม่มีงาน</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center">ยังไม่มีงาน</td></tr>`;
     return;
   }
 
-data.forEach(job => {
-  tbody.innerHTML += `
-    <tr>
-      <td>${job.title}</td>
-      <td>${job.description || "ไม่มี"}</td>
-      <td>${job.price ?? 0}</td>
-      <td>${job.status || "เปิดรับ"}</td>
-      <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
-    </tr>
-  `;
-});
-
+  data.forEach(job => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${job.title}</td>
+        <td>${job.category || "-"}</td>
+        <td>${job.hire_type || "-"}</td>
+        <td>${job.price ?? 0}</td>
+        <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
+        <td>${job.deadline ? new Date(job.deadline).toLocaleDateString("th-TH") : "-"}</td>
+      </tr>
+    `;
+  });
 }
 
 loadJobs();
@@ -251,18 +257,26 @@ submitJob.onclick = async ()=>{
   await supabase.from("jobs").insert({
     title: jobTitle.value,
     description: jobDesc.value,
+    category: jobCategory.value,
+    hire_type: jobHireType.value,
     price: jobPrice.value || null,
-    status: "เปิดรับ",
+    status: "open",
     created_at: jobDate.value
       ? new Date(jobDate.value).toISOString()
-      : new Date().toISOString()
+      : new Date().toISOString(),
+    deadline: jobDeadline.value
+      ? new Date(jobDeadline.value).toISOString()
+      : null
   });
 
   postModal.style.display="none";
   jobTitle.value = "";
   jobDesc.value = "";
+  jobCategory.value = "";
+  jobHireType.value = "";
   jobPrice.value = "";
   jobDate.value = "";
+  jobDeadline.value = "";
 
   loadJobs();
 };
