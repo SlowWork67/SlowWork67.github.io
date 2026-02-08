@@ -1,76 +1,45 @@
-<!DOCTYPE html>
-<html lang="th">
+<!DOCTYPE html><html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>FastJob | เว็บรับจ้างงานออนไลน์</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-        }
-
-        header {
-            background: #1e88e5;
-            color: white;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 22px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 15px;
-            font-size: 14px;
-        }
-
-        .search-box {
-            background: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .search-box input {
-            width: 70%;
-            max-width: 500px;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .title {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-
-        .freelance-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .card img {
-            width: 60
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartSummary – รับจ้างสรุปบทเรียน</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background:#f5f7fb; color:#333; }
+    header { background:#3b82f6; color:white; padding:30px; text-align:center; }
+    section { padding:40px; max-width:1100px; margin:auto; }
+    h2 { color:#1e40af; }
+    .categories, .pricing { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:20px; }
+    .card { background:white; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.08); }
+    .price { font-size:22px; font-weight:bold; color:#2563eb; }
+    footer { background:#1e293b; color:white; text-align:center; padding:20px; }
+    button { background:#3b82f6; border:none; color:white; padding:10px 18px; border-radius:8px; cursor:pointer; }
+  </style>
+</head>
+<body><header>
+  <h1>📘 SmartSummary</h1>
+  <p>รับจ้างสรุปบทเรียน เข้าใจง่าย ใช้สอบได้จริง</p>
+</header><section>
+  <h2>📚 หมวดหมู่วิชา</h2>
+  <div class="categories">
+    <div class="card">📐 คณิตศาสตร์<br/>พื้นฐาน – ขั้นสูง</div>
+    <div class="card">⚗️ วิทยาศาสตร์<br/>ฟิสิกส์ เคมี ชีวะ</div>
+    <div class="card">🌍 สังคมศึกษา<br/>ประวัติศาสตร์ หน้าที่พลเมือง</div>
+    <div class="card">📝 ภาษาไทย<br/>สรุปเนื้อหา + วิเคราะห์บทเรียน</div>
+    <div class="card">🌎 ภาษาอังกฤษ<br/>Grammar / Reading</div>
+    <div class="card">💻 เทคโนโลยี<br/>คอมพิวเตอร์ / Coding เบื้องต้น</div>
+  </div>
+</section><section>
+  <h2>💰 เรทราคา</h2>
+  <div class="pricing">
+    <div class="card">
+      <h3>สรุปสั้น</h3>
+      <p>1–2 หน้า A4</p>
+      <p class="price">100 – 300 บาท</p>
+    </div>
+    <div class="card">
+      <h3>สรุปมาตรฐาน</h3>
+      <p>3–6 หน้า + ตัวอย่าง</p>
+      <p class="price">400 – 800 บาท</p>
+    </div>
+    <div class="card">
+      <h3>สรุ
