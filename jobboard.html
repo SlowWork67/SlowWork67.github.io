@@ -262,10 +262,7 @@ submitJob.onclick = async ()=>{
     hire_type: jobHireType.value,
     price: jobPrice.value || null,
     deadline: jobDeadline.value || null,
-    status: "เปิดรับ",
-    created_at: jobDate.value
-      ? new Date(jobDate.value).toISOString()
-      : new Date().toISOString()
+    status: "เปิดรับ"
   });
 
   postModal.style.display="none";
