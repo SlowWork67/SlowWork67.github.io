@@ -416,7 +416,7 @@ body {
     <div id="hireModal" class="modal-overlay">
     <div class="modal-content">
         <h3>📄 สรุปการจ้างงาน</h3>
-        <p>บริการ: ออกแบบโลโก้ (1,500.-)</p>
+        <p>บริการ: รับทำการบ้าน (200.-)</p>
         <textarea placeholder="พิมพ์บรีฟงานตรงนี้..." style="width:100%; height:80px; margin:10px 0; padding:10px; border-radius:8px; border:1px solid #ddd;"></textarea>
         <div style="display:flex; gap:10px;">
             <button onclick="closeModal()" class="btn-outline" style="flex:1">ยกเลิก</button>
@@ -440,7 +440,7 @@ function confirmHire() {
     const brief = document.querySelector('#hireModal textarea').value;
     
     // 2. ใส่ LINE ID หรือลิงก์ LINE OA ของคุณตรงนี้ (เช่น https://line.me/ti/p/ชื่อไอดีคุณ)
-    const lineUrl = "https://line.me/ti/p/1179527090"; 
+    const lineUrl = "https://line.me/ti/p/1179627090"; 
     
     // 3. สร้างข้อความที่จะส่ง (Encode สำหรับ URL)
     const message = encodeURIComponent("สนใจจ้างงานออกแบบโลโก้ครับ\nบรีฟงาน: " + brief);
