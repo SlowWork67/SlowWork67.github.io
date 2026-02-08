@@ -8,302 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-
-
-        /* วางต่อท้ายในส่วน <style> */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: none; /* ซ่อนไว้ก่อน รอปุ่มกด */
-    align-items: center; justify-content: center;
-    z-index: 9999;
-}
-.modal-content {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 380px;
-    text-align: center;
-}
-
-
-        /* --- ส่วนหมวดหมู่การจ้างงาน --- */
-.category-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin: 40px 0;
-}
-
-.category-card {
-    background: white !important;
-    border-radius: 15px !important;
-    padding: 25px;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 2px solid transparent !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
-}
-
-.category-card:hover {
-    border-color: #28a745 !important; /* เปลี่ยนขอบเป็นสีเขียวเมื่อชี้ */
-    transform: translateY(-5px);
-}
-
-.category-icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.category-title {
-    font-weight: bold;
-    color: #333;
-    font-size: 1.1rem;
-}
-
-.category-desc {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 8px;
-}
-
-
-        /* --- แผนกำปั้นทุบดิน: เปลี่ยนพื้นหลังเป็นสีส้ม --- */
-body {
-    background-color: #FF8A00 !important; /* เปลี่ยนพื้นหลังทั้งหน้าเป็นสีส้ม */
-}
-
-/* ปรับสีกล่องเนื้อหาให้ตัดกับพื้นหลังส้ม */
-.card, .sidebar-card {
-    background: white !important; /* ให้กล่องเป็นสีขาวเพื่อให้ตัวหนังสืออ่านง่าย */
-    border: none !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; /* เพิ่มเงาให้กล่องดูลอยเด่นขึ้นมา */
-}
-
-/* ปรับสีตัวหนังสือในหน้าเว็บให้คมชัด */
-.service-title, .section-header {
-    color: #333 !important;
-}/* --- เปลี่ยนราคากับปุ่มจ้างงานเป็นสีเขียว --- */
-.price-tag {
-    color: #28a745 !important; /* เปลี่ยนตัวเลขราคาเป็นสีเขียว */
-}
-
-.btn-main {
-    background: #28a745 !important; /* เปลี่ยนพื้นหลังปุ่มจ้างงานเป็นสีเขียว */
-    border: none !important;
-}
-
-.btn-main:hover {
-    background: #218838 !important; /* สีเขียวเข้มขึ้นนิดนึงเวลาเอาเมาส์ไปชี้ */
-}
-
-.btn-outline {
-    border-color: #28a745 !important; /* เปลี่ยนขอบปุ่มสอบถามเป็นสีเขียว */
-    color: #28a745 !important; /* เปลี่ยนตัวหนังสือปุ่มสอบถามเป็นสีเขียว */
-}
-
-.sidebar-card {
-    border-color: #28a745 !important; /* เปลี่ยนสีกรอบของ Sidebar ให้เป็นสีเขียวด้วย */
-}
-
-/* ถ้าสีโลโก้ Work มันกลืนกับพื้นหลังส้ม ให้ใช้ขอบขาวช่วย */
-.logo {
-    text-shadow: 1px 1px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white;
-}
-        :root {
-            --primary-color: #005DE8; /* สีน้ำเงิน Fastwork Style */
-            --secondary-color: #f4f7fa;
-            --text-dark: #333;
-            --text-gray: #666;
-            --logo-green: #28a745; /* สีเขียวสำหรับ Slow */
-            --logo-orange: #ff8a00; /* สีส้มสำหรับ Work */
-            --star-yellow: #ffc107;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
-        }
-
-        body {
-            background-color: var(--secondary-color);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        /* --- Navbar --- */
-        nav {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            padding: 12px 8%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        /* แก้ไขสีโลโก้ที่นี่ */
-        .logo {
-            font-size: 26px;
-            font-weight: 700;
-            text-decoration: none;
-            color: var(--logo-orange); /* สีของคำว่า Work */
-        }
-
-        .logo span {
-            color: var(--logo-green); /* สีของคำว่า Slow */
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            margin-left: 20px;
-            font-size: 14px;
-            font-weight: 400;
-        }
-
-        /* --- Layout --- */
-        .container {
-            max-width: 1100px;
-            margin: 20px auto;
-            display: grid;
-            grid-template-columns: 1.8fr 1fr;
-            gap: 25px;
-            padding: 0 20px;
-        }
-
-        /* --- Main Content (Left) --- */
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            border: 1px solid #e1e4e8;
-        }
-
-        .main-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .service-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .freelancer-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 20px;
-        }
-
-        .avatar-circle {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: #ddd;
-        }
-
-        .info-text p { font-size: 14px; color: var(--text-gray); }
-        .info-text strong { color: var(--text-dark); }
-
-        .section-header {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 25px 0 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-header i { color: var(--primary-color); }
-
-        /* --- Sidebar (Right) --- */
-        .sidebar-card {
-            background: white;
-            border-radius: 12px;
-            border: 1px solid var(--primary-color);
-            position: sticky;
-            top: 90px;
-            overflow: hidden;
-        }
-
-        .price-header {
-            background: #f8faff;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }
-
-        .price-tag {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .package-list {
-            padding: 20px;
-            list-style: none;
-        }
-
-        .package-list li {
-            font-size: 14px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        /* --- CSS เดิมของคุณทั้งหมด --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 9999; }
+        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 380px; text-align: center; }
+        .category-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px auto; max-width: 1100px; padding: 0 20px; }
+        .category-card { background: white !important; border-radius: 15px !important; padding: 25px; text-align: center; transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent !important; box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; }
+        .category-card:hover { border-color: #28a745 !important; transform: translateY(-5px); }
+        .category-icon { font-size: 40px; margin-bottom: 15px; display: block; }
+        .category-title { font-weight: bold; color: #333; font-size: 1.1rem; }
+        .category-desc { font-size: 0.9rem; color: #666; margin-top: 8px; }
+        body { background-color: #FF8A00 !important; margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
+        .card, .sidebar-card { background: white !important; border-radius: 12px; padding: 24px; border: none !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; margin-bottom: 20px; }
+        .price-tag { color: #28a745 !important; font-size: 32px; font-weight: 700; }
+        .btn-main { background: #28a745 !important; border: none !important; color: white; padding: 14px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; display: block; margin-bottom: 10px; text-align: center; text-decoration: none; }
+        .btn-outline { border: 1px solid #28a745 !important; color: #28a745 !important; background: transparent; padding: 12px; border-radius: 8px; font-weight: 500; width: 100%; cursor: pointer; display: block; text-align: center; text-decoration: none; }
+        nav { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 12px 8%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 26px; font-weight: 700; text-decoration: none; color: #ff8a00; text-shadow: 1px 1px 0px white, -1px -1px 0px white; }
+        .logo span { color: #28a745; }
+        .nav-links a { text-decoration: none; color: #333; margin-left: 20px; font-size: 14px; }
+        .container { max-width: 1100px; margin: 20px auto; display: grid; grid-template-columns: 1.8fr 1fr; gap: 25px; padding: 0 20px; }
+        .main-image { width: 100%; height: auto; border-radius: 8px; margin-bottom: 20px; }
+        .freelancer-bar { display: flex; align-items: center; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid #eee; margin-bottom: 20px; }
+        .avatar-circle { width: 45px; height: 45px; border-radius: 50%; background: #ddd; }
+        .section-header { font-size: 18px; font-weight: 600; margin: 25px 0 15px 0; display: flex; align-items: center; gap: 10px; }
+        .package-list { list-style: none; padding: 20px 0; }
+        .package-list li { font-size: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
         .package-list li i { color: #28a745; }
-
-        .btn-main {
-            display: block;
-            width: calc(100% - 40px);
-            margin: 0 auto 10px auto;
-            padding: 14px;
-            background: var(--primary-color);
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .btn-main:hover { background: #004bb5; }
-
-        .btn-outline {
-            display: block;
-            width: calc(100% - 40px);
-            margin: 0 auto 20px auto;
-            padding: 12px;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            text-align: center;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-        }
-
-        /* --- Responsive --- */
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
-            nav { padding: 12px 5%; }
-        }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -313,149 +44,98 @@ body {
         <div class="nav-links">
             <a href="#">หาความรู้</a>
             <a href="#">สมัครเป็นฟรีแลนซ์</a>
-            <a href="#" style="color: var(--primary-color); font-weight: 600;">เข้าสู่ระบบ</a>
+            <a href="#" style="color: #28a745; font-weight: 600;">เข้าสู่ระบบ</a>
         </div>
     </nav>
 
     <div class="container">
-        
         <div class="left-col">
             <div class="card">
-                <img src= "https://ibb.co/dwNx8bx0" alt="Work Example" class="main-image">
-                
+                <img src="https://i.ibb.co/6810/your-image.jpg" alt="Work Example" class="main-image">
                 <h1 class="service-title">รับทำงานหรือการบ้านของโรงเรียนฯลฯ</h1>
-                
                 <div class="freelancer-bar">
                     <div class="avatar-circle"></div>
                     <div class="info-text">
-                        <p>รับทำโดย
-                            
-                    <strong>Studen</strong></p>
-                        <p><i class="fas fa-star" style="color: var(--star-yellow);"></i> 5.0 | ขายแล้ว 154 งาน</p>
+                        <p>รับทำโดย <strong>Student</strong></p>
+                        <p><i class="fas fa-star" style="color: #ffc107;"></i> 5.0 | ขายแล้ว 154 งาน</p>
                     </div>
                 </div>
-
                 <h3 class="section-header"><i class="fas fa-info-circle"></i> รายละเอียดงาน</h3>
-                <p>ยินดีต้อนรับครับ! หากคุณกำลังมองหาคนที่ช่วยทำการบ้านของคุณ ผมพร้อมดูแลคุณด้วยประสบการณ์กว่า 16 ปี</p>
-                <br>
-                <p><strong>สิ่งที่คุณจะได้รับ:</strong></p>
-                <ul style="margin-left: 20px; font-size: 15px;">
+                <p>ยินดีต้อนรับครับ! หากคุณกำลังมองหาคนที่ช่วยทำการบ้านของคุณ ผมพร้อมดูแลคุณ</p>
+                <ul style="margin-left: 20px; font-size: 15px; margin-top:10px;">
                     <li>ร่างแบบหลายสไตล์ตามที่คุณกำหนด</li>
                     <li>แก้ไขงานได้จนกว่าจะพอใจ</li>
-                    <li>ไฟล์งานต้นฉบับ .AI .PNG .JPG .PDF</li>
-                    <li>คู่มือการทำงาน Handmake</li>
+                    <li>ไฟล์งานต้นฉบับครบถ้วน</li>
                 </ul>
             </div>
-
             <div class="card">
                 <h3 class="section-header"><i class="fas fa-list-ol"></i> ขั้นตอนการทำงาน</h3>
                 <p>1. พูดคุยบรีฟงานและสรุปความต้องการ</p>
                 <p>2. ชำระเงินผ่านระบบ SlowWork เพื่อเริ่มงาน</p>
-                <p>3. ส่งแบบร่างครั้งแรกภายใน 48 ชม.</p>
-                <p>4. ปรับแก้ตามคอมเมนต์ลูกค้า</p>
-                <p>5. ส่งมอบไฟล์งานสมบูรณ์</p>
+                <p>3. ส่งมอบไฟล์งานสมบูรณ์</p>
             </div>
         </div>
 
         <div class="right-col">
             <div class="sidebar-card">
-                <div class="price-header">
-                    <p style="font-size: 14px; color: var(--text-gray);">ราคาเริ่มต้น</p>
+                <div style="text-align:center; padding: 20px; background:#f8faff; border-bottom:1px solid #eee;">
+                    <p style="font-size: 14px; color: #666;">ราคาเริ่มต้น</p>
                     <div class="price-tag">฿200</div>
                 </div>
-                
-                <ul class="package-list">
+                <ul class="package-list" style="padding: 20px;">
                     <li><i class="fas fa-check-circle"></i> แก้ไขได้ไม่จำกัดครั้ง</li>
-                    <li><i class="fas fa-check-circle"></i> งานต้นฉบับครบถ้วน</li>
-                    <li><i class="fas fa-check-circle"></i> นำไปส่งได้อย่างแน่นอน</li>
                     <li><i class="fas fa-clock"></i> ระยะเวลาทำงาน 3 วัน</li>
                 </ul>
-
-                <a href="#" class="btn-main" onclick="openModal()">จ้างงาน</a>
-                <a href="#" class="btn-outline" onclick="window.location.href='https://m.me/Student job marketplace'">สอบถาม</button>
-                
-                <p style="text-align: center; font-size: 12px; color: var(--text-gray); margin-bottom: 20px;">
-                    รับประกันการคืนเงินหากไม่ได้รับงาน
-                </p>
+                <div style="padding: 0 20px 20px 20px;">
+                    <button class="btn-main" onclick="openModal()">จ้างงาน</button>
+                    <button class="btn-outline" onclick="window.location.href='https://m.me/61586735639400'">สอบถาม</button>
+                    <p style="text-align: center; font-size: 12px; color: #666; margin-top: 15px;">
+                        รับประกันการคืนเงินหากไม่ได้รับงาน
+                    </p>
+                </div>
             </div>
         </div>
-
     </div>
-    <p style="text-align: center; font-size: 12px; color: var(--text-gray); margin-bottom: 20px;">
-                    รับประกันการคืนเงินหากไม่ได้รับงาน
-                </p>
-            </div>
+
+    <div class="category-container">
+        <div class="category-card">
+            <span class="category-icon">🎨</span>
+            <div class="category-title">ออกแบบงาน</div>
+            <div class="category-desc">เริ่มต้น 400.-</div>
         </div>
-
-        <div class="category-container">
-            <div class="category-card">
-                <span class="category-icon">🎨</span>
-                <div class="category-title">ออกแบบงาน</div>
-                <div class="category-desc">เริ่มต้น 400.-</div>
-            </div>
-
-            <div class="category-card">
-                <span class="category-icon">💻</span>
-                <div class="category-title">การบ้านจดเขียน</div>
-                <div class="category-desc">เริ่มต้น 300.-</div>
-            </div>
-
-            <div class="category-card">
-                <span class="category-icon">✍️</span>
-                <div class="category-title">เขียนบทความ / แปลภาษา</div>
-                <div class="category-desc">เริ่มต้น 500.-</div>
-            </div>
-
-            <div class="category-card">
-                <span class="category-icon">📸</span>
-                <div class="category-title">ถ่ายภาพ / ตัดวิดีโอ</div>
-                <div class="category-desc">เริ่มต้น 500.-</div>
-            </div>
+        <div class="category-card">
+            <span class="category-icon">💻</span>
+            <div class="category-title">การบ้านจดเขียน</div>
+            <div class="category-desc">เริ่มต้น 300.-</div>
         </div>
+        <div class="category-card">
+            <span class="category-icon">✍️</span>
+            <div class="category-title">เขียนบทความ</div>
+            <div class="category-desc">เริ่มต้น 500.-</div>
         </div>
+        <div class="category-card">
+            <span class="category-icon">📸</span>
+            <div class="category-title">ตัดวิดีโอ</div>
+            <div class="category-desc">เริ่มต้น 500.-</div>
+        </div>
+    </div>
+
     <div id="hireModal" class="modal-overlay">
-    <div class="modal-content">
-        <h3>📄 สรุปการจ้างงาน</h3>
-        <p>บริการ: รับทำการบ้าน (200.-)</p>
-        <textarea placeholder="พิมพ์บรีฟงานตรงนี้..." style="width:100%; height:80px; margin:10px 0; padding:10px; border-radius:8px; border:1px solid #ddd;"></textarea>
-        <div style="display:flex; gap:10px;">
-            <button onclick="closeModal()" class="btn-outline" style="flex:1">ยกเลิก</button>
-            <button onclick="confirmHire()" class="btn-main" style="flex:1">ยืนยัน</button>
+        <div class="modal-content">
+            <h3>📄 สรุปการจ้างงาน</h3>
+            <p style="margin-top:10px;">บริการ: รับทำการบ้าน (200.-)</p>
+            <textarea placeholder="พิมพ์บรีฟงานตรงนี้..." style="width:100%; height:80px; margin:15px 0; padding:10px; border-radius:8px; border:1px solid #ddd;"></textarea>
+            <div style="display:flex; gap:10px;">
+                <button onclick="closeModal()" class="btn-outline" style="flex:1">ยกเลิก</button>
+                <button onclick="confirmHire()" class="btn-main" style="flex:1; margin-bottom:0;">ยืนยัน</button>
+            </div>
         </div>
     </div>
-</div>
 
-
-<script>
-    // ฟังก์ชันเปิดหน้าต่างเด้ง
-    function openModal() { 
-        document.getElementById('hireModal').style.display = 'flex'; 
-    }
-
-    // ฟังก์ชันปิดหน้าต่างเด้ง
-    function closeModal() { 
-        document.getElementById('hireModal').style.display = 'none'; 
-    }
-
-    // ฟังก์ชันเวลายืนยันจ้างงาน
-    function confirmHire() { 
-        // 1. ดึงข้อความบรีฟที่ลูกค้าพิมพ์
-        const brief = document.querySelector('#hireModal textarea').value;
-        
-        // 2. ID เพจของคุณที่ดึงมาจากลิงก์ (61586735639400)
-        const fbPageID = "61586735639400"; 
-        
-        // 3. สร้างลิงก์ Messenger ตรงเข้าเพจ
-        const fbUrl = "https://m.me/" + fbPageID;
-        
-        // 4. แจ้งเตือนและเด้งไปที่ Messenger
-        alert('กำลังพาท่านไปที่ Messenger ของเพจเพื่อคุยรายละเอียดงานครับ');
-        window.location.href = fbUrl;
-        
-        closeModal(); 
-    }
-
-</script>
-
-</body>
-</html>
+    <script>
+        function openModal() { document.getElementById('hireModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('hireModal').style.display = 'none'; }
+        function confirmHire() { 
+            const brief = document.querySelector('#hireModal textarea').value;
+            const fbPageID = "61586735639400"; 
+            alert('กำลังพาท่านไปที่ Messenger เพื่อส่งบรีฟงานครับ');
