@@ -205,6 +205,16 @@ const supabase = createClient(
   "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r"
 );
 
+/* ===== FIX: bind input elements (แก้เฉพาะจุดที่บอก) ===== */
+const jobTitle = document.getElementById("jobTitle");
+const jobDesc = document.getElementById("jobDesc");
+const jobCategory = document.getElementById("jobCategory");
+const jobHireType = document.getElementById("jobHireType");
+const jobPrice = document.getElementById("jobPrice");
+const jobDeadline = document.getElementById("jobDeadline");
+const jobDate = document.getElementById("jobDate");
+/* ===== END FIX ===== */
+
 async function loadJobs(){
   const { data } = await supabase
     .from("jobs")
@@ -219,32 +229,18 @@ async function loadJobs(){
     return;
   }
 
- data.forEach(job => {
-  tbody.innerHTML += `
-    <tr>
-      <td>${job.title}</td>
-
-      <td>${job.category || "-"}</td>
-
-      <td>${job.hire_type || "-"}</td>
-
-      <td>${job.price ?? 0}</td>
-
-      <td>
-        ${new Date(job.created_at).toLocaleDateString("th-TH")}
-      </td>
-
-      <td>
-        ${
-          job.deadline
-            ? new Date(job.deadline).toLocaleDateString("th-TH")
-            : "-"
-        }
-      </td>
-    </tr>
-  `;
-});
-
+  data.forEach(job => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${job.title}</td>
+        <td>${job.category || "-"}</td>
+        <td>${job.hire_type || "-"}</td>
+        <td>${job.price ?? 0}</td>
+        <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
+        <td>${job.deadline ? new Date(job.deadline).toLocaleDateString("th-TH") : "-"}</td>
+      </tr>
+    `;
+  });
 }
 
 loadJobs();
@@ -273,6 +269,7 @@ submitJob.onclick = async ()=>{
   });
 
   postModal.style.display="none";
+
   jobTitle.value = "";
   jobDesc.value = "";
   jobCategory.value = "";
