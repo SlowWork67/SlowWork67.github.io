@@ -273,18 +273,19 @@ async function loadJobs() {
     return;
   }
 
-  data.forEach(job => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${job.title ?? "-"}</td>
-      <td>${job.category ?? "-"}</td>
-      <td>${job.price ?? "-"}</td>
-      <td>${job.type ?? "-"}</td>
-      <td>${job.created_at ? new Date(job.created_at).toLocaleDateString() : "-"}</td>
-      <td>${job.deadline ?? "-"}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+data.forEach(job => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${job.title}</td>
+    <td>${job.category}</td>
+    <td>${job.price ?? "-"}</td>
+    <td>${job.job_type}</td>
+    <td>${new Date(job.created_at).toLocaleDateString()}</td>
+    <td>${job.deadline ?? "-"}</td>
+  `;
+  tbody.appendChild(tr);
+});
+
 }
 
 loadJobs();
