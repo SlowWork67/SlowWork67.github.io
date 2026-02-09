@@ -1,78 +1,143 @@
-<input type="password" placeholder="รหัสผ่าน" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; outline: none;">
-            <button class="btn-main" onclick="login()">เข้าสู่ระบบ</button>
-            <p style="font-size: 12px; color: #999; margin-top: 15px;">ยังไม่มีบัญชี? <span style="color: var(--primary-green); cursor: pointer;">สมัครสมาชิก</span></p>
-            <button onclick="closeAllModals()" style="background:none; border:none; color:#ccc; margin-top:10px; cursor:pointer; font-size: 13px;">ไว้ทีหลัง</button>
-        </div>
-    </div>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlowWork Dashboard - แพลตฟอร์มฟรีแลนซ์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { --primary-green: #28a745; --primary-orange: #FF8A00; --text-dark: #333; --text-gray: #666; --bg-light: #f8f9fa; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
+        body { background-color: var(--primary-orange); color: var(--text-dark); line-height: 1.6; }
 
-    <div id="hireModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3>📄 สรุปการจ้างงาน</h3>
-            <textarea id="brief" placeholder="พิมพ์บรีฟงานของคุณที่นี่..." style="width:100%; height:100px; margin:15px 0; padding:10px; border-radius:8px; border:1px solid #ddd; outline: none;"></textarea>
-            <div style="display:flex; gap:10px;">
-                <button onclick="closeAllModals()" class="btn-outline" style="flex:1">ยกเลิก</button>
-                <button class="btn-main" onclick="confirmHire()" style="flex:1; margin-bottom:0;">ยืนยันจ้างงาน</button>
+        /* --- Navbar --- */
+        nav { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 10px 8%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 24px; font-weight: 700; text-decoration: none; color: var(--primary-orange); cursor: pointer; }
+        .logo span { color: var(--primary-green); }
+        .nav-links { display: flex; align-items: center; gap: 20px; }
+        .nav-item { text-decoration: none; color: var(--text-dark); font-size: 14px; cursor: pointer; }
+        .nav-login { text-decoration: none; color: var(--primary-green); font-weight: 600; border: 1.5px solid var(--primary-green); padding: 5px 15px; border-radius: 6px; transition: 0.3s; cursor: pointer; }
+
+        /* --- Layout --- */
+        .container { max-width: 1100px; margin: 20px auto; display: grid; grid-template-columns: 1.8fr 1fr; gap: 25px; padding: 0 20px; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px; border: none; }
+        
+        /* --- Dashboard Specific --- */
+        #dashboard-content { display: none; max-width: 1100px; margin: 20px auto; padding: 0 20px; }
+        .db-layout { display: grid; grid-template-columns: 280px 1fr; gap: 25px; }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav li { padding: 12px 15px; border-radius: 8px; margin-bottom: 5px; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        .sidebar-nav li:hover { background: var(--bg-light); color: var(--primary-green); }
+        .sidebar-nav li.active { background: var(--primary-green); color: white; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: white; padding: 20px; border-radius: 12px; text-align: center; border-bottom: 4px solid var(--primary-green); }
+        
+        /* --- UI Elements --- */
+        .btn-main { background: var(--primary-green); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; display: block; text-align: center; }
+        .btn-outline { border: 1px solid var(--primary-green); color: var(--primary-green); background: white; padding: 10px; border-radius: 8px; cursor: pointer; width: 100%; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 10001; }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
+
+        /* --- Category Styles --- */
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 20px; }
+        .cat-item { background: white; padding: 15px; border-radius: 10px; text-align: center; font-size: 12px; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) { .container, .db-layout { grid-template-columns: 1fr; } .sidebar-menu { display: none; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="showHome()"><span>Slow</span>Work</div>
+        <div class="nav-links" id="nav-guest">
+            <a onclick="openModal('loginModal')" class="nav-item">หาความรู้</a>
+            <a onclick="openModal('loginModal')" class="nav-item">สมัครเป็นฟรีแลนซ์</a>
+            <div style="width:1px; height:20px; background:#ddd;"></div>
+            <a onclick="openModal('loginModal')" class="nav-login">เข้าสู่ระบบ</a>
+        </div>
+        <div class="nav-links" id="nav-user" style="display: none;">
+            <span class="nav-item">สวัสดี, <strong id="display-name">Student</strong></span>
+            <a onclick="showHome()" class="nav-item">หน้าแรก</a>
+            <a onclick="logout()" class="nav-item" style="color: #ff4d4d;"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </nav>
+
+    <div id="main-content">
+        <div class="container">
+            <div class="left-col">
+                <div class="card">
+                    <img src="https://i.ibb.co/6810/your-image.jpg" alt="Work" style="width:100%; border-radius:8px; margin-bottom:15px;">
+                    <h1>รับทำงานหรือการบ้านของโรงเรียนฯลฯ</h1>
+                    <p style="margin-top:10px; color:#666;">บริการรับทำการบ้านทุกวิชา รวดเร็ว ทันใจ โดยทีมงานนักศึกษาไฟแรง</p>
+                    
+                    <div class="cat-grid">
+                        <div class="cat-item">🎨 ออกแบบ</div>
+                        <div class="cat-item">✍️ เขียนบทความ</div>
+                        <div class="cat-item">💻 คีย์ข้อมูล</div>
+                        <div class="cat-item">📚 สรุปบทเรียน</div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-col">
+                <div class="card" style="text-align: center;">
+                    <p style="font-size: 14px; color: #666;">ราคาเริ่มต้นที่</p>
+                    <h2 style="color:var(--primary-green); font-size: 36px;">฿200</h2>
+                    <button class="btn-main" style="margin-top:15px;" onclick="openModal('hireModal')">จ้างงานทันที</button>
+                    <button class="btn-outline" style="margin-top:10px;" onclick="window.location.href='https://m.me/61586735639400'">สอบถามเพิ่มเติม</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // ฟังก์ชันเปิด-ปิด Modal
-        function openModal(id) { 
-            document.getElementById(id).style.display = 'flex'; 
-        }
-        
-        function closeAllModals() { 
-            document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); 
-        }
+    <div id="dashboard-content">
+        <div class="db-layout">
+            <div class="sidebar-menu">
+                <div class="card" style="padding: 15px;">
+                    <ul class="sidebar-nav">
+                        <li class="active"><i class="fas fa-home"></i> แผงควบคุม</li>
+                        <li><i class="fas fa-briefcase"></i> งานของฉัน</li>
+                        <li><i class="fas fa-wallet"></i> การเงิน</li>
+                        <li><i class="fas fa-user-cog"></i> ตั้งค่าโปรไฟล์</li>
+                        <li onclick="logout()" style="color: red; margin-top: 20px;"><i class="fas fa-power-off"></i> ออกจากระบบ</li>
+                    </ul>
+                </div>
+            </div>
 
-        // ระบบจำลองการ Login แบบ Real-time Name
-        function login() {
-            const nameInput = document.getElementById('usernameInput').value;
-            const finalName = nameInput ? nameInput : "Student"; // ถ้าไม่กรอกให้ใช้ชื่อ Student
+            <div class="main-dashboard">
+                <div class="card" style="display: flex; align-items: center; gap: 20px;">
+                    <div style="width:70px; height:70px; border-radius:50%; background:var(--primary-green); display:flex; align-items:center; justify-content:center; color:white; font-size:28px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">S</div>
+                    <div>
+                        <h2 id="welcome-text">ยินดีต้อนรับ, Student</h2>
+                        <p style="color:#666; font-size:14px;">สถานะบัญชี: <span style="color:var(--primary-green); font-weight: 600;">ฟรีแลนซ์ยืนยันตัวตนแล้ว</span></p>
+                    </div>
+                </div>
 
-            // แสดง Feedback เล็กน้อย
-            alert('ยินดีต้อนรับคุณ ' + finalName + ' เข้าสู่ระบบครับ!');
-            
-            // เปลี่ยนชื่อในหน้าจอ
-            document.getElementById('display-name').innerText = finalName;
-            document.getElementById('welcome-text').innerText = 'ยินดีต้อนรับ, ' + finalName;
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-wallet" style="color: var(--primary-green); margin-bottom: 10px;"></i>
+                        <p style="color:#666; font-size:13px;">รายได้สะสม</p>
+                        <h2 style="color:var(--primary-green);">฿1,540</h2>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-spinner" style="color: #ffc107; margin-bottom: 10px;"></i>
+                        <p style="color:#666; font-size:13px;">งานที่กำลังทำ</p>
+                        <h2>3</h2>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-double" style="color: #007bff; margin-bottom: 10px;"></i>
+                        <p style="color:#666; font-size:13px;">งานที่เสร็จสิ้น</p>
+                        <h2>154</h2>
+                    </div>
+                </div>
 
-            // สลับหน้าจอ
-            closeAllModals();
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('dashboard-content').style.display = 'block';
-            document.getElementById('nav-guest').style.display = 'none';
-            document.getElementById('nav-user').style.display = 'flex';
-        }
-
-        // ระบบ Logout
-        function logout() {
-            if(confirm('คุณต้องการออกจากระบบใช่หรือไม่?')) {
-                showHome();
-                document.getElementById('nav-guest').style.display = 'flex';
-                document.getElementById('nav-user').style.display = 'none';
-            }
-        }
-
-        // กลับหน้าแรก
-        function showHome() {
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('dashboard-content').style.display = 'none';
-        }
-
-        // ยืนยันจ้างงาน
-        function confirmHire() {
-            alert('ระบบกำลังบันทึกบรีฟและนำท่านไปยัง Messenger ครับ');
-            window.location.href = "https://m.me/61586735639400";
-        }
-
-        // คลิกข้างนอก Modal เพื่อปิด
-        window.onclick = function(event) {
-            if (event.target.className === 'modal-overlay') {
-                closeAllModals();
-            }
-        }
-    </script>
-</body>
-</html>
+                <div class="card">
+                    <h3 style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">📦 ติดตามสถานะงานล่าสุด</h3>
+                    <div style="display:flex; justify-content:space-between; padding: 10px 0;">
+                        <p><i class="fas fa-file-alt" style="color: #ddd; margin-right: 10px;"></i> คณิตศาสตร์ ม.4 (ชุดที่ 2)</p>
+                        <span style="color: var(--primary-orange); font-size: 12px; font-weight: 600;">รอดำเนินการ</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding: 10px 0; border-top: 1px solid #f9f9f9;">
+                        <p><i class="fas fa-file-alt" style="color: #ddd; margin-right: 10px;"></i> รายงานประวัติศาสตร์</
