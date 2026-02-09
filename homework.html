@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlowWork - แพลตฟอร์มฟรีแลนซ์ของคุณ</title>
+    <title>SlowWork - แพลตฟอร์มฟรีแลนซ์ระดับมืออาชีพ</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -13,46 +13,51 @@
             --primary-orange: #FF8A00; 
             --text-dark: #333; 
             --text-gray: #666; 
-            --bg-light: #f8f9fa; 
+            --bg-light: #f4f7f6; 
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
-        body { background-color: var(--primary-orange); color: var(--text-dark); line-height: 1.6; transition: 0.3s; }
+        body { background-color: var(--primary-orange); transition: background-color 0.4s ease; color: var(--text-dark); line-height: 1.6; }
 
         /* --- Navbar --- */
         nav { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 10px 8%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 24px; font-weight: 700; text-decoration: none; color: var(--primary-orange); cursor: pointer; }
         .logo span { color: var(--primary-green); }
         .nav-links { display: flex; align-items: center; gap: 20px; }
-        .nav-item { text-decoration: none; color: var(--text-dark); font-size: 14px; cursor: pointer; font-weight: 400; }
-        .nav-item:hover { color: var(--primary-green); }
-        .nav-login { text-decoration: none; color: var(--primary-green); font-weight: 600; border: 1.5px solid var(--primary-green); padding: 5px 15px; border-radius: 6px; transition: 0.3s; cursor: pointer; }
+        .nav-item { text-decoration: none; color: var(--text-dark); font-size: 14px; cursor: pointer; font-weight: 500; }
+        .nav-login { text-decoration: none; color: var(--primary-green); font-weight: 600; border: 1.5px solid var(--primary-green); padding: 6px 18px; border-radius: 8px; transition: 0.3s; cursor: pointer; }
         .nav-login:hover { background: var(--primary-green); color: white; }
 
-        /* --- Layout --- */
-        .container { max-width: 1100px; margin: 20px auto; display: grid; grid-template-columns: 1.8fr 1fr; gap: 25px; padding: 0 20px; }
-        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px; border: none; }
-        
+        /* --- Main Content Layout --- */
+        .container { max-width: 1100px; margin: 25px auto; display: grid; grid-template-columns: 1.8fr 1fr; gap: 25px; padding: 0 20px; }
+        .card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px; }
+        .main-image { width: 100%; border-radius: 10px; margin-bottom: 20px; }
+
         /* --- Dashboard UI --- */
-        #dashboard-content { display: none; max-width: 1100px; margin: 20px auto; padding: 0 20px; }
-        .db-layout { display: grid; grid-template-columns: 250px 1fr; gap: 25px; }
-        .sidebar-menu .card { padding: 10px; }
+        #dashboard-content { display: none; max-width: 1100px; margin: 25px auto; padding: 0 20px; }
+        .db-layout { display: grid; grid-template-columns: 260px 1fr; gap: 25px; }
+        .sidebar-menu .card { padding: 15px; }
         .sidebar-nav { list-style: none; }
-        .sidebar-nav li { padding: 12px 15px; border-radius: 8px; margin-bottom: 5px; cursor: pointer; transition: 0.2s; font-size: 14px; display: flex; align-items: center; gap: 10px; }
-        .sidebar-nav li:hover { background: var(--bg-light); color: var(--primary-green); }
+        .sidebar-nav li { padding: 12px 15px; border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: 0.3s; font-size: 14px; display: flex; align-items: center; gap: 12px; }
+        .sidebar-nav li:hover { background: #f0fdf4; color: var(--primary-green); }
         .sidebar-nav li.active { background: var(--primary-green); color: white; }
         
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .stat-card { background: white; padding: 20px; border-radius: 12px; text-align: center; border-bottom: 4px solid var(--primary-green); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        
-        /* --- UI Elements --- */
-        .btn-main { background: var(--primary-green); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; width: 100%; cursor: pointer; display: block; text-align: center; font-size: 16px; }
-        .btn-outline { border: 1px solid var(--primary-green); color: var(--primary-green); background: white; padding: 10px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: 500; }
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 10001; }
-        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; position: relative; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: white; padding: 20px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--primary-green); }
 
-        /* --- Category Cards --- */
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 20px; }
-        .cat-item { background: #fff; padding: 15px; border-radius: 10px; text-align: center; font-size: 12px; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        /* --- Buttons & Inputs --- */
+        .btn-main { background: var(--primary-green); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 600; width: 100%; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        .btn-main:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-outline { border: 1.5px solid var(--primary-green); color: var(--primary-green); background: white; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: 600; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; transition: 0.3s; }
+        input:focus, textarea:focus { border-color: var(--primary-green); box-shadow: 0 0 5px rgba(40,167,69,0.2); }
+
+        /* --- Category Grid --- */
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 25px; }
+        .cat-item { background: #fff; padding: 15px; border-radius: 12px; text-align: center; font-size: 13px; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+
+        /* --- Modals --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 10001; }
+        .modal-content { background: white; padding: 35px; border-radius: 25px; width: 90%; max-width: 420px; text-align: center; }
 
         @media (max-width: 768px) { .container, .db-layout { grid-template-columns: 1fr; } .sidebar-menu { display: none; } }
     </style>
@@ -64,11 +69,11 @@
         <div class="nav-links" id="nav-guest">
             <a onclick="openModal('loginModal')" class="nav-item">หาความรู้</a>
             <a onclick="openModal('loginModal')" class="nav-item">สมัครเป็นฟรีแลนซ์</a>
-            <div style="width:1px; height:20px; background:#ddd;"></div>
+            <div style="width:1px; height:20px; background:#eee;"></div>
             <a onclick="openModal('loginModal')" class="nav-login">เข้าสู่ระบบ</a>
         </div>
         <div class="nav-links" id="nav-user" style="display: none;">
-            <span class="nav-item">สวัสดี, <strong id="display-name">User</strong></span>
+            <span class="nav-item">สวัสดี, <strong id="display-name">คุณ</strong></span>
             <a onclick="showHome()" class="nav-item">หน้าแรก</a>
             <a onclick="logout()" class="nav-item" style="color: #ff4d4d;"><i class="fas fa-power-off"></i></a>
         </div>
@@ -78,24 +83,34 @@
         <div class="container">
             <div class="left-col">
                 <div class="card">
-                    <img src="https://i.ibb.co/6810/your-image.jpg" alt="Work" style="width:100%; border-radius:8px; margin-bottom:15px;">
+                    <img src="https://i.ibb.co/6810/your-image.jpg" alt="Work" class="main-image">
                     <h1>รับทำงานหรือการบ้านของโรงเรียนฯลฯ</h1>
-                    <p style="margin-top:10px; color:#666;">เบื่อไหมกับการบ้านกองโต? ให้เราช่วยดูแลคุณ งานไว มั่นใจได้ 100%</p>
+                    <p style="color:#666; margin: 10px 0;">ช่วยแบ่งเบาภาระการบ้าน ให้คุณมีเวลาไปทำกิจกรรมที่รัก งานคุณภาพ ส่งไว มั่นใจได้</p>
                     
                     <div class="cat-grid">
                         <div class="cat-item">🎨 ออกแบบ</div>
                         <div class="cat-item">✍️ เขียนบทความ</div>
-                        <div class="cat-item">💻 คีย์ข้อมูล</div>
                         <div class="cat-item">📚 สรุปบทเรียน</div>
+                        <div class="cat-item">💻 คีย์ข้อมูล</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-list-check" style="color: var(--primary-green);"></i> ขั้นตอนการสั่งงาน</h3>
+                    <div style="margin-top: 15px;">
+                        <p>1. กดปุ่ม <strong>"จ้างงาน"</strong> เพื่อกรอกบรีฟรายละเอียด</p>
+                        <p>2. ระบบจะ <strong>Copy</strong> บรีฟไว้ให้ ให้คุณกดวางใน Messenger</p>
+                        <p>3. ตกลงราคาและเริ่มดำเนินงานทันที</p>
                     </div>
                 </div>
             </div>
+
             <div class="right-col">
                 <div class="card" style="text-align: center;">
                     <p style="font-size: 14px; color: #666;">ราคาเริ่มต้น</p>
-                    <h2 style="color:var(--primary-green); font-size: 40px; font-weight: 700;">฿200</h2>
-                    <button class="btn-main" style="margin-top:15px;" onclick="openModal('hireModal')">จ้างงานทันที</button>
-                    <button class="btn-outline" style="margin-top:10px;" onclick="window.location.href='https://m.me/61586735639400'">สอบถามเพิ่มเติม</button>
+                    <h2 style="color:var(--primary-green); font-size: 42px; margin-bottom: 20px;">฿200</h2>
+                    <button class="btn-main" onclick="openModal('hireModal')">จ้างงานทันที</button>
+                    <button class="btn-outline" style="margin-top: 12px;" onclick="window.location.href='https://m.me/61586735639400'">สอบถามเพิ่มเติม</button>
                 </div>
             </div>
         </div>
@@ -103,30 +118,30 @@
 
     <div id="dashboard-content">
         <div class="db-layout">
-            <div class="sidebar-menu">
+            <aside class="sidebar-menu">
                 <div class="card">
                     <ul class="sidebar-nav">
-                        <li class="active"><i class="fas fa-chart-line"></i> แผงควบคุม</li>
-                        <li><i class="fas fa-folder-open"></i> งานที่รับทำ</li>
-                        <li><i class="fas fa-wallet"></i> รายได้ของฉัน</li>
-                        <li><i class="fas fa-user-circle"></i> โปรไฟล์ส่วนตัว</li>
-                        <li onclick="logout()" style="color: red; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</li>
+                        <li class="active"><i class="fas fa-grid-2"></i> แผงควบคุม</li>
+                        <li><i class="fas fa-briefcase"></i> งานที่รับผิดชอบ</li>
+                        <li><i class="fas fa-wallet"></i> รายได้และการถอนเงิน</li>
+                        <li><i class="fas fa-user-pen"></i> แก้ไขข้อมูลส่วนตัว</li>
+                        <li onclick="logout()" style="color: #ff4d4d; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</li>
                     </ul>
                 </div>
-            </div>
+            </aside>
 
-            <div class="main-dashboard">
-                <div class="card" style="display: flex; align-items: center; gap: 20px; background: linear-gradient(to right, #ffffff, #f0fff4) !important;">
-                    <div style="width:70px; height:70px; border-radius:50%; background:var(--primary-green); display:flex; align-items:center; justify-content:center; color:white; font-size:30px; font-weight:bold;">S</div>
+            <main class="main-dashboard">
+                <div class="card" style="display: flex; align-items: center; gap: 20px; border-left: 6px solid var(--primary-green);">
+                    <div style="width:65px; height:65px; border-radius:50%; background:var(--primary-green); color:white; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:bold;">S</div>
                     <div>
                         <h2 id="welcome-text">ยินดีต้อนรับ</h2>
-                        <p style="color:#666; font-size:14px;">ระดับสมาชิก: <span style="color:var(--primary-green); font-weight:600;">Standard Freelancer</span></p>
+                        <p style="color:#666; font-size:14px;">ระดับ: <span style="color:var(--primary-green); font-weight:600;">SlowWorker ยืนยันตัวตนแล้ว</span></p>
                     </div>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <p style="color:#666; font-size:13px;">ยอดเงินที่ถอนได้</p>
+                        <p style="color:#666; font-size:13px;">รายได้ที่ถอนได้</p>
                         <h2 style="color:var(--primary-green);">฿1,540</h2>
                     </div>
                     <div class="stat-card">
@@ -134,32 +149,32 @@
                         <h2 style="color:var(--primary-orange);">3</h2>
                     </div>
                     <div class="stat-card">
-                        <p style="color:#666; font-size:13px;">คะแนนความพึงพอใจ</p>
-                        <h2 style="color:#007bff;">5.0 ⭐</h2>
+                        <p style="color:#666; font-size:13px;">รีวิวเฉลี่ย</p>
+                        <h2 style="color:#fbbf24;">4.9 ⭐</h2>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3 style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;"><i class="fas fa-history"></i> งานล่าสุด</h3>
+                    <h3 style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">📦 สถานะงานล่าสุด</h3>
                     <div style="display:flex; justify-content:space-between; padding: 12px 0; border-bottom: 1px solid #f9f9f9;">
-                        <p>📝 รายงานภาษาไทย ม.2</p>
-                        <span style="background: #fff3cd; color: #856404; padding: 2px 10px; border-radius: 20px; font-size: 11px;">กำลังตรวจ</span>
+                        <p>📌 การบ้านเลข ม.ปลาย</p>
+                        <span style="color: var(--primary-orange); font-weight: bold; font-size: 13px;">กำลังทำ</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; padding: 12px 0;">
-                        <p>📊 สรุปชีทเคมี บทที่ 4</p>
-                        <span style="background: #d4edda; color: #155724; padding: 2px 10px; border-radius: 20px; font-size: 11px;">สำเร็จแล้ว</span>
+                        <p>📌 สรุปภาษาอังกฤษชุดที่ 1</p>
+                        <span style="color: var(--primary-green); font-weight: bold; font-size: 13px;">สำเร็จ</span>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
     </div>
 
     <div id="loginModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 style="margin-bottom: 15px;">เข้าสู่ระบบ</h2>
-            <input type="text" id="usernameInput" placeholder="ชื่อเล่นของคุณ" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px; outline:none;">
-            <input type="password" placeholder="รหัสผ่าน" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:8px; outline:none;">
-            <button class="btn-main" onclick="login()">Log In</button>
+            <h2 style="margin-bottom: 20px;">เข้าสู่ระบบสมาชิก</h2>
+            <input type="text" id="usernameInput" placeholder="ชื่อของคุณ" style="margin-bottom: 10px;">
+            <input type="password" placeholder="รหัสผ่าน" style="margin-bottom: 20px;">
+            <button class="btn-main" onclick="login()">เข้าสู่ระบบ</button>
             <button onclick="closeAllModals()" style="background:none; border:none; color:#999; margin-top:15px; cursor:pointer;">ยกเลิก</button>
         </div>
     </div>
@@ -167,9 +182,8 @@
     <div id="hireModal" class="modal-overlay">
         <div class="modal-content">
             <h3 style="margin-bottom: 15px;">ยืนยันการจ้างงาน</h3>
-            <p style="font-size: 14px; color: #666;">กรุณาระบุรายละเอียดงานเบื้องต้น</p>
-            <textarea id="brief" placeholder="เช่น ทำวิชาอะไร, ส่งวันไหน..." style="width:100%; height:100px; margin:15px 0; padding:10px; border-radius:8px; border:1px solid #ddd; outline:none; resize:none;"></textarea>
-            <div style="display:flex; gap:10px;">
+            <textarea id="brief" placeholder="ระบุวิชา, หัวข้อ, และวันที่ต้องส่งงาน..."></textarea>
+            <div style="display:flex; gap:10px; margin-top: 20px;">
                 <button onclick="closeAllModals()" class="btn-outline" style="flex:1">กลับ</button>
                 <button class="btn-main" onclick="confirmHire()" style="flex:1">ส่งบรีฟงาน</button>
             </div>
@@ -177,32 +191,29 @@
     </div>
 
     <script>
-        // ควบคุม Modal
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
 
-        // ระบบ Login จำลอง
+        // ระบบ Login
         function login() {
             const name = document.getElementById('usernameInput').value || "Freelancer";
-            alert('ยินดีต้อนรับคุณ ' + name);
+            alert('ล็อกอินสำเร็จ! ยินดีต้อนรับคุณ ' + name);
             
-            // อัปเดตข้อมูลหน้าจอ
             document.getElementById('display-name').innerText = name;
             document.getElementById('welcome-text').innerText = 'ยินดีต้อนรับ, ' + name;
             
-            // สลับหน้า
             closeAllModals();
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('dashboard-content').style.display = 'block';
             document.getElementById('nav-guest').style.display = 'none';
             document.getElementById('nav-user').style.display = 'flex';
-            document.body.style.backgroundColor = "#f0f2f5"; // เปลี่ยนสีพื้นหลัง Dashboard ให้ดูคลีนขึ้น
+            document.body.style.backgroundColor = "#f0f2f5"; 
         }
 
+        // ระบบ Logout
         function logout() {
-            if(confirm('ต้องการออกจากระบบ?')) {
-                document.getElementById('main-content').style.display = 'block';
-                document.getElementById('dashboard-content').style.display = 'none';
+            if(confirm('ต้องการออกจากระบบใช่หรือไม่?')) {
+                showHome();
                 document.getElementById('nav-guest').style.display = 'flex';
                 document.getElementById('nav-user').style.display = 'none';
                 document.body.style.backgroundColor = "#FF8A00";
@@ -214,9 +225,21 @@
             document.getElementById('dashboard-content').style.display = 'none';
         }
 
+        // ระบบจ้างงาน + Copy บรีฟอัตโนมัติ
         function confirmHire() {
-            alert('กำลังพาคุณไปสรุปงานใน Messenger ครับ');
-            window.location.href = "https://m.me/61586735639400";
+            const briefText = document.getElementById('brief').value;
+            if (!briefText) {
+                alert('กรุณากรอกบรีฟงานก่อนนะครับ :3');
+                return;
+            }
+
+            const fullMsg = "สวัสดีครับ สนใจจ้างงาน SlowWork ครับ\nบรีฟงาน: " + briefText;
+
+            // คัดลอกลง Clipboard
+            navigator.clipboard.writeText(fullMsg).then(() => {
+                alert('📋 ระบบคัดลอกบรีฟงานของคุณแล้ว!\nคุณสามารถ "วาง" (Paste) ในแชท Messenger ได้เลยครับ');
+                window.location.href = "https://m.me/61586735639400";
+            });
         }
 
         window.onclick = function(e) { if(e.target.className === 'modal-overlay') closeAllModals(); }
