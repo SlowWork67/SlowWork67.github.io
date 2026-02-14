@@ -235,15 +235,16 @@ body{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const supabaseUrl = 'PASTE_SUPABASE_URL_HERE';
-  const supabaseKey = 'PASTE_SUPABASE_ANON_KEY_HERE';
+  const supabaseUrl = 'https://zjnwuujlpitsysetqqmv.supabase.co';
+  const supabaseKey = 'sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r';
 
   const supabaseClient = window.supabase.createClient(
     supabaseUrl,
     supabaseKey
   );
+console.log('Supabase connected', supabaseClient);
 
-  console.log('Supabase connected');
+  
 
   const jobs = [];
   const table = document.getElementById("jobTable");
