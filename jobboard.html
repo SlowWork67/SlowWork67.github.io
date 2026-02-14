@@ -78,6 +78,7 @@ body{
   padding:10px 14px;
   border-radius:10px;
   font-size:14px;
+  background:white;
 }
 .category{
   border:2px solid #2bb673;
@@ -108,7 +109,7 @@ body{
   cursor:pointer;
 }
 
-/* ===== TABLE ===== */
+/* ===== TABLE (DESKTOP) ===== */
 .jobboard-table{
   width:100%;
   border-collapse:collapse;
@@ -124,12 +125,51 @@ body{
   background:#f9fafb;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE (FASTWORK STYLE) ===== */
 @media (max-width:768px){
+
   .hero-title{ font-size:32px; }
+
   .post-btn{
     width:100%;
     margin-left:0;
+  }
+
+  /* ซ่อนหัวตาราง */
+  .jobboard-table thead{
+    display:none;
+  }
+
+  /* ตาราง → การ์ด */
+  .jobboard-table,
+  .jobboard-table tbody,
+  .jobboard-table tr,
+  .jobboard-table td{
+    display:block;
+    width:100%;
+  }
+
+  .jobboard-table tr{
+    background:white;
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:14px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .jobboard-table td{
+    border:none;
+    padding:6px 0;
+    font-size:14px;
+  }
+
+  .jobboard-table td::before{
+    content:attr(data-label);
+    font-weight:bold;
+    color:#666;
+    display:block;
+    font-size:12px;
+    margin-bottom:2px;
   }
 }
 </style>
@@ -179,7 +219,7 @@ body{
         </tr>
       </thead>
       <tbody id="jobTable">
-        <!-- JS จะใส่ข้อมูลตรงนี้ -->
+        <!-- JS ใส่ข้อมูล -->
       </tbody>
     </table>
 
@@ -187,21 +227,19 @@ body{
 </div>
 
 <script>
-/* ===============================
-   STEP 2: โครงข้อมูล (ยังไม่ใช้ Supabase)
-   =============================== */
+/* ===== STEP 2: โครงข้อมูล (ยังไม่ใช้ Supabase) ===== */
 
-// 🔸 เว้นที่ไว้สำหรับ Supabase ในอนาคต
+// เว้นไว้สำหรับ Supabase
 // const supabase = createClient(...);
 
-const jobs = []; // ตอนนี้ยังไม่มีงาน
+const jobs = [];
 
 const table = document.getElementById("jobTable");
 
 if (jobs.length === 0) {
   table.innerHTML = `
     <tr>
-      <td colspan="6" style="text-align:center;color:#999">
+      <td data-label="สถานะ" colspan="6" style="text-align:center;color:#999">
         ยังไม่มีงาน
       </td>
     </tr>
