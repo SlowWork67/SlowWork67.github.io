@@ -42,7 +42,6 @@ body{
 }
 .hero-title .job{ color:#ff8a00; }
 .hero-title .board{ color:#2bb673; }
-
 .hero-text{
   margin-top:8px;
   font-size:15px;
@@ -75,44 +74,29 @@ body{
   gap:10px;
   margin-bottom:20px;
 }
-
-/* หมวดหมู่งาน (เขียว) */
-.filters .category{
+.filters select{
   padding:10px 14px;
   border-radius:10px;
-  border:2px solid #2bb673;
-  background:white;
   font-size:14px;
-  transition:0.2s;
 }
-.filters .category:hover{
-  background:#e6f6ef;
+.category{
+  border:2px solid #2bb673;
 }
-.filters .category:focus{
+.category:hover{ background:#e6f6ef; }
+.category:focus{
   background:#2bb673;
   color:white;
   outline:none;
 }
-
-/* ลักษณะการจ้าง (ส้ม) */
-.filters .type{
-  padding:10px 14px;
-  border-radius:10px;
+.type{
   border:2px solid #ff9f1c;
-  background:white;
-  font-size:14px;
-  transition:0.2s;
 }
-.filters .type:hover{
-  background:#fff1e0;
-}
-.filters .type:focus{
+.type:hover{ background:#fff1e0; }
+.type:focus{
   background:#ff9f1c;
   color:white;
   outline:none;
 }
-
-/* ปุ่มประกาศ */
 .post-btn{
   margin-left:auto;
   padding:10px 22px;
@@ -125,12 +109,8 @@ body{
 }
 
 /* ===== TABLE ===== */
-.table-scroll{
-  overflow-x:auto;
-}
 .jobboard-table{
   width:100%;
-  min-width:700px; /* สำคัญสำหรับมือถือ */
   border-collapse:collapse;
   font-size:14px;
 }
@@ -146,20 +126,9 @@ body{
 
 /* ===== RESPONSIVE ===== */
 @media (max-width:768px){
-  .hero-title{
-    font-size:32px;
-  }
-
-  .filters{
-    flex-direction:column;
-  }
-
-  .filters select,
+  .hero-title{ font-size:32px; }
   .post-btn{
     width:100%;
-  }
-
-  .post-btn{
     margin-left:0;
   }
 }
@@ -172,7 +141,6 @@ body{
   <div class="logo">Slow<span>Work</span></div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-title">
     <span class="job">Job</span><span class="board">board</span>
@@ -182,7 +150,6 @@ body{
   </div>
 </div>
 
-<!-- JOBBOARD -->
 <div class="jobboard-container">
   <div class="table-wrap">
 
@@ -200,30 +167,47 @@ body{
       <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
     </div>
 
-    <div class="table-scroll">
-      <table class="jobboard-table">
-        <thead>
-          <tr>
-            <th>ชื่องาน</th>
-            <th>หมวดหมู่</th>
-            <th>ลักษณะการจ้าง</th>
-            <th>งบประมาณ(บาท)</th>
-            <th>ลงประกาศเมื่อ</th>
-            <th>ส่งมอบงานภายใน</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="6" style="text-align:center;color:#999">
-              ยังไม่มีงาน
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="jobboard-table">
+      <thead>
+        <tr>
+          <th>ชื่องาน</th>
+          <th>หมวดหมู่</th>
+          <th>ลักษณะการจ้าง</th>
+          <th>งบประมาณ(บาท)</th>
+          <th>ลงประกาศเมื่อ</th>
+          <th>ส่งมอบงานภายใน</th>
+        </tr>
+      </thead>
+      <tbody id="jobTable">
+        <!-- JS จะใส่ข้อมูลตรงนี้ -->
+      </tbody>
+    </table>
 
   </div>
 </div>
+
+<script>
+/* ===============================
+   STEP 2: โครงข้อมูล (ยังไม่ใช้ Supabase)
+   =============================== */
+
+// 🔸 เว้นที่ไว้สำหรับ Supabase ในอนาคต
+// const supabase = createClient(...);
+
+const jobs = []; // ตอนนี้ยังไม่มีงาน
+
+const table = document.getElementById("jobTable");
+
+if (jobs.length === 0) {
+  table.innerHTML = `
+    <tr>
+      <td colspan="6" style="text-align:center;color:#999">
+        ยังไม่มีงาน
+      </td>
+    </tr>
+  `;
+}
+</script>
 
 </body>
 </html>
