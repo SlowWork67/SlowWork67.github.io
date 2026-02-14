@@ -248,6 +248,20 @@ console.log('Supabase connected', supabaseClient);
 
   const jobs = [];
   const table = document.getElementById("jobTable");
+async function loadJobs() {
+  const { data, error } = await supabaseClient
+    .from('jobs')
+    .select('*');
+
+  if (error) {
+    console.error('Error loading jobs:', error);
+    return;
+  }
+
+  console.log('Jobs from Supabase:', data);
+}
+
+loadJobs();
 
   if (jobs.length === 0) {
     table.innerHTML = `
