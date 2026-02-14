@@ -29,21 +29,24 @@ body{
 }
 .logo span{ color:#4CAF50; }
 
-/* ===== HERO ===== */
+/* ===== HERO (ปรับตำแหน่งตรงนี้) ===== */
 .hero{
   background:white;
-  padding:40px 24px;
+  padding:48px 24px;
+  text-align:center; /* 👈 จัดกลางเหมือน Fastwork */
 }
 .hero-title{
-  font-size:38px;
+  font-size:40px;
   font-weight:bold;
+  line-height:1.1;
 }
 .hero-title .job{ color:#ff8a00; }
 .hero-title .board{ color:#2bb673; }
+
 .hero-text{
-  margin-top:10px;
+  margin-top:8px;      /* 👈 ขยับให้ชิดขึ้น */
   font-size:15px;
-  max-width:600px;
+  color:#555;
 }
 
 /* ===== MAIN ===== */
@@ -73,21 +76,43 @@ body{
   margin-bottom:20px;
 }
 
-.filters select{
+/* ค้นหาหมวดหมู่งาน (เขียว) */
+.filters .category{
   padding:10px 14px;
   border-radius:10px;
-  border:2px solid #ddd;
+  border:2px solid #2bb673;
   background:white;
   font-size:14px;
+  transition:0.2s;
+}
+.filters .category:hover{
+  background:#e6f6ef;        /* เขียวอ่อน */
+}
+.filters .category:focus{
+  background:#2bb673;        /* เขียวเข้ม */
+  color:white;
+  outline:none;
 }
 
-.filters .category{
-  border-color:#2bb673;
-}
+/* ลักษณะการจ้าง (ส้ม) */
 .filters .type{
-  border-color:#ff9f1c;
+  padding:10px 14px;
+  border-radius:10px;
+  border:2px solid #ff9f1c;
+  background:white;
+  font-size:14px;
+  transition:0.2s;
+}
+.filters .type:hover{
+  background:#fff1e0;        /* ส้มอ่อน */
+}
+.filters .type:focus{
+  background:#ff9f1c;        /* ส้มเข้ม */
+  color:white;
+  outline:none;
 }
 
+/* ปุ่มประกาศ */
 .post-btn{
   margin-left:auto;
   padding:10px 22px;
@@ -117,10 +142,7 @@ body{
 
 /* ===== RESPONSIVE ===== */
 @media (max-width:768px){
-  .hero-title{ font-size:30px; }
-  .jobboard-table{
-    font-size:13px;
-  }
+  .hero-title{ font-size:32px; }
   .post-btn{
     width:100%;
     margin-left:0;
@@ -131,12 +153,11 @@ body{
 
 <body>
 
-<!-- ===== HEADER ===== -->
 <div class="top-header">
   <div class="logo">Slow<span>Work</span></div>
 </div>
 
-<!-- ===== HERO ===== -->
+<!-- HERO -->
 <div class="hero">
   <div class="hero-title">
     <span class="job">Job</span><span class="board">board</span>
@@ -146,13 +167,12 @@ body{
   </div>
 </div>
 
-<!-- ===== JOBBOARD ===== -->
+<!-- JOBBOARD -->
 <div class="jobboard-container">
   <div class="table-wrap">
 
     <div class="table-title">Jobboard</div>
 
-    <!-- FILTER -->
     <div class="filters">
       <select class="category">
         <option>ค้นหาหมวดหมู่งาน</option>
@@ -165,7 +185,6 @@ body{
       <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
     </div>
 
-    <!-- TABLE -->
     <table class="jobboard-table">
       <thead>
         <tr>
@@ -178,10 +197,9 @@ body{
         </tr>
       </thead>
       <tbody>
-        <!-- 🔹 STEP ถัดไป: ตรงนี้จะดึงข้อมูลจาก Supabase -->
         <tr>
           <td colspan="6" style="text-align:center;color:#999">
-            ยังไม่มีงาน (รอเชื่อมระบบ)
+            ยังไม่มีงาน
           </td>
         </tr>
       </tbody>
@@ -189,11 +207,6 @@ body{
 
   </div>
 </div>
-
-<!-- ============================= -->
-<!-- STEP ถัดไปจะเริ่มตรงนี้ -->
-<!-- 🔽 เว้นไว้สำหรับ Supabase -->
-<!-- ============================= -->
 
 </body>
 </html>
