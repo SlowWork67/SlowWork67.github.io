@@ -12,7 +12,163 @@ body{
   font-family:Arial,sans-serif;
   background:#f6f6f6;
 }
-/* (CSS ทั้งหมดเหมือนเดิม ไม่ได้แตะ) */
+
+/* ===== TOP BAR ===== */
+.top-header{
+  width:100%;
+  height:80px;
+  background:linear-gradient(90deg,#ff9f1c,#2bb673);
+  display:flex;
+  align-items:center;
+  padding:0 24px;
+}
+.logo{
+  font-size:24px;
+  font-weight:bold;
+  color:white;
+}
+.logo span{ color:#4CAF50; }
+
+/* ===== HERO ===== */
+.hero{
+  background:white;
+  padding:48px 24px;
+  text-align:center;
+}
+.hero-title{
+  font-size:40px;
+  font-weight:bold;
+  line-height:1.1;
+}
+.hero-title .job{ color:#ff8a00; }
+.hero-title .board{ color:#2bb673; }
+.hero-text{
+  margin-top:8px;
+  font-size:15px;
+  color:#555;
+}
+
+/* ===== MAIN ===== */
+.jobboard-container{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 16px;
+}
+.table-wrap{
+  background:white;
+  border-radius:14px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  padding:20px;
+}
+.table-title{
+  font-size:24px;
+  font-weight:bold;
+  color:#ff8a00;
+  margin-bottom:16px;
+}
+
+/* ===== FILTERS ===== */
+.filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:20px;
+}
+.filters select{
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:14px;
+  background:white;
+}
+.category{
+  border:2px solid #2bb673;
+}
+.category:hover{ background:#e6f6ef; }
+.category:focus{
+  background:#2bb673;
+  color:white;
+  outline:none;
+}
+.type{
+  border:2px solid #ff9f1c;
+}
+.type:hover{ background:#fff1e0; }
+.type:focus{
+  background:#ff9f1c;
+  color:white;
+  outline:none;
+}
+.post-btn{
+  margin-left:auto;
+  padding:10px 22px;
+  border-radius:10px;
+  border:2px solid #2bb673;
+  background:white;
+  color:#2bb673;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* ===== TABLE (DESKTOP) ===== */
+.jobboard-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.jobboard-table th,
+.jobboard-table td{
+  padding:12px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+}
+.jobboard-table thead{
+  background:#f9fafb;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:768px){
+  .hero-title{ font-size:32px; }
+
+  .post-btn{
+    width:100%;
+    margin-left:0;
+  }
+
+  .jobboard-table thead{
+    display:none;
+  }
+
+  .jobboard-table,
+  .jobboard-table tbody,
+  .jobboard-table tr,
+  .jobboard-table td{
+    display:block;
+    width:100%;
+  }
+
+  .jobboard-table tr{
+    background:white;
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:14px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .jobboard-table td{
+    border:none;
+    padding:6px 0;
+    font-size:14px;
+  }
+
+  .jobboard-table td::before{
+    content:attr(data-label);
+    font-weight:bold;
+    color:#666;
+    display:block;
+    font-size:12px;
+    margin-bottom:2px;
+  }
+}
 </style>
 </head>
 
@@ -70,13 +226,12 @@ body{
           <td data-label="ส่งมอบงานภายใน">-</td>
         </tr>
       </tbody>
-
     </table>
 
   </div>
 </div>
 
-<!-- ✅ โหลด Supabase ให้ถูกที่ -->
+<!-- ✅ Supabase JS (แก้ถูกต้อง) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
