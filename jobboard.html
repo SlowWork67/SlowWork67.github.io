@@ -20,10 +20,10 @@ body{
   background:linear-gradient(90deg,#ff9f1c,#2bb673);
   display:flex;
   align-items:center;
-  padding:0 80px;
+  padding:0 24px;
 }
 .logo{
-  font-size:26px;
+  font-size:24px;
   font-weight:bold;
   color:white;
 }
@@ -32,58 +32,65 @@ body{
 /* ===== HERO ===== */
 .hero{
   background:white;
-  padding:50px 80px;
+  padding:40px 24px;
 }
 .hero-title{
-  font-size:46px;
+  font-size:38px;
   font-weight:bold;
 }
 .hero-title .job{ color:#ff8a00; }
 .hero-title .board{ color:#2bb673; }
 .hero-text{
   margin-top:10px;
-  font-size:16px;
+  font-size:15px;
   max-width:600px;
 }
 
 /* ===== MAIN ===== */
 .jobboard-container{
   max-width:1100px;
-  margin:40px auto;
-  padding:20px;
+  margin:30px auto;
+  padding:0 16px;
 }
 .table-wrap{
   background:white;
   border-radius:14px;
   box-shadow:0 4px 10px rgba(0,0,0,0.05);
-  padding:24px;
+  padding:20px;
 }
 .table-title{
-  font-size:26px;
+  font-size:24px;
   font-weight:bold;
   color:#ff8a00;
+  margin-bottom:16px;
 }
 
 /* ===== FILTERS ===== */
 .filters{
   display:flex;
-  align-items:center;
-  gap:12px;
+  flex-wrap:wrap;
+  gap:10px;
   margin-bottom:20px;
 }
+
 .filters select{
   padding:10px 14px;
   border-radius:10px;
+  border:2px solid #ddd;
+  background:white;
+  font-size:14px;
 }
-.filters select.category{
-  border:2px solid #2bb673;
+
+.filters .category{
+  border-color:#2bb673;
 }
-.filters select.type{
-  border:2px solid #ff9f1c;
+.filters .type{
+  border-color:#ff9f1c;
 }
+
 .post-btn{
   margin-left:auto;
-  padding:10px 26px;
+  padding:10px 22px;
   border-radius:10px;
   border:2px solid #2bb673;
   background:white;
@@ -100,32 +107,36 @@ body{
 }
 .jobboard-table th,
 .jobboard-table td{
-  padding:14px;
+  padding:12px;
   border-bottom:1px solid #eee;
+  text-align:left;
 }
 .jobboard-table thead{
   background:#f9fafb;
 }
 
-/* ===== MODAL ===== */
-#postModal{
-  display:none;
-  margin-bottom:20px;
-}
-#postModal input{
-  width:100%;
-  padding:10px;
-  margin:6px 0;
+/* ===== RESPONSIVE ===== */
+@media (max-width:768px){
+  .hero-title{ font-size:30px; }
+  .jobboard-table{
+    font-size:13px;
+  }
+  .post-btn{
+    width:100%;
+    margin-left:0;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- ===== HEADER ===== -->
 <div class="top-header">
   <div class="logo">Slow<span>Work</span></div>
 </div>
 
+<!-- ===== HERO ===== -->
 <div class="hero">
   <div class="hero-title">
     <span class="job">Job</span><span class="board">board</span>
@@ -135,133 +146,54 @@ body{
   </div>
 </div>
 
+<!-- ===== JOBBOARD ===== -->
 <div class="jobboard-container">
-<div class="table-wrap">
+  <div class="table-wrap">
 
-<!-- POST JOB -->
-<div id="postModal">
-  <h3>ประกาศหาฟรีแลนซ์</h3>
-  <input id="jobTitle" placeholder="ชื่องาน">
-  <input id="jobDesc" placeholder="รายละเอียดงาน">
-  <input id="jobCategory" placeholder="หมวดหมู่งาน">
-  <input id="jobHireType" placeholder="ลักษณะการจ้าง">
-  <input id="jobPrice" type="number" placeholder="งบประมาณ">
-  <input id="jobDeadline" type="date">
-  <button id="submitJob">โพสต์งาน</button>
-  <button id="cancelPost">ยกเลิก</button>
+    <div class="table-title">Jobboard</div>
+
+    <!-- FILTER -->
+    <div class="filters">
+      <select class="category">
+        <option>ค้นหาหมวดหมู่งาน</option>
+      </select>
+
+      <select class="type">
+        <option>ลักษณะการจ้าง</option>
+      </select>
+
+      <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
+    </div>
+
+    <!-- TABLE -->
+    <table class="jobboard-table">
+      <thead>
+        <tr>
+          <th>ชื่องาน</th>
+          <th>หมวดหมู่</th>
+          <th>ลักษณะการจ้าง</th>
+          <th>งบประมาณ(บาท)</th>
+          <th>ลงประกาศเมื่อ</th>
+          <th>ส่งมอบงานภายใน</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 🔹 STEP ถัดไป: ตรงนี้จะดึงข้อมูลจาก Supabase -->
+        <tr>
+          <td colspan="6" style="text-align:center;color:#999">
+            ยังไม่มีงาน (รอเชื่อมระบบ)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 </div>
 
-<div class="table-title">Jobboard</div>
-
-<div class="filters">
-  <select class="category">
-    <option>ค้นหาหมวดหมู่งาน</option>
-  </select>
-  <select class="type">
-    <option>ลักษณะการจ้าง</option>
-  </select>
-  <button class="post-btn">ประกาศหาฟรีแลนซ์</button>
-</div>
-
-<table class="jobboard-table">
-<thead>
-<tr>
-  <th>ชื่องาน</th>
-  <th>หมวดหมู่</th>
-  <th>ลักษณะการจ้าง</th>
-  <th>งบประมาณ(บาท)</th>
-  <th>ลงประกาศเมื่อ</th>
-  <th>ส่งมอบงานภายใน</th>
-</tr>
-</thead>
-<tbody id="jobs-table-body"></tbody>
-</table>
-
-</div>
-</div>
-
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-const supabase = createClient(
-  "https://zjnwuujlpitsysetqqmv.supabase.co",
-  "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r"
-);
-
-/* ===== INPUTS ===== */
-const jobTitle = document.getElementById("jobTitle");
-const jobDesc = document.getElementById("jobDesc");
-const jobCategory = document.getElementById("jobCategory");
-const jobHireType = document.getElementById("jobHireType");
-const jobPrice = document.getElementById("jobPrice");
-const jobDeadline = document.getElementById("jobDeadline");
-
-/* ===== LOAD JOBS ===== */
-async function loadJobs(){
-  const { data } = await supabase
-    .from("jobs")
-    .select("*")
-    .order("created_at",{ ascending:false });
-
-  const tbody = document.getElementById("jobs-table-body");
-  tbody.innerHTML = "";
-
-  if(!data || data.length === 0){
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6" style="text-align:center">ยังไม่มีงาน</td>
-      </tr>`;
-    return;
-  }
-
-  data.forEach(job=>{
-    tbody.innerHTML += `
-      <tr>
-        <td>${job.title}</td>
-        <td>${job.category || "-"}</td>
-        <td>${job.hire_type || "-"}</td>
-        <td>${job.price ?? "-"}</td>
-        <td>${new Date(job.created_at).toLocaleDateString("th-TH")}</td>
-        <td>${job.deadline ? new Date(job.deadline).toLocaleDateString("th-TH") : "-"}</td>
-      </tr>
-    `;
-  });
-}
-
-loadJobs();
-
-/* ===== EVENTS ===== */
-const postBtn = document.querySelector(".post-btn");
-const postModal = document.getElementById("postModal");
-const submitJob = document.getElementById("submitJob");
-const cancelPost = document.getElementById("cancelPost");
-
-postBtn.onclick = ()=> postModal.style.display="block";
-cancelPost.onclick = ()=> postModal.style.display="none";
-
-submitJob.onclick = async ()=>{
-  await supabase.from("jobs").insert({
-    title: jobTitle.value,
-    description: jobDesc.value,
-    category: jobCategory.value,
-    hire_type: jobHireType.value,
-    price: jobPrice.value || null,
-    deadline: jobDeadline.value || null,
-    status: "เปิดรับ"
-  });
-
-  postModal.style.display="none";
-
-  jobTitle.value = "";
-  jobDesc.value = "";
-  jobCategory.value = "";
-  jobHireType.value = "";
-  jobPrice.value = "";
-  jobDeadline.value = "";
-
-  loadJobs();
-};
-</script>
+<!-- ============================= -->
+<!-- STEP ถัดไปจะเริ่มตรงนี้ -->
+<!-- 🔽 เว้นไว้สำหรับ Supabase -->
+<!-- ============================= -->
 
 </body>
 </html>
