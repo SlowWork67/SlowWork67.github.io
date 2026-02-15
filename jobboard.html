@@ -112,6 +112,12 @@ body{
 .jobboard-table thead{
   background:#f9fafb;
 }
+.jobboard-table tbody tr{
+  cursor:pointer;
+}
+.jobboard-table tbody tr:hover{
+  background:#f9fafb;
+}
 </style>
 </head>
 
@@ -172,7 +178,6 @@ body{
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
-  /* ===== Supabase Config (anon key only) ===== */
   const SUPABASE_URL = "https://zjnwuujlpitsysetqqmv.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r";
 
@@ -187,15 +192,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const { data, error } = await supabaseClient
         .from("jobs")
-        .select("title, category, type, budget, created_at, deadline")
+        .select("id, title, category, type, budget, created_at, deadline")
         .order("created_at", { ascending: false });
 
-      console.log('jobs data:', data);
-
-      if (error) {
-        console.error("Supabase error:", error.message);
-        throw error;
-      }
+      if (error) throw error;
 
       tableBody.innerHTML = "";
 
@@ -212,6 +212,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       data.forEach(job => {
         const row = document.createElement("tr");
+
+        row.onclick = () => {
+          window.location.href = `job-detail.html?id=${job.id}`;
+        };
+
         row.innerHTML = `
           <td>${job.title ?? "-"}</td>
           <td>${job.category ?? "-"}</td>
