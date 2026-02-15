@@ -167,11 +167,28 @@
       border-radius: 20px;
     }
 
-    /* ===== BUTTON ===== */
-    .submit-btn {
-      width: 100%;
-      padding: 14px;
+    /* ===== BUTTON AREA ===== */
+    .button-group {
+      display: flex;
+      gap: 14px;
       margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .back-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      border: 2px solid var(--border-soft);
+      background-color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .submit-btn {
+      flex: 1;
+      padding: 14px;
       border-radius: 12px;
       border: none;
       font-size: 16px;
@@ -185,7 +202,8 @@
       );
     }
 
-    .submit-btn:hover {
+    .submit-btn:hover,
+    .back-btn:hover {
       opacity: 0.9;
     }
   </style>
@@ -205,7 +223,7 @@
   <div class="container">
 
     <div class="notice-box">
-      สำหรับโพสต์จ้างงานเท่านั้น กรุณากรอกข้อมูลให้ครบถ้วนและชัดเจน
+      โปรดกรอกข้อมูลให้ครบถ้วนและถูกต้อง เพื่อให้ผู้รับงานเข้าใจรายละเอียดงานได้ชัดเจน
     </div>
 
     <div class="card">
@@ -234,7 +252,7 @@
           <option>เขียนโปรแกรม</option>
           <option>เขียนบทความ</option>
           <option>ตัดต่อวิดีโอ</option>
-         <option>อื่นๆ</option>
+          <option>อื่นๆ</option>
         </select>
       </div>
 
@@ -251,31 +269,31 @@
       <div class="form-group">
         <label>ลักษณะการจ้าง</label>
         <div class="job-type">
-
           <label class="job-option">
             <input type="radio" name="jobtype">
             <span>ฟรีแลนซ์</span>
           </label>
-
           <label class="job-option">
             <input type="radio" name="jobtype">
             <span>สัญญาจ้าง</span>
           </label>
-
           <label class="job-option">
             <input type="radio" name="jobtype">
             <span>พาร์ทไทม์</span>
           </label>
-
           <label class="job-option">
             <input type="radio" name="jobtype">
             <span>งานประจำ</span>
           </label>
-
         </div>
       </div>
 
-      <button class="submit-btn">โพสต์งาน</button>
+      <div class="button-group">
+        <button class="back-btn" onclick="window.location.href='jobboard.html'">
+          ย้อนกลับ
+        </button>
+        <button class="submit-btn">โพสต์งาน</button>
+      </div>
     </div>
 
   </div>
