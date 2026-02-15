@@ -259,19 +259,19 @@
         <label>ลักษณะการจ้าง</label>
         <div class="job-type">
           <label class="job-option">
-            <input type="radio" name="type" value="ฟรีแลนซ์">
+            <input type="radio" name="job_type" value="ฟรีแลนซ์">
             <span>ฟรีแลนซ์</span>
           </label>
           <label class="job-option">
-            <input type="radio" name="type" value="สัญญาจ้าง">
+            <input type="radio" name="job_type" value="สัญญาจ้าง">
             <span>สัญญาจ้าง</span>
           </label>
           <label class="job-option">
-            <input type="radio" name="type" value="พาร์ทไทม์">
+            <input type="radio" name="job_type" value="พาร์ทไทม์">
             <span>พาร์ทไทม์</span>
           </label>
           <label class="job-option">
-            <input type="radio" name="type" value="งานประจำ">
+            <input type="radio" name="job_type" value="งานประจำ">
             <span>งานประจำ</span>
           </label>
         </div>
@@ -305,12 +305,11 @@ document.querySelector('.submit-btn').addEventListener('click', async () => {
   const category = document.querySelector('select').value;
   const budget = document.querySelector('input[type="number"]').value;
   const deadline = document.querySelector('input[type="date"]').value;
-
   const job_type = document.querySelector(
-    'input[name="jobtype"]:checked'
+    'input[name="jobtype"]:checked' 
   )?.nextElementSibling.innerText || "";
-
-  if (!title || !description || !category) {
+console.log("job_type =", job_type);
+  if (!title || !description || !category||!job_type) {
     alert("กรุณากรอกข้อมูลให้ครบ");
     return;
   }
