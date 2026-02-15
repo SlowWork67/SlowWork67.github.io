@@ -287,33 +287,56 @@
 
   </div>
 
-<script>
-  document.querySelector('.submit-btn').addEventListener('click', function () {
-    const title = document.querySelector('input[name="title"]')?.value || '';
-    const category = document.querySelector('select[name="category"]')?.value || '';
-    const description = document.querySelector('textarea[name="description"]')?.value || '';
-    const type = document.querySelector('input[name="type"]:checked')?.value || '';
-    const budget = document.querySelector('input[name="budget"]')?.value || '';
-    const deadline = document.querySelector('input[name="deadline"]')?.value || '';
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    const job = {
-      id: Date.now(),
+<script>
+const SUPABASE_URL = "https://zjnwuujlpitsysetqqmv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+document.querySelector('.submit-btn').addEventListener('click', async () => {
+
+  const title = document.querySelector('input[placeholder*="Web"]').value;
+  const description = document.querySelector('textarea').value;
+  const category = document.querySelector('select').value;
+  const budget = document.querySelector('input[type="number"]').value;
+  const deadline = document.querySelector('input[type="date"]').value;
+
+  const type = document.querySelector(
+    'input[name="jobtype"]:checked'
+  )?.nextElementSibling.innerText || "";
+
+  if (!title || !description || !category) {
+    alert("กรุณากรอกข้อมูลให้ครบ");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("jobs")
+    .insert([{
       title,
-      category,
       description,
+      category,
       type,
       budget,
-      deadline,
-      created_at: new Date().toISOString()
-    };
+      deadline
+    }]);
 
-    const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
-    jobs.push(job);
-    localStorage.setItem('jobs', JSON.stringify(jobs));
+  if (error) {
+    alert("โพสต์งานไม่สำเร็จ");
+    console.error(error);
+    return;
+  }
 
-    window.location.href = 'jobboard.html';
-  });
+  // กลับหน้า jobboard หลังโพสต์สำเร็จ
+  window.location.href = "jobboard.html";
+});
 </script>
+
 
 </body>
 </html>
