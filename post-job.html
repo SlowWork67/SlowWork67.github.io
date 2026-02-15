@@ -23,8 +23,6 @@
       --green-main: #5fb3a2;
       --orange-soft: #ffe2c6;
       --orange-main: #f4a261;
-      --blue-main: #2f6fd6;
-      --blue-soft: #e8f0ff;
       --border-soft: #e0e0e0;
     }
 
@@ -60,6 +58,14 @@
       font-weight: 600;
     }
 
+    .site-name .slow {
+      color: var(--green-main);
+    }
+
+    .site-name .work {
+      color: var(--orange-main);
+    }
+
     /* ===== CONTAINER ===== */
     .container {
       max-width: 900px;
@@ -67,11 +73,11 @@
       padding: 0 20px;
     }
 
-    /* ===== BLUE NOTICE BOX ===== */
+    /* ===== NOTICE BOX (ORANGE) ===== */
     .notice-box {
-      background-color: var(--blue-soft);
-      border: 2px solid var(--blue-main);
-      color: var(--blue-main);
+      background-color: var(--orange-soft);
+      border: 2px solid var(--orange-main);
+      color: #a85a1a;
       padding: 14px 18px;
       border-radius: 10px;
       font-weight: 600;
@@ -104,7 +110,10 @@
     }
 
     input[type="text"],
-    textarea {
+    input[type="number"],
+    input[type="date"],
+    textarea,
+    select {
       width: 100%;
       padding: 12px 14px;
       border-radius: 10px;
@@ -119,7 +128,8 @@
     }
 
     input:focus,
-    textarea:focus {
+    textarea:focus,
+    select:focus {
       border-color: var(--green-main);
     }
 
@@ -186,14 +196,16 @@
   <!-- HEADER -->
   <div class="header">
     <div class="logo">JB</div>
-    <div class="site-name">SlowWork</div>
+    <div class="site-name">
+      <span class="slow">Slow</span><span class="work">Work</span>
+    </div>
   </div>
 
   <!-- CONTENT -->
   <div class="container">
 
     <div class="notice-box">
-      สำหรับโพสต์จ้างงานเท่านั้น
+      สำหรับโพสต์จ้างงานเท่านั้น กรุณากรอกข้อมูลให้ครบถ้วนและชัดเจน
     </div>
 
     <div class="card">
@@ -207,6 +219,32 @@
       <div class="form-group">
         <label>รายละเอียดงาน</label>
         <textarea placeholder="อธิบายลักษณะงาน ความรับผิดชอบ ฯลฯ"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>ตัวอย่างผลงาน</label>
+        <input type="text" placeholder="ลิงก์ผลงาน / Google Drive / Behance">
+      </div>
+
+      <div class="form-group">
+        <label>หมวดหมู่งาน</label>
+        <select>
+          <option>เลือกหมวดหมู่</option>
+          <option>ออกแบบกราฟิก</option>
+          <option>เขียนโปรแกรม</option>
+          <option>เขียนบทความ</option>
+          <option>ตัดต่อวิดีโอ</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>งบประมาณ (บาท)</label>
+        <input type="number" placeholder="เช่น 5000">
+      </div>
+
+      <div class="form-group">
+        <label>กำหนดส่งงาน</label>
+        <input type="date">
       </div>
 
       <div class="form-group">
