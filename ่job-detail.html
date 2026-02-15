@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>รายละเอียดงาน | JobBoard</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: #f5f7f6;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #2a9d8f;
+    }
+
+    .meta {
+      margin: 12px 0;
+      color: #555;
+    }
+
+    .meta b {
+      display: inline-block;
+      width: 120px;
+    }
+
+    .back-btn {
+      margin-top: 24px;
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(90deg, #5fb3a2, #f4a261);
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="card" id="jobDetail">
+      <!-- รายละเอียดงานจะมาแสดงตรงนี้ -->
+    </div>
+
+    <a href="jobboard.html" class="back-btn">← กลับไปหน้า Job Board</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = Number(params.get("id"));
+
+    const jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+    const job = jobs.find(j => j.id === id);
+
+    if (!job) {
+      document.getElementById("jobDetail").innerHTML =
+        "<p>ไม่พบข้อมูลงานนี้</p>";
+    } else {
+      document.getElementById("jobDetail").innerHTML = `
+        <h2>${job.title}</h2>
+
+        <div class="meta"><b>หมวดหมู่:</b> ${job.category}</div>
+        <div class="meta"><b>งบประมาณ:</b> ${job.budget} บาท</div>
+        <div class="meta"><b>กำหนดส่ง:</b> ${job.deadline || "-"}</div>
+        <div class="meta"><b>วันที่โพสต์:</b> ${job.created_at}</div>
+
+        <hr>
+
+        <p>${job.description}</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
