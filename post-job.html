@@ -5,7 +5,6 @@
   <title>Post Job | JobBoard</title>
 
   <style>
-    /* ===== RESET ===== */
     * {
       box-sizing: border-box;
       font-family: "Segoe UI", Tahoma, sans-serif;
@@ -17,7 +16,6 @@
       color: #333;
     }
 
-    /* ===== COLOR VARIABLES ===== */
     :root {
       --green-soft: #cfe8d9;
       --green-main: #5fb3a2;
@@ -26,7 +24,6 @@
       --border-soft: #e0e0e0;
     }
 
-    /* ===== HEADER ===== */
     .header {
       width: 100%;
       background: linear-gradient(
@@ -66,14 +63,12 @@
       color: var(--orange-main);
     }
 
-    /* ===== CONTAINER ===== */
     .container {
       max-width: 900px;
       margin: 32px auto;
       padding: 0 20px;
     }
 
-    /* ===== NOTICE BOX (ORANGE) ===== */
     .notice-box {
       background-color: var(--orange-soft);
       border: 2px solid var(--orange-main);
@@ -84,7 +79,6 @@
       margin-bottom: 24px;
     }
 
-    /* ===== FORM CARD ===== */
     .card {
       background-color: #ffffff;
       border-radius: 14px;
@@ -98,7 +92,6 @@
       color: var(--green-main);
     }
 
-    /* ===== FORM ELEMENTS ===== */
     .form-group {
       margin-bottom: 18px;
     }
@@ -133,7 +126,6 @@
       border-color: var(--green-main);
     }
 
-    /* ===== JOB TYPE ===== */
     .job-type {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -167,7 +159,6 @@
       border-radius: 20px;
     }
 
-    /* ===== BUTTON AREA ===== */
     .button-group {
       display: flex;
       gap: 14px;
@@ -211,7 +202,6 @@
 
 <body>
 
-  <!-- HEADER -->
   <div class="header">
     <div class="logo">JB</div>
     <div class="site-name">
@@ -219,7 +209,6 @@
     </div>
   </div>
 
-  <!-- CONTENT -->
   <div class="container">
 
     <div class="notice-box">
@@ -231,12 +220,12 @@
 
       <div class="form-group">
         <label>ชื่องาน</label>
-        <input type="text" placeholder="เช่น Web Designer">
+        <input type="text" name="title" placeholder="เช่น Web Designer">
       </div>
 
       <div class="form-group">
         <label>รายละเอียดงาน</label>
-        <textarea placeholder="อธิบายลักษณะงาน ความรับผิดชอบ ฯลฯ"></textarea>
+        <textarea name="description" placeholder="อธิบายลักษณะงาน ความรับผิดชอบ ฯลฯ"></textarea>
       </div>
 
       <div class="form-group">
@@ -246,8 +235,8 @@
 
       <div class="form-group">
         <label>หมวดหมู่งาน</label>
-        <select>
-          <option>เลือกหมวดหมู่</option>
+        <select name="category">
+          <option value="">เลือกหมวดหมู่</option>
           <option>ออกแบบกราฟิก</option>
           <option>เขียนโปรแกรม</option>
           <option>เขียนบทความ</option>
@@ -258,31 +247,31 @@
 
       <div class="form-group">
         <label>งบประมาณ (บาท)</label>
-        <input type="number" placeholder="เช่น 5000">
+        <input type="number" name="budget" placeholder="เช่น 5000">
       </div>
 
       <div class="form-group">
         <label>กำหนดส่งงาน</label>
-        <input type="date">
+        <input type="date" name="deadline">
       </div>
 
       <div class="form-group">
         <label>ลักษณะการจ้าง</label>
         <div class="job-type">
           <label class="job-option">
-            <input type="radio" name="jobtype">
+            <input type="radio" name="type" value="ฟรีแลนซ์">
             <span>ฟรีแลนซ์</span>
           </label>
           <label class="job-option">
-            <input type="radio" name="jobtype">
+            <input type="radio" name="type" value="สัญญาจ้าง">
             <span>สัญญาจ้าง</span>
           </label>
           <label class="job-option">
-            <input type="radio" name="jobtype">
+            <input type="radio" name="type" value="พาร์ทไทม์">
             <span>พาร์ทไทม์</span>
           </label>
           <label class="job-option">
-            <input type="radio" name="jobtype">
+            <input type="radio" name="type" value="งานประจำ">
             <span>งานประจำ</span>
           </label>
         </div>
@@ -292,11 +281,39 @@
         <button class="back-btn" onclick="window.location.href='jobboard.html'">
           ย้อนกลับ
         </button>
-        <button class="submit-btn">โพสต์งาน</button>
+        <button type="button" class="submit-btn">โพสต์งาน</button>
       </div>
     </div>
 
   </div>
+
+<script>
+  document.querySelector('.submit-btn').addEventListener('click', function () {
+    const title = document.querySelector('input[name="title"]')?.value || '';
+    const category = document.querySelector('select[name="category"]')?.value || '';
+    const description = document.querySelector('textarea[name="description"]')?.value || '';
+    const type = document.querySelector('input[name="type"]:checked')?.value || '';
+    const budget = document.querySelector('input[name="budget"]')?.value || '';
+    const deadline = document.querySelector('input[name="deadline"]')?.value || '';
+
+    const job = {
+      id: Date.now(),
+      title,
+      category,
+      description,
+      type,
+      budget,
+      deadline,
+      created_at: new Date().toISOString()
+    };
+
+    const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+    jobs.push(job);
+    localStorage.setItem('jobs', JSON.stringify(jobs));
+
+    window.location.href = 'jobboard.html';
+  });
+</script>
 
 </body>
 </html>
