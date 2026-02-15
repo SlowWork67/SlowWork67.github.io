@@ -170,55 +170,64 @@ body{
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
-  const supabaseUrl = 'https://zjnwuujlpitsysetqqmv.supabase.co';
-  const supabaseKey = 'sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r';
+  /* ===== Supabase Config (anon key only) ===== */
+  const SUPABASE_URL = "https://zjnwuujlpitsysetqqmv.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r";
 
   const supabaseClient = window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
   );
 
-  console.log('Supabase connected');
-
-  const table = document.getElementById("jobTableBody");
+  const tableBody = document.getElementById("jobTableBody");
 
   async function loadJobs() {
-    const { data, error } = await supabaseClient
-      .from('jobs')
-      .select('*');
+    try {
+      const { data, error } = await supabaseClient
+        .from("jobs")
+        .select("title, category, type, budget, created_at, deadline")
+        .order("created_at", { ascending: false });
 
-    if (error) {
-      console.error('Error loading jobs:', error);
-      return;
-    }
+      if (error) {
+        console.error("Supabase error:", error.message);
+        throw error;
+      }
 
-    console.log('Jobs from Supabase:', data);
+      tableBody.innerHTML = "";
 
-    table.innerHTML = "";
+      if (!data || data.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align:center;color:#999">
+              ยังไม่มีงาน
+            </td>
+          </tr>
+        `;
+        return;
+      }
 
-    if (!data || data.length === 0) {
-      table.innerHTML = `
+      data.forEach(job => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${job.title ?? "-"}</td>
+          <td>${job.category ?? "-"}</td>
+          <td>${job.type ?? "-"}</td>
+          <td>${job.budget ?? "-"}</td>
+          <td>${job.created_at ? new Date(job.created_at).toLocaleDateString("th-TH") : "-"}</td>
+          <td>${job.deadline ?? "-"}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+
+    } catch (err) {
+      tableBody.innerHTML = `
         <tr>
-          <td colspan="6" style="text-align:center;color:#999">
-            ยังไม่มีงาน
+          <td colspan="6" style="text-align:center;color:red">
+            เกิดข้อผิดพลาดในการโหลดข้อมูล
           </td>
         </tr>
       `;
-      return;
     }
-
-    data.forEach(job => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${job.title || "-"}</td>
-        <td>${job.category || "-"}</td>
-        <td>${job.type || "-"}</td>
-        <td>${job.budget || "-"}</td>
-        <td>${job.created_at ? new Date(job.created_at).toLocaleDateString() : "-"}</td>
-        <td>${job.deadline || "-"}</td>
-      `;
-      table.appendChild(row);
-    });
   }
 
   loadJobs();
