@@ -3,55 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fastwork Clone - หน้าแรก</title>
+    <title>จ้างงานและส่งบรีฟ - Fastwork Style</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>body { font-family: 'Kanit', sans-serif; }</style>
 </head>
-<body class="bg-gray-50">
-    <nav class="bg-white p-4 shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
-            <a href="post-job.html" class="bg-orange-500 text-white px-4 py-2 rounded-lg font-bold">ลงประกาศงาน</a>
+<body class="bg-gray-100">
+
+    <nav class="bg-white p-4 border-b sticky top-0 z-50">
+        <div class="max-w-3xl mx-auto flex items-center">
+            <a href="index.html" class="text-blue-600 font-bold text-sm">← กลับไปหน้าแรก</a>
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto p-6">
-        <h2 class="text-2xl font-bold mb-8">งานทั้งหมด</h2>
-        <div id="job-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <p class="text-gray-500">กำลังโหลดงาน...</p>
+    <main class="max-w-3xl mx-auto p-4 md:p-8">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+            <div class="bg-blue-600 p-8 text-white text-center">
+                <h2 class="text-2xl font-bold">ส่งบรีฟงานของคุณ</h2>
+                <p class="opacity-80 text-sm mt-1">รายละเอียดและไฟล์จะถูกส่งไปที่ฟรีแลนซ์ทันที</p>
+            </div>
+
+            <div class="p-8 space-y-6">
+                <div>
+                    <label class="block text-lg font-bold mb-2">1. รายละเอียดงาน</label>
+                    <textarea id="job-detail" rows="4" class="w-full border-2 border-gray-100 rounded-2xl p-4 focus:border-blue-500 outline-none transition" placeholder="บอกชื่อแบรนด์, โทนสี, หรือสไตล์ที่ชอบ..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-lg font-bold mb-2">2. อัพโหลดรูปตัวอย่าง/บรีฟ</label>
+                    <label for="file-input" class="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-blue-200 rounded-3xl bg-blue-50/30 cursor-pointer hover:bg-blue-50 transition">
+                        <div class="text-4xl mb-2">☁️</div>
+                        <p id="status-text" class="text-blue-600 font-medium">คลิกเพื่อเลือกไฟล์จาก iPad</p>
+                        <p class="text-xs text-gray-400 mt-1">รองรับ JPG, PNG, PDF</p>
+                        <input type="file" id="file-input" class="hidden" accept="image/*,.pdf">
+                    </label>
+                </div>
+
+                <button onclick="handleSubmit()" id="submit-btn" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold text-xl shadow-lg shadow-blue-200 hover:bg-blue-700 active:scale-[0.98] transition-all">
+                    ยืนยันการจ้างงาน
+                </button>
+            </div>
         </div>
     </main>
 
     <script>
+        // --- การตั้งค่า Supabase ของคุณ ---
         const SUPABASE_URL = 'https://zxubzigylpalejienmzi.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dWJ6aWd5bHBhbGVqaWVubXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMjA2MzIsImV4cCI6MjA4NjY5NjYzMn0.3RMM9deY0Cu7y1QxphD2UllEnylAiOhTTftZelcKXYo';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function loadJobs() {
-            const { data: jobs, error } = await _supabase.from('jobs').select('*').order('created_at', { ascending: false });
-            const container = document.getElementById('job-container');
-            
-            if (error) {
-                container.innerHTML = '<p class="text-red-500">เกิดข้อผิดพลาดในการโหลดข้อมูล</p>';
+        const fileInput = document.getElementById('file-input');
+        const statusText = document.getElementById('status-text');
+
+        // แสดงชื่อเมื่อเลือกไฟล์
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                statusText.innerText = "ไฟล์ที่เลือก: " + fileInput.files[0].name;
+                statusText.className = "text-green-600 font-bold";
+            }
+        };
+
+        // ฟังก์ชันอัพโหลด
+        async function handleSubmit() {
+            const file = fileInput.files[0];
+            const detail = document.getElementById('job-detail').value;
+            const btn = document.getElementById('submit-btn');
+
+            if (!file || !detail) {
+                alert("กรุณากรอกข้อมูลและเลือกไฟล์ให้ครบครับ");
                 return;
             }
 
-            container.innerHTML = ''; 
-            jobs.forEach(job => {
-                container.innerHTML += `
-                    <a href="service-detail.html?id=${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all overflow-hidden border">
-                        <img src="${job.image_url}" class="w-full h-44 object-cover">
-                        <div class="p-4">
-                            <h3 class="font-bold text-sm h-10 line-clamp-2">${job.title}</h3>
-                            <p class="text-blue-600 font-bold text-lg mt-4">฿${Number(job.price).toLocaleString()}</p>
-                        </div>
-                    </a>
-                `;
-            });
+            btn.disabled = true;
+            btn.innerText = "กำลังอัพโหลด... รอสักครู่";
+
+            try {
+                // อัพโหลดไปที่ Bucket ชื่อ work-briefs
+                const fileName = Date.now() + "_" + file.name;
+                const { data, error } = await _supabase.storage
+                    .from('work-briefs') 
+                    .upload(fileName, file);
+
+                if (error) throw error;
+
+                alert("ส่งบรีฟงานสำเร็จ! ข้อมูลถูกเก็บใน Supabase แล้ว");
+                window.location.href = "index.html";
+
+            } catch (err) {
+                alert("เกิดข้อผิดพลาด: " + err.message + "\n(อย่าลืมสร้าง Bucket ชื่อ work-briefs ใน Supabase นะครับ)");
+                btn.disabled = false;
+                btn.innerText = "ยืนยันการจ้างงาน";
+            }
         }
-        loadJobs();
     </script>
 </body>
 </html>
