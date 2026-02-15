@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ลงประกาศงาน - Fastwork Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Kanit', sans-serif; }</style>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl shadow-lg mt-10">
+        <a href="index.html" class="text-blue-600 font-bold text-sm">← กลับหน้าแรก</a>
+        <h2 class="text-2xl font-bold my-6 text-center">สร้างโพสต์ขายงาน</h2>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อหัวข้อประกาศงาน</label>
+                <input type="text" id="job-title" placeholder="เช่น รับออกแบบโลโก้..." class="w-full p-4 border rounded-xl outline-none focus:border-blue-500">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">ราคาเริ่มต้น (บาท)</label>
+                <input type="number" id="job-price" placeholder="500" class="w-full p-4 border rounded-xl outline-none focus:border-blue-500">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">รูปหน้าปกงาน</label>
+                <input type="file" id="job-img" accept="image/*" class="w-full">
+            </div>
+            <button onclick="postJob()" id="btn-post" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-blue-700 transition">
+                ลงประกาศงานเลย
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://zxubzigylpalejienmzi.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dWJ6aWd5bHBhbGVqaWVubXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMjA2MzIsImV4cCI6MjA4NjY5NjYzMn0.3RMM9deY0Cu7y1QxphD2UllEnylAiOhTTftZelcKXYo';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function postJob() {
+            const title = document.getElementById('job-title').value;
+            const price = document.getElementById('job-price').value;
+            const file = document.getElementById('job-img').files[0];
+            const btn = document.getElementById('btn-post');
+
+            if(!title || !price || !file) return alert("กรุณากรอกข้อมูลและเลือกรูปภาพครับ");
+
+            btn.disabled = true;
+            btn.innerText = "กำลังบันทึกข้อมูล...";
+
+            try {
+                // 1. อัปโหลดรูปภาพ
+                const fileName = Date.now() + "_" + file.name;
+                const { data: imgData, error: imgErr } = await _supabase.storage
+                    .from('job-images').upload(fileName, file);
+                
+                if(imgErr) throw imgErr;
+
+                const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/job-images/${fileName}`;
+
+                // 2. บันทึกข้อมูลลงตาราง
+                const { error: dbErr } = await _supabase.from('jobs').insert([
+                    { title: title, price: price, image_url: imageUrl }
+                ]);
+
+                if(dbErr) throw dbErr;
+
+                alert("ลงประกาศงานสำเร็จ!");
+                window.location.href = "index.html";
+            } catch (err) {
+                alert("เกิดข้อผิดพลาด: " + err.message);
+                btn.disabled = false;
+                btn.innerText = "ลงประกาศงานเลย";
+            }
+        }
+    </script>
+</body>
+</html>
