@@ -187,6 +187,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         .from("jobs")
         .select("title, category, type, budget, created_at, deadline")
         .order("created_at", { ascending: false });
+console.log('jobs data:', data);
 
       if (error) {
         console.error("Supabase error:", error.message);
