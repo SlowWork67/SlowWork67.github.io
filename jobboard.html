@@ -239,7 +239,7 @@ console.log('Supabase connected', supabaseClient);
   
 
   const jobs = [];
-  const table = document.getElementById("jobTable");
+  const table = document.getElementById("jobTableBody");
 async function loadJobs() {
   const { data, error } = await supabaseClient
     .from('jobs')
