@@ -144,10 +144,9 @@ body{
         <option>ลักษณะการจ้าง</option>
       </select>
 
-     <button class="post-btn" onclick="location.href='post-job.html'">
-  ประกาศหาฟรีแลนซ์
-</button>
-
+      <button class="post-btn" onclick="location.href='post-job.html'">
+        ประกาศหาฟรีแลนซ์
+      </button>
     </div>
 
     <table class="jobboard-table">
@@ -190,7 +189,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         .from("jobs")
         .select("title, category, type, budget, created_at, deadline")
         .order("created_at", { ascending: false });
-console.log('jobs data:', data);
+
+      console.log('jobs data:', data);
 
       if (error) {
         console.error("Supabase error:", error.message);
@@ -218,7 +218,7 @@ console.log('jobs data:', data);
           <td>${job.type ?? "-"}</td>
           <td>${job.budget ?? "-"}</td>
           <td>${job.created_at ? new Date(job.created_at).toLocaleDateString("th-TH") : "-"}</td>
-          <td>${job.deadline ?? "-"}</td>
+          <td>${job.deadline ? new Date(job.deadline).toLocaleDateString("th-TH") : "-"}</td>
         `;
         tableBody.appendChild(row);
       });
