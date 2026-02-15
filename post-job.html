@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Job | JobBoard</title>
+
+  <style>
+    /* ===== RESET ===== */
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f5f7f6;
+      color: #333;
+    }
+
+    /* ===== COLOR VARIABLES ===== */
+    :root {
+      --green-soft: #cfe8d9;
+      --green-main: #5fb3a2;
+      --orange-soft: #ffe2c6;
+      --orange-main: #f4a261;
+      --blue-main: #2f6fd6;
+      --blue-soft: #e8f0ff;
+      --border-soft: #e0e0e0;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      width: 100%;
+      background: linear-gradient(
+        90deg,
+        var(--green-soft),
+        var(--orange-soft)
+      );
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      background-color: var(--green-main);
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .site-name {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: 900px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+
+    /* ===== BLUE NOTICE BOX ===== */
+    .notice-box {
+      background-color: var(--blue-soft);
+      border: 2px solid var(--blue-main);
+      color: var(--blue-main);
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    /* ===== FORM CARD ===== */
+    .card {
+      background-color: #ffffff;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: var(--green-main);
+    }
+
+    /* ===== FORM ELEMENTS ===== */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      outline: none;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--green-main);
+    }
+
+    /* ===== JOB TYPE ===== */
+    .job-type {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .job-option {
+      border: 2px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      background-color: #fff;
+    }
+
+    .job-option input {
+      display: none;
+    }
+
+    .job-option:hover {
+      border-color: var(--orange-main);
+      background-color: var(--orange-soft);
+    }
+
+    .job-option input:checked + span {
+      color: white;
+      background-color: var(--orange-main);
+      padding: 8px 12px;
+      border-radius: 20px;
+    }
+
+    /* ===== BUTTON ===== */
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border-radius: 12px;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(
+        90deg,
+        var(--green-main),
+        var(--orange-main)
+      );
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">JB</div>
+    <div class="site-name">JobBoard</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="container">
+
+    <div class="notice-box">
+      สำหรับโพสต์จ้างงานเท่านั้น
+    </div>
+
+    <div class="card">
+      <h2>ลงประกาศงานใหม่</h2>
+
+      <div class="form-group">
+        <label>ชื่อตำแหน่งงาน</label>
+        <input type="text" placeholder="เช่น Web Designer">
+      </div>
+
+      <div class="form-group">
+        <label>รายละเอียดงาน</label>
+        <textarea placeholder="อธิบายลักษณะงาน ความรับผิดชอบ ฯลฯ"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>ลักษณะการจ้าง</label>
+        <div class="job-type">
+
+          <label class="job-option">
+            <input type="radio" name="jobtype">
+            <span>ฟรีแลนซ์</span>
+          </label>
+
+          <label class="job-option">
+            <input type="radio" name="jobtype">
+            <span>สัญญาจ้าง</span>
+          </label>
+
+          <label class="job-option">
+            <input type="radio" name="jobtype">
+            <span>พาร์ทไทม์</span>
+          </label>
+
+          <label class="job-option">
+            <input type="radio" name="jobtype">
+            <span>งานประจำ</span>
+          </label>
+
+        </div>
+      </div>
+
+      <button class="submit-btn">โพสต์งาน</button>
+    </div>
+
+  </div>
+
+</body>
+</html>
