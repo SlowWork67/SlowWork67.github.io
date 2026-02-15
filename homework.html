@@ -3,96 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlowWork Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Service Detail - Fastwork Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #28a745; --orange: #FF8A00; --bg: #f4f7f6; }
-        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; }
-        nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { font-size: 24px; font-weight: bold; color: var(--orange); cursor: pointer; }
-        .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
-        
-        /* Job Cards */
-        .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .job-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
-        .job-card:hover { transform: translateY(-5px); }
-        .job-img { width: 100%; height: 180px; object-fit: cover; }
-        .job-info { padding: 15px; }
-
-        /* Modal */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index: 1000; }
-        .modal-content { background:white; padding:25px; border-radius:20px; width:90%; max-width:400px; }
-        input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: 'Kanit'; }
-        button { cursor: pointer; border: none; border-radius: 8px; padding: 10px; font-family: 'Kanit'; font-weight: 500; }
-        
-        .btn-main { background: var(--primary); color: white; width: 100%; margin-bottom: 10px; }
-        .btn-orange { background: var(--orange); color: white; width: 100%; }
-        .btn-outline { background: none; border: 1px solid #ddd; width: 100%; margin-top: 10px; }
-        
-        /* Dashboard */
-        .dashboard-card { background: white; padding: 20px; border-radius: 15px; border-left: 5px solid var(--orange); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        body { font-family: 'Kanit', sans-serif; }
+        .sticky-sidebar { top: 5rem; }
     </style>
 </head>
-<body>
+<body class="bg-gray-50">
 
-<nav>
-    <div class="logo" onclick="showHome()">Slow<span>Work</span></div>
-    <div id="auth-section">
-        <button onclick="openModal('auth-modal')" style="background:var(--primary); color:white;">เข้าสู่ระบบ</button>
-    </div>
-</nav>
-
-<div class="container" id="home-page">
-    <div id="user-dashboard" style="display:none;">
-        <div class="dashboard-card">
-            <div>
-                <h3 style="margin:0;">สวัสดี, <span id="user-name">...</span></h3>
-                <button onclick="showMyJobs()" style="background:none; color:var(--primary); padding:0; margin-top:5px; text-decoration:underline;">📂 จัดการงานของฉัน</button>
+    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600">Fastwork <span class="text-gray-800 text-lg font-normal">Clone</span></h1>
+            <div class="space-x-4">
+                <button class="text-gray-600 font-medium">ค้นหางาน</button>
+                <button class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">เข้าสู่ระบบ</button>
             </div>
-            <button onclick="openModal('upload-modal')" class="btn-orange" style="width:auto; padding: 10px 20px;">+ ลงประกาศงาน</button>
         </div>
-    </div>
+    </nav>
 
-    <h2>งานทั้งหมด</h2>
-    <div class="job-grid" id="job-display"></div>
-</div>
+    <main class="max-w-6xl mx-auto p-4 md:p-6 mt-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <div class="lg:col-span-2 space-y-8">
+            
+            <section>
+                <nav class="text-sm text-gray-500 mb-4">หน้าแรก > ออกแบบ > โลโก้</nav>
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 leading-tight">รับออกแบบ Logo มินิมอล เรียบหรู สำหรับแบรนด์และ Start-up</h2>
+                <div class="rounded-2xl overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=1000" alt="Work Example" class="w-full h-[300px] md:h-[450px] object-cover">
+                </div>
+            </section>
 
-<div class="container" id="my-jobs-page" style="display:none;">
-    <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
-        <button onclick="showHome()" style="background:#eee;"><i class="fas fa-arrow-left"></i></button>
-        <h2 style="margin:0;">จัดการงานของคุณ</h2>
-    </div>
-    <div class="job-grid" id="my-job-display"></div>
-</div>
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-wrap items-center gap-4">
+                <div class="w-16 h-16 bg-gradient-to-tr from-blue-500 to-blue-300 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-inner">FW</div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-lg">Freelancer Pro <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded ml-2">ผู้เชี่ยวชาญ</span></h3>
+                    <p class="text-gray-500 text-sm italic">"สร้างตัวตนให้แบรนด์คุณ ด้วยดีไซน์ที่แตกต่าง"</p>
+                    <div class="flex items-center mt-1 text-sm text-yellow-500">
+                        ★★★★★ <span class="text-gray-400 ml-2">(รีวิว 150 รายการ)</span>
+                    </div>
+                </div>
+                <button class="border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50">ดูโปรไฟล์</button>
+            </section>
 
-<div id="auth-modal" class="modal">
-    <div class="modal-content">
-        <h3 style="text-align:center;">บัญชีผู้ใช้งาน</h3>
-        <input type="email" id="auth-email" placeholder="อีเมล">
-        <input type="password" id="auth-pw" placeholder="รหัสผ่าน">
-        <button class="btn-main" onclick="handleSignIn()">เข้าสู่ระบบ</button>
-        <button class="btn-orange" onclick="handleSignUp()">สมัครสมาชิกใหม่</button>
-        <button class="btn-outline" onclick="closeModal('auth-modal')">ยกเลิก</button>
-    </div>
-</div>
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h3 class="text-xl font-bold mb-4 border-b pb-4">รายละเอียดการบริการ</h3>
+                <article class="text-gray-700 leading-relaxed space-y-4">
+                    <p>ยินดีต้อนรับครับ! ผมพร้อมช่วยสร้างโลโก้ที่สะท้อนถึงตัวตนธุรกิจของคุณอย่างดีที่สุด</p>
+                    <ul class="list-disc list-inside space-y-2 ml-2">
+                        <li>รับฟังบรีฟและวิเคราะห์คู่แข่ง</li>
+                        <li>ออกแบบโดยคำนึงถึงการใช้งานจริง (Print & Web)</li>
+                        <li>ส่งมอบไฟล์ครบครัน (.AI, .JPG, .PNG, .PDF)</li>
+                    </ul>
+                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 text-sm">
+                        <strong>หมายเหตุ:</strong> ระยะเวลาทำงานเริ่มนับหลังจากสรุปบรีฟชัดเจนแล้วเท่านั้น
+                    </div>
+                </article>
+            </section>
 
-<div id="upload-modal" class="modal">
-    <div class="modal-content">
-        <h3>ลงประกาศงานใหม่</h3>
-        <input type="text" id="job-title" placeholder="ชื่องานของคุณ">
-        <input type="number" id="job-price" placeholder="ราคา (บาท)">
-        <button class="btn-main" onclick="uploadJob()">ตกลง ลงประกาศ</button>
-        <button class="btn-outline" onclick="closeModal('upload-modal')">ยกเลิก</button>
-    </div>
-</div>
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+                <h3 class="text-xl font-bold mb-6">เปรียบเทียบแพ็กเกจ</h3>
+                <table class="w-full text-left min-w-[500px]">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="py-4 text-gray-500 font-medium w-1/3">คุณสมบัติ</th>
+                            <th class="py-4 text-center font-bold">Standard</th>
+                            <th class="py-4 text-center font-bold text-blue-600 border-x border-blue-100 bg-blue-50/30">Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        <tr>
+                            <td class="py-4">จำนวนแบบที่เลือก</td>
+                            <td class="text-center text-sm">1 แบบ</td>
+                            <td class="text-center font-semibold text-blue-600 border-x border-blue-50 bg-blue-50/20">3 แบบ</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 text-gray-700">จำนวนการแก้ไข</td>
+                            <td class="text-center text-sm">3 ครั้ง</td>
+                            <td class="text-center font-semibold text-blue-600 border-x border-blue-50 bg-blue-50/20">ไม่จำกัด</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 text-gray-700">ไฟล์ต้นฉบับ (.AI)</td>
+                            <td class="text-center text-red-400">✘</td>
+                            <td class="text-center text-green-500 border-x border-blue-50 bg-blue-50/20">✔</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-bold">ราคาเริ่มต้น</td>
+                            <td class="text-center font-bold text-lg italic">฿1,500</td>
+                            <td class="text-center font-bold text-xl text-blue-700 border-x border-blue-50 bg-blue-50/20">฿3,500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script type="module" src="app.js"></script>
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h3 class="text-xl font-bold mb-6">รีวิวจากลูกค้า (4.9/5)</h3>
+                <div class="space-y-6">
+                    <div class="border-b pb-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+                            <span class="font-bold text-sm text-gray-800">K. Anan</span>
+                            <span class="text-yellow-400 text-xs">★★★★★</span>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">งานสวยมากครับ สื่อสารง่าย เข้าใจความต้องการตั้งแต่ดราฟแรก แนะนำเลย!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-<script>
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-</script>
+        <div class="lg:col-span-1">
+            <div class="bg-white p-6 rounded-2xl shadow-xl border-2 border-blue-600 sticky-sidebar sticky">
+                <div class="mb-4">
+                    <h4 class="text-gray-500 text-sm uppercase tracking-wider mb-1 font-bold">ราคาเริ่มต้น</h4>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-black text-blue-600">฿1,500</span>
+                        <span class="text-gray-400 text-sm">/ ต่อชิ้นงาน</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 mb-6">
+                    <div class="flex items-center text-sm text-gray-600 gap-2">
+                        <span class="text-blue-500">✔</span> รับงานภายใน 3 วัน
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600 gap-2">
+                        <span class="text-blue-500">✔</span> แก้ไขงานได้ 3 ครั้ง
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <button class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 shadow-lg shadow-blue-200 active:scale-95 transition-all">
+                        ซื้อบริการเลย
+                    </button>
+                    <button class="w-full bg-white border-2 border-blue-600 text-blue-600 py-3 rounded-xl font-bold hover:bg-blue-50 transition-all flex justify-center items-center gap-2">
+                        <span>💬</span> แชทกับฟรีแลนซ์
+                    </button>
+                </div>
+                
+                <p class="text-center text-xs text-gray-400 mt-4 underline cursor-pointer">เงื่อนไขการรับประกันคืนเงิน</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="mt-20 py-10 bg-gray-800 text-gray-400 text-center text-sm">
+        &copy; 2026 Your Project - Inspired by Fastwork.
+    </footer>
+
 </body>
 </html>
