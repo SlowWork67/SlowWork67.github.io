@@ -3,232 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlowWork - แพลตฟอร์มฟรีแลนซ์ครบวงจร</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>SlowWork Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-
-        // 🔴 1. วาง Firebase Config ของคุณตรงนี้
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
-        // --- ระบบดึงงาน (Jobs) ---
-        const jobGrid = document.getElementById('job-grid-dynamic');
-        onSnapshot(query(collection(db, "jobs"), orderBy("createdAt", "desc")), (snapshot) => {
-            jobGrid.innerHTML = ''; 
-            snapshot.forEach((doc) => {
-                const job = doc.data();
-                jobGrid.innerHTML += `
-                    <div class="job-card" onclick="openModal('hireModal')">
-                        <img src="${job.image}" class="job-img">
-                        <div class="job-info">
-                            <div class="job-title">${job.title}</div>
-                            <div class="freelancer-name"><i class="fas fa-user-circle"></i> ${job.freelancer}</div>
-                            <div class="job-price" style="margin-top:10px;">฿${job.price}</div>
-                        </div>
-                    </div>`;
-            });
-        });
-
-        // --- ระบบแชท (Chat Logic) ---
-        window.sendMessage = async () => {
-            const text = document.getElementById('chatInput').value;
-            const sender = document.getElementById('display-name').innerText;
-            if (!text || sender === "คุณ") return;
-
-            await addDoc(collection(db, "chats"), {
-                sender: sender,
-                text: text,
-                timestamp: serverTimestamp()
-            });
-            document.getElementById('chatInput').value = '';
-        };
-
-        window.loadMessages = () => {
-            const q = query(collection(db, "chats"), orderBy("timestamp", "asc"));
-            onSnapshot(q, (snapshot) => {
-                const chatDiv = document.getElementById('chat-messages');
-                chatDiv.innerHTML = '';
-                const myName = document.getElementById('display-name').innerText;
-                snapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const isMe = data.sender === myName;
-                    chatDiv.innerHTML += `
-                        <div class="msg ${isMe ? 'me' : 'them'}">
-                            <small style="font-size:9px; display:block; opacity:0.6;">${data.sender}</small>
-                            ${data.text}
-                        </div>`;
-                });
-                chatDiv.scrollTop = chatDiv.scrollHeight;
-            });
-        };
-
-        // --- ระบบอัปโหลดงาน ---
-        window.handleUploadWork = async () => {
-            const title = document.getElementById('workTitle').value;
-            const price = document.getElementById('workPrice').value;
-            const imageFile = document.getElementById('workImage').files[0];
-            const btn = document.getElementById('uploadBtn');
-
-            if (!title || !price || !imageFile) return alert("กรุณากรอกข้อมูลให้ครบ!");
-            btn.innerText = "กำลังอัปโหลด..."; btn.disabled = true;
-
-            try {
-                const storageRef = ref(storage, 'jobs/' + Date.now() + "_" + imageFile.name);
-                await uploadBytes(storageRef, imageFile);
-                const imageURL = await getDownloadURL(storageRef);
-                await addDoc(collection(db, "jobs"), {
-                    title, price, image: imageURL, freelancer: document.getElementById('display-name').innerText, createdAt: new Date()
-                });
-                alert("ลงขายงานสำเร็จ!"); closeAllModals(); btn.innerText = "ยืนยันลงขายงาน"; btn.disabled = false;
-            } catch (e) { alert(e.message); }
-        };
-    </script>
-
     <style>
-        :root { --primary-green: #28a745; --primary-orange: #FF8A00; --text-dark: #333; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
-        body { background-color: var(--primary-orange); transition: 0.4s; }
+        :root { --primary: #28a745; --orange: #FF8A00; --bg: #f4f7f6; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; }
+        nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { font-size: 24px; font-weight: bold; color: var(--orange); }
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
         
-        /* Layout & Nav */
-        nav { background: white; padding: 10px 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo { font-size: 24px; font-weight: 700; color: var(--primary-orange); cursor: pointer; }
-        .logo span { color: var(--primary-green); }
-        .container { max-width: 1100px; margin: 25px auto; padding: 0 20px; }
-        .card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 20px; }
-
-        /* Job Grid */
-        .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .job-card { background: white; border-radius: 12px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #eee; }
-        .job-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .job-img { width: 100%; height: 160px; object-fit: cover; }
+        /* Job Cards */
+        .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .job-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; }
+        .job-img { width: 100%; height: 180px; object-fit: cover; }
         .job-info { padding: 15px; }
-        .job-price { color: var(--primary-green); font-weight: 700; font-size: 18px; }
 
-        /* Chat UI */
-        .chat-box { position: fixed; bottom: 20px; right: 20px; width: 320px; height: 400px; background: white; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 3000; }
-        .chat-header { background: var(--primary-green); color: white; padding: 12px; border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; }
-        #chat-messages { flex: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: #fdfdfd; }
-        .msg { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 13px; }
-        .msg.me { align-self: flex-end; background: var(--primary-green); color: white; }
-        .msg.them { align-self: flex-start; background: #eee; color: #333; }
-        .chat-input { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 5px; }
+        /* Chat Window */
+        #chat-window { position: fixed; bottom: 20px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 15px; display: none; flex-direction: column; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1000; }
+        #messages { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 8px 12px; border-radius: 10px; max-width: 80%; font-size: 14px; }
+        .msg.me { align-self: flex-end; background: var(--primary); color: white; }
+        .msg.them { align-self: flex-start; background: #eee; }
 
-        /* Modals & Inputs */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 400px; }
-        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; }
-        .btn-main { background: var(--primary-green); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: 600; }
+        /* General UI */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index: 999; }
+        .modal-content { background:white; padding:25px; border-radius:20px; width:90%; max-width:400px; }
+        button { cursor: pointer; border: none; border-radius: 8px; padding: 10px; }
+        .btn-post { background: var(--primary); color: white; width: 100%; font-size: 16px; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo" onclick="location.reload()"><span>Slow</span>Work</div>
-        <div id="nav-guest">
-            <button onclick="openModal('loginModal')" style="padding:8px 15px; border-radius:8px; border:1px solid var(--primary-green); color:var(--primary-green); cursor:pointer; background:none;">เข้าสู่ระบบ</button>
-        </div>
-        <div id="nav-user" style="display: none; align-items: center; gap: 10px;">
-            <img id="user-pic-nav" src="" style="width:30px; border-radius:50%;">
-            <span id="display-name" style="font-weight:500;">คุณ</span>
-            <button onclick="location.reload()" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-power-off"></i></button>
-        </div>
-    </nav>
+<nav>
+    <div class="logo">Slow<span>Work</span></div>
+    <div id="auth-section">
+        <button onclick="login()" style="background:var(--primary); color:white;">เข้าสู่ระบบด้วย Google</button>
+    </div>
+</nav>
 
-    <div class="container">
-        <div id="dashboard-content" style="display: none;">
-            <div class="card" style="border-left: 5px solid var(--primary-green);">
-                <h3>ยินดีต้อนรับฟรีแลนซ์!</h3>
-                <button class="btn-main" style="margin-top:10px; width:auto;" onclick="openModal('uploadWorkModal')"><i class="fas fa-plus"></i> ลงขายงานใหม่</button>
-            </div>
-        </div>
-
-        <h2 style="color: white; margin-bottom: 15px;">งานแนะนำ</h2>
-        <div class="job-grid" id="job-grid-dynamic">
-            <p style="color:white;">กรุณารอโหลดข้อมูล...</p>
+<div class="container">
+    <div id="user-dashboard" style="display:none; margin-bottom: 30px;">
+        <div style="background: white; padding: 20px; border-radius: 15px; border-left: 5px solid var(--orange);">
+            <h3>แผงควบคุมของ: <span id="user-name">...</span></h3>
+            <button onclick="document.getElementById('upload-modal').style.display='flex'" style="background:var(--orange); color:white;">+ ลงประกาศงานใหม่</button>
         </div>
     </div>
 
-    <div id="chatBox" class="chat-box">
-        <div class="chat-header"><span>💬 แชทคุยงาน</span><button onclick="document.getElementById('chatBox').style.display='none'" style="color:white; border:none; background:none; cursor:pointer;">&times;</button></div>
-        <div id="chat-messages"></div>
-        <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="ถามข้อมูล..." style="margin:0;">
-            <button onclick="sendMessage()" class="btn-main" style="width:50px;">ส่ง</button>
+    <h2>งานแนะนำสำหรับคุณ</h2>
+    <div class="job-grid" id="job-display">
         </div>
+</div>
+
+<div id="upload-modal" class="modal">
+    <div class="modal-content">
+        <h3>ลงประกาศงาน</h3>
+        <input type="text" id="job-title" placeholder="ชื่อหัวข้องาน" style="width:100%; margin-bottom:10px;">
+        <input type="number" id="job-price" placeholder="ราคา (บาท)" style="width:100%; margin-bottom:10px;">
+        <input type="file" id="job-file" style="margin-bottom:15px;">
+        <button class="btn-post" onclick="uploadJob()">ยืนยันลงขายงาน</button>
+        <button onclick="this.parentElement.parentElement.style.display='none'" style="width:100%; background:none; color:gray; margin-top:10px;">ยกเลิก</button>
     </div>
+</div>
 
-    <div id="loginModal" class="modal-overlay">
-        <div class="modal-content" style="text-align:center;">
-            <h2>เข้าสู่ระบบ</h2>
-            <p style="margin-bottom:20px; color:#666;">ใช้ Google Account เพื่อเริ่มจ้างงาน</p>
-            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" data-callback="handleCredentialResponse"></div>
-            <div class="g_id_signin" data-type="standard"></div>
-            <button onclick="closeAllModals()" style="margin-top:15px; border:none; background:none; color:#999; cursor:pointer;">ปิด</button>
-        </div>
+<div id="chat-window">
+    <div style="background:var(--primary); color:white; padding:12px; border-radius:15px 15px 0 0; display:flex; justify-content:space-between;">
+        <span>ห้องแชทคุยงาน</span>
+        <button onclick="document.getElementById('chat-window').style.display='none'" style="color:white; background:none;">&times;</button>
     </div>
-
-    <div id="uploadWorkModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3>ลงรายละเอียดงาน</h3>
-            <input type="text" id="workTitle" placeholder="หัวข้องาน เช่น รับทำสรุปวิชาเลข">
-            <input type="number" id="workPrice" placeholder="ราคา (บาท)">
-            <input type="file" id="workImage" accept="image/*">
-            <button class="btn-main" id="uploadBtn" onclick="handleUploadWork()">ยืนยันลงขายงาน</button>
-            <button onclick="closeAllModals()" style="width:100%; margin-top:10px; border:none; background:none; cursor:pointer;">ยกเลิก</button>
-        </div>
+    <div id="messages"></div>
+    <div style="padding:10px; border-top:1px solid #eee; display:flex; gap:5px;">
+        <input type="text" id="chat-input" placeholder="พิมพ์ข้อความ..." style="flex:1;">
+        <button onclick="sendChatMessage()" style="background:var(--primary); color:white;">ส่ง</button>
     </div>
+</div>
 
-    <div id="hireModal" class="modal-overlay">
-        <div class="modal-content" style="text-align:center;">
-            <h3>สนใจงานนี้?</h3>
-            <p>เริ่มแชทคุยกับฟรีแลนซ์ได้ทันทีในระบบของเรา</p>
-            <button class="btn-main" style="margin-top:15px;" onclick="openChat()">เปิดห้องแชท</button>
-            <button onclick="closeAllModals()" style="width:100%; margin-top:10px; border:none; background:none; cursor:pointer;">กลับ</button>
-        </div>
-    </div>
-
-    <script>
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
-        
-        function handleCredentialResponse(response) {
-            const user = JSON.parse(atob(response.credential.split('.')[1]));
-            document.getElementById('display-name').innerText = user.name;
-            document.getElementById('user-pic-nav').src = user.picture;
-            document.getElementById('nav-guest').style.display = 'none';
-            document.getElementById('nav-user').style.display = 'flex';
-            document.getElementById('dashboard-content').style.display = 'block';
-            document.body.style.backgroundColor = "#f0f2f5";
-            closeAllModals();
-        }
-
-        function openChat() {
-            if (document.getElementById('display-name').innerText === "คุณ") {
-                alert("กรุณาเข้าสู่ระบบก่อนเริ่มแชทครับ");
-                openModal('loginModal');
-                return;
-            }
-            closeAllModals();
-            document.getElementById('chatBox').style.display = 'flex';
-            window.loadMessages();
-        }
-    </script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
