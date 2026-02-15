@@ -192,7 +192,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const { data, error } = await supabaseClient
         .from("jobs")
-        .select("id, title, category, type, budget, created_at, deadline")
+        .select("id, title, category, job_type, budget, created_at, deadline")
+
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -220,7 +221,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         row.innerHTML = `
           <td>${job.title ?? "-"}</td>
           <td>${job.category ?? "-"}</td>
-          <td>${job.type ?? "-"}</td>
+         <td>${job.job_type ?? "-"}</td>
+
           <td>${job.budget ?? "-"}</td>
           <td>${job.created_at ? new Date(job.created_at).toLocaleDateString("th-TH") : "-"}</td>
           <td>${job.deadline ? new Date(job.deadline).toLocaleDateString("th-TH") : "-"}</td>
