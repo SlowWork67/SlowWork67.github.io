@@ -10,72 +10,80 @@
         :root { --primary: #28a745; --orange: #FF8A00; --bg: #f4f7f6; }
         body { font-family: 'Kanit', sans-serif; background: var(--bg); margin: 0; }
         nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { font-size: 24px; font-weight: bold; color: var(--orange); }
+        .logo { font-size: 24px; font-weight: bold; color: var(--orange); cursor: pointer; }
         .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
         
         /* Job Cards */
         .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .job-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
+        .job-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
         .job-card:hover { transform: translateY(-5px); }
         .job-img { width: 100%; height: 180px; object-fit: cover; }
         .job-info { padding: 15px; }
 
-        /* Modal Settings */
+        /* Modal */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index: 1000; }
         .modal-content { background:white; padding:25px; border-radius:20px; width:90%; max-width:400px; }
-        input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { cursor: pointer; border: none; border-radius: 8px; padding: 10px; font-family: 'Kanit'; }
-        .btn-main { background: var(--primary); color: white; width: 100%; font-size: 16px; margin-bottom: 10px; }
-        .btn-sub { background: var(--orange); color: white; width: 100%; font-size: 16px; }
+        input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: 'Kanit'; }
+        button { cursor: pointer; border: none; border-radius: 8px; padding: 10px; font-family: 'Kanit'; font-weight: 500; }
+        
+        .btn-main { background: var(--primary); color: white; width: 100%; margin-bottom: 10px; }
+        .btn-orange { background: var(--orange); color: white; width: 100%; }
+        .btn-outline { background: none; border: 1px solid #ddd; width: 100%; margin-top: 10px; }
+        
+        /* Dashboard */
+        .dashboard-card { background: white; padding: 20px; border-radius: 15px; border-left: 5px solid var(--orange); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">Slow<span>Work</span></div>
+    <div class="logo" onclick="showHome()">Slow<span>Work</span></div>
     <div id="auth-section">
-        <button onclick="openAuthModal()" style="background:var(--primary); color:white;">เข้าสู่ระบบ / สมัครสมาชิก</button>
+        <button onclick="openModal('auth-modal')" style="background:var(--primary); color:white;">เข้าสู่ระบบ</button>
     </div>
 </nav>
 
-<div class="container">
-    <div id="user-dashboard" style="display:none; margin-bottom: 30px;">
-        <div style="background: white; padding: 20px; border-radius: 15px; border-left: 5px solid var(--orange); display:flex; justify-content:space-between; align-items:center;">
+<div class="container" id="home-page">
+    <div id="user-dashboard" style="display:none;">
+        <div class="dashboard-card">
             <div>
-                <h3 style="margin:0;">ยินดีต้อนรับ, <span id="user-name">...</span></h3>
-                <p style="margin:5px 0 0; color:gray; font-size:14px;">จัดการงานของคุณได้ที่นี่</p>
+                <h3 style="margin:0;">สวัสดี, <span id="user-name">...</span></h3>
+                <button onclick="showMyJobs()" style="background:none; color:var(--primary); padding:0; margin-top:5px; text-decoration:underline;">📂 จัดการงานของฉัน</button>
             </div>
-            <button onclick="document.getElementById('upload-modal').style.display='flex'" style="background:var(--orange); color:white;">+ ลงประกาศงานใหม่</button>
+            <button onclick="openModal('upload-modal')" class="btn-orange" style="width:auto; padding: 10px 20px;">+ ลงประกาศงาน</button>
         </div>
     </div>
 
-    <h2>งานแนะนำสำหรับคุณ</h2>
-    <div class="job-grid" id="job-display">
-        </div>
+    <h2>งานทั้งหมด</h2>
+    <div class="job-grid" id="job-display"></div>
+</div>
+
+<div class="container" id="my-jobs-page" style="display:none;">
+    <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+        <button onclick="showHome()" style="background:#eee;"><i class="fas fa-arrow-left"></i></button>
+        <h2 style="margin:0;">จัดการงานของคุณ</h2>
+    </div>
+    <div class="job-grid" id="my-job-display"></div>
 </div>
 
 <div id="auth-modal" class="modal">
     <div class="modal-content">
-        <h3 style="text-align:center;">บัญชี SlowWork</h3>
+        <h3 style="text-align:center;">บัญชีผู้ใช้งาน</h3>
         <input type="email" id="auth-email" placeholder="อีเมล">
         <input type="password" id="auth-pw" placeholder="รหัสผ่าน">
         <button class="btn-main" onclick="handleSignIn()">เข้าสู่ระบบ</button>
-        <button class="btn-sub" onclick="handleSignUp()">สมัครสมาชิกใหม่</button>
-        <hr>
-        <button onclick="loginWithGoogle()" style="width:100%; background:#4285F4; color:white; margin-bottom:10px;">
-            <i class="fab fa-google"></i> เข้าด้วย Google
-        </button>
-        <button onclick="closeModal('auth-modal')" style="width:100%; background:none; color:gray;">ยกเลิก</button>
+        <button class="btn-orange" onclick="handleSignUp()">สมัครสมาชิกใหม่</button>
+        <button class="btn-outline" onclick="closeModal('auth-modal')">ยกเลิก</button>
     </div>
 </div>
 
 <div id="upload-modal" class="modal">
     <div class="modal-content">
         <h3>ลงประกาศงานใหม่</h3>
-        <input type="text" id="job-title" placeholder="ชื่อหัวข้องาน (เช่น รับทำเว็บ, แต่งรูป)">
-        <input type="number" id="job-price" placeholder="ราคาเริ่มต้น (บาท)">
-        <button class="btn-main" onclick="uploadJob()">ยืนยันลงประกาศ</button>
-        <button onclick="closeModal('upload-modal')" style="width:100%; background:none; color:gray;">ยกเลิก</button>
+        <input type="text" id="job-title" placeholder="ชื่องานของคุณ">
+        <input type="number" id="job-price" placeholder="ราคา (บาท)">
+        <button class="btn-main" onclick="uploadJob()">ตกลง ลงประกาศ</button>
+        <button class="btn-outline" onclick="closeModal('upload-modal')">ยกเลิก</button>
     </div>
 </div>
 
@@ -83,8 +91,7 @@
 <script type="module" src="app.js"></script>
 
 <script>
-    // ฟังก์ชันช่วยเปิด-ปิด Modal
-    function openAuthModal() { document.getElementById('auth-modal').style.display = 'flex'; }
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 </script>
 </body>
