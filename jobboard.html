@@ -83,20 +83,8 @@ body{
 .category{
   border:2px solid #2bb673;
 }
-.category:hover{ background:#e6f6ef; }
-.category:focus{
-  background:#2bb673;
-  color:white;
-  outline:none;
-}
 .type{
   border:2px solid #ff9f1c;
-}
-.type:hover{ background:#fff1e0; }
-.type:focus{
-  background:#ff9f1c;
-  color:white;
-  outline:none;
 }
 .post-btn{
   margin-left:auto;
@@ -109,7 +97,7 @@ body{
   cursor:pointer;
 }
 
-/* ===== TABLE (DESKTOP) ===== */
+/* ===== TABLE ===== */
 .jobboard-table{
   width:100%;
   border-collapse:collapse;
@@ -123,51 +111,6 @@ body{
 }
 .jobboard-table thead{
   background:#f9fafb;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width:768px){
-  .hero-title{ font-size:32px; }
-
-  .post-btn{
-    width:100%;
-    margin-left:0;
-  }
-
-  .jobboard-table thead{
-    display:none;
-  }
-
-  .jobboard-table,
-  .jobboard-table tbody,
-  .jobboard-table tr,
-  .jobboard-table td{
-    display:block;
-    width:100%;
-  }
-
-  .jobboard-table tr{
-    background:white;
-    border-radius:12px;
-    padding:14px;
-    margin-bottom:14px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.05);
-  }
-
-  .jobboard-table td{
-    border:none;
-    padding:6px 0;
-    font-size:14px;
-  }
-
-  .jobboard-table td::before{
-    content:attr(data-label);
-    font-weight:bold;
-    color:#666;
-    display:block;
-    font-size:12px;
-    margin-bottom:2px;
-  }
 }
 </style>
 </head>
@@ -215,18 +158,18 @@ body{
           <th>ส่งมอบงานภายใน</th>
         </tr>
       </thead>
-<tbody id="jobTableBody">
-</tbody>
+      <tbody id="jobTableBody"></tbody>
     </table>
 
   </div>
 </div>
 
-<!-- ✅ Supabase JS (แก้ถูกต้อง) -->
+<!-- Supabase JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {
+
   const supabaseUrl = 'https://zjnwuujlpitsysetqqmv.supabase.co';
   const supabaseKey = 'sb_publishable_ufGfq44Aiz0T6kYRlwZhIQ_5uleFb3r';
 
@@ -234,37 +177,56 @@ body{
     supabaseUrl,
     supabaseKey
   );
-console.log('Supabase connected', supabaseClient);
 
-  
+  console.log('Supabase connected', supabaseClient);
 
   const jobs = [];
   const table = document.getElementById("jobTableBody");
-async function loadJobs() {
-  const { data, error } = await supabaseClient
-    .from('jobs')
-    .select('*');
 
-  if (error) {
-    console.error('Error loading jobs:', error);
-    return;
+  async function loadJobs() {
+    const { data, error } = await supabaseClient
+      .from('jobs')
+      .select('*');
+
+    if (error) {
+      console.error('Error loading jobs:', error);
+      return;
+    }
+
+    console.log('Jobs from Supabase:', data);
+
+    jobs.length = 0;
+    jobs.push(...data);
+
+    table.innerHTML = "";
+
+    if (jobs.length === 0) {
+      table.innerHTML = `
+        <tr>
+          <td data-label="สถานะ" colspan="6" style="text-align:center;color:#999">
+            ยังไม่มีงาน
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    jobs.forEach(job => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td data-label="ชื่องาน">${job.title || "-"}</td>
+        <td data-label="หมวดหมู่">${job.category || "-"}</td>
+        <td data-label="ลักษณะการจ้าง">${job.type || "-"}</td>
+        <td data-label="งบประมาณ">${job.budget || "-"}</td>
+        <td data-label="ลงประกาศเมื่อ">${job.created_at ? new Date(job.created_at).toLocaleDateString() : "-"}</td>
+        <td data-label="ส่งมอบงานภายใน">${job.deadline || "-"}</td>
+      `;
+      table.appendChild(row);
+    });
   }
 
-  console.log('Jobs from Supabase:', data);
-}
-
-loadJobs();
-
-  if (jobs.length === 0) {
-    table.innerHTML = `
-      <tr>
-        <td data-label="สถานะ" colspan="6" style="text-align:center;color:#999">
-          ยังไม่มีงาน
-        </td>
-      </tr>
-    `;
-  }
-  });
+  loadJobs();
+});
 </script>
 
 </body>
