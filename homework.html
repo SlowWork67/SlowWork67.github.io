@@ -13,15 +13,14 @@
     <nav class="bg-white p-4 shadow-sm sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
-            <a href="post-job.html" class="bg-orange-500 text-white px-4 py-2 rounded-lg font-bold">ลงประกาศงาน</a>
+            <a href="post-job.html" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold hover:bg-blue-700 transition">ลงประกาศงาน</a>
         </div>
     </nav>
 
     <main class="max-w-6xl mx-auto p-6">
-        <h2 class="text-2xl font-bold mb-8">งานทั้งหมด</h2>
-        <div id="job-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <p class="text-gray-500">กำลังโหลดงาน...</p>
-        </div>
+        <h2 class="text-2xl font-bold mb-8">งานดีไซน์ล่าสุด</h2>
+        <div id="job-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
     </main>
 
     <script>
@@ -29,29 +28,22 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dWJ6aWd5bHBhbGVqaWVubXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMjA2MzIsImV4cCI6MjA4NjY5NjYzMn0.3RMM9deY0Cu7y1QxphD2UllEnylAiOhTTftZelcKXYo';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function loadJobs() {
-            const { data: jobs, error } = await _supabase.from('jobs').select('*').order('created_at', { ascending: false });
-            const container = document.getElementById('job-container');
-            
-            if (error) {
-                container.innerHTML = '<p class="text-red-500">เกิดข้อผิดพลาดในการโหลดข้อมูล</p>';
-                return;
-            }
+        async function fetchJobs() {
+            const { data, error } = await _supabase.from('jobs').select('*').order('created_at', { ascending: false });
+            if (error) return console.error(error);
 
-            container.innerHTML = ''; 
-            jobs.forEach(job => {
-                container.innerHTML += `
-                    <a href="service-detail.html?id=${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all overflow-hidden border">
-                        <img src="${job.image_url}" class="w-full h-44 object-cover">
-                        <div class="p-4">
-                            <h3 class="font-bold text-sm h-10 line-clamp-2">${job.title}</h3>
-                            <p class="text-blue-600 font-bold text-lg mt-4">฿${Number(job.price).toLocaleString()}</p>
-                        </div>
-                    </a>
-                `;
-            });
+            const list = document.getElementById('job-list');
+            list.innerHTML = data.map(job => `
+                <a href="service-detail.html?id=${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden border">
+                    <img src="${job.image_url}" class="w-full h-40 object-cover bg-gray-100">
+                    <div class="p-4">
+                        <h3 class="font-bold text-sm h-10 line-clamp-2">${job.title}</h3>
+                        <p class="text-blue-600 font-bold mt-2">฿${Number(job.price).toLocaleString()}</p>
+                    </div>
+                </a>
+            `).join('');
         }
-        loadJobs();
+        fetchJobs();
     </script>
 </body>
 </html>
