@@ -11,29 +11,13 @@
 </head>
 <body class="bg-gray-100 p-4">
     <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl shadow-lg mt-10">
-        <a href="index.html" class="text-blue-600 font-bold text-sm">← กลับหน้าแรก</a>
-        <h2 class="text-2xl font-bold my-6 text-center">สร้างโพสต์ขายงาน</h2>
-        
+        <h2 class="text-2xl font-bold mb-6 text-center">สร้างโพสต์ใหม่</h2>
         <div class="space-y-4">
-            <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อหัวข้อประกาศงาน</label>
-                <input type="text" id="job-title" placeholder="เช่น รับออกแบบโลโก้..." class="w-full p-4 border rounded-xl outline-none focus:border-blue-500">
-            </div>
-            <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1">ราคาเริ่มต้น (บาท)</label>
-                <input type="number" id="job-price" placeholder="500" class="w-full p-4 border rounded-xl outline-none focus:border-blue-500">
-            </div>
-            <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1">รายละเอียดงาน</label>
-                <textarea id="job-desc" placeholder="อธิบายงานของคุณ..." class="w-full p-4 border rounded-xl outline-none focus:border-blue-500 h-32"></textarea>
-            </div>
-            <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1">รูปหน้าปกงาน</label>
-                <input type="file" id="job-img" accept="image/*" class="w-full">
-            </div>
-            <button onclick="postJob()" id="btn-post" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-blue-700 transition">
-                ลงประกาศงานเลย
-            </button>
+            <input type="text" id="title" placeholder="ชื่อหัวข้อประกาศงาน" class="w-full p-4 border rounded-xl">
+            <input type="number" id="price" placeholder="ราคา (บาท)" class="w-full p-4 border rounded-xl">
+            <textarea id="desc" placeholder="อธิบายรายละเอียดงาน..." class="w-full p-4 border rounded-xl h-32"></textarea>
+            <input type="file" id="img-file" accept="image/*" class="w-full">
+            <button onclick="handlePost()" id="btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold">ลงประกาศงานเลย</button>
         </div>
     </div>
 
@@ -42,58 +26,38 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dWJ6aWd5bHBhbGVqaWVubXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMjA2MzIsImV4cCI6MjA4NjY5NjYzMn0.3RMM9deY0Cu7y1QxphD2UllEnylAiOhTTftZelcKXYo';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function postJob() {
-            const title = document.getElementById('job-title').value;
-            const price = document.getElementById('job-price').value;
-            const desc = document.getElementById('job-desc').value;
-            const fileInput = document.getElementById('job-img');
-            const file = fileInput.files[0];
-            const btn = document.getElementById('btn-post');
-
-            if(!title || !price || !file) return alert("กรุณากรอกข้อมูลและเลือกรูปภาพครับ");
+        async function handlePost() {
+            const btn = document.getElementById('btn');
+            const file = document.getElementById('img-file').files[0];
+            if (!file) return alert("กรุณาเลือกรูปภาพ");
 
             btn.disabled = true;
-            btn.innerText = "กำลังอัปโหลดรูปและบันทึกข้อมูล...";
+            btn.innerText = "กำลังดำเนินการ...";
 
             try {
-                // 1. สร้างชื่อไฟล์ใหม่เพื่อไม่ให้ซ้ำ
-                const fileExt = file.name.split('.').pop();
-                const fileName = `${Date.now()}.${fileExt}`;
-                const filePath = `${fileName}`;
+                // 1. อัปโหลดรูปภาพ
+                const fileName = Date.now() + "_" + file.name;
+                const { data: uploadData, error: uploadErr } = await _supabase.storage
+                    .from('job-images').upload(fileName, file);
+                if (uploadErr) throw uploadErr;
 
-                // 2. อัปโหลดรูปภาพไปยัง Bucket 'job-images'
-                const { data: uploadData, error: uploadError } = await _supabase.storage
-                    .from('job-images')
-                    .upload(filePath, file);
-                
-                if (uploadError) throw uploadError;
+                // 2. สร้างลิงก์ URL (ใช้โครงสร้าง Public URL โดยตรง)
+                const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/job-images/${fileName}`;
 
-                // 3. สร้าง Public URL ของรูปภาพด้วยตัวเอง (วิธีนี้ชัวร์ที่สุด)
-                const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/job-images/${filePath}`;
-                console.log("Image URL created:", imageUrl); // เช็กใน Console
+                // 3. บันทึกลง Database (เช็คให้แน่ใจว่าชื่อคอลัมน์ในฐานข้อมูลคือ image_url)
+                const { error: dbErr } = await _supabase.from('jobs').insert([{
+                    title: document.getElementById('title').value,
+                    price: document.getElementById('price').value,
+                    description: document.getElementById('desc').value,
+                    image_url: imageUrl
+                }]);
+                if (dbErr) throw dbErr;
 
-                // 4. บันทึกทุกอย่างลงในตาราง 'jobs'
-                const { error: dbError } = await _supabase
-                    .from('jobs')
-                    .insert([
-                        { 
-                            title: title, 
-                            price: parseInt(price), 
-                            description: desc, 
-                            image_url: imageUrl // ใส่ URL ตรงนี้
-                        }
-                    ]);
-
-                if (dbError) throw dbError;
-
-                alert("ลงประกาศงานสำเร็จ!");
+                alert("สำเร็จ!");
                 window.location.href = "index.html";
-
             } catch (err) {
-                console.error(err);
-                alert("เกิดข้อผิดพลาด: " + err.message);
+                alert("ผิดพลาด: " + err.message);
                 btn.disabled = false;
-                btn.innerText = "ลงประกาศงานเลย";
             }
         }
     </script>
