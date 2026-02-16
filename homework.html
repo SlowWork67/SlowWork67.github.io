@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Fastwork Clone - หน้าแรก</title>
+    <title>Fastwork Clone</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
             <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
             <div class="space-x-4">
                 <a href="admin.html" class="text-gray-500 font-bold">งานที่ได้รับ</a>
-                <a href="post-job2.html" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
+                <a href="post-job.html" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
             </div>
         </div>
     </nav>
@@ -34,7 +34,7 @@
                 <a href="service-detail.html?id=${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border block">
                     <img src="${job.image_url}" class="w-full h-44 object-cover">
                     <div class="p-4">
-                        <h3 class="font-bold text-sm h-10 line-clamp-2">${job.title}</h3>
+                        <h3 class="font-bold text-sm h-10 line-clamp-2 text-gray-800">${job.title}</h3>
                         <p class="text-blue-600 font-bold mt-4">฿${Number(job.price).toLocaleString()}</p>
                     </div>
                 </a>
