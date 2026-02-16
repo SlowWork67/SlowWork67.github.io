@@ -2,41 +2,40 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Fastwork Clone</title>
+    <title>Fastwork Clone - หน้าแรก</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
     <style>body { font-family: 'Kanit', sans-serif; }</style>
 </head>
 <body class="bg-gray-50">
-    <nav class="bg-white p-4 shadow-sm flex justify-between items-center max-w-6xl mx-auto rounded-b-2xl">
-        <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
-        <div class="space-x-2">
-            <a href="admin.html" class="text-gray-600 px-4 py-2">งานที่ได้รับ</a>
-            <a href="post-job2.html" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
+    <nav class="bg-white p-4 shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
+            <div class="space-x-4">
+                <a href="admin.html" class="text-gray-500 font-bold">งานที่ได้รับ</a>
+                <a href="post-job.html" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
+            </div>
         </div>
     </nav>
-
     <main class="max-w-6xl mx-auto p-6">
-        <div id="job-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            </div>
+        <div id="job-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </main>
-
     <script>
         const SUPABASE_URL = 'https://zxubzigylpalejienmzi.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dWJ6aWd5bHBhbGVqaWVubXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMjA2MzIsImV4cCI6MjA4NjY5NjYzMn0.3RMM9deY0Cu7y1QxphD2UllEnylAiOhTTftZelcKXYo';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         async function fetchJobs() {
-            const { data, error } = await _supabase.from('jobs').select('*').order('created_at', { ascending: false });
+            const { data } = await _supabase.from('jobs').select('*').order('created_at', { ascending: false });
             const list = document.getElementById('job-list');
-            if (data.length === 0) list.innerHTML = '<p>ยังไม่มีงานประกาศในขณะนี้</p>';
+            if (!data || data.length === 0) { list.innerHTML = "ยังไม่มีงานประกาศ"; return; }
             list.innerHTML = data.map(job => `
-                <a href="service-detail.html?id=${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border">
-                    <img src="${job.image_url}" class="w-full h-40 object-cover bg-gray-100">
+                <a href="service-detail.html?id=${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border block">
+                    <img src="${job.image_url}" class="w-full h-44 object-cover">
                     <div class="p-4">
                         <h3 class="font-bold text-sm h-10 line-clamp-2">${job.title}</h3>
-                        <p class="text-blue-600 font-bold mt-2">฿${Number(job.price).toLocaleString()}</p>
+                        <p class="text-blue-600 font-bold mt-4">฿${Number(job.price).toLocaleString()}</p>
                     </div>
                 </a>
             `).join('');
