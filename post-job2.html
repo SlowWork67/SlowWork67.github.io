@@ -2,25 +2,23 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ลงประกาศงาน - Fastwork Clone</title>
+    <title>ลงประกาศงานใหม่</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
     <style>body { font-family: 'Kanit', sans-serif; }</style>
 </head>
-<body class="bg-gray-100 p-4">
-    <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl shadow-lg mt-10">
-        <h2 class="text-2xl font-bold mb-6 text-center">สร้างโพสต์ใหม่</h2>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-xl mx-auto bg-white p-8 rounded-3xl shadow-lg">
+        <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">ลงประกาศงานของคุณ</h2>
         <div class="space-y-4">
-            <input type="text" id="title" placeholder="ชื่อหัวข้อประกาศงาน" class="w-full p-4 border rounded-xl">
-            <input type="number" id="price" placeholder="ราคา (บาท)" class="w-full p-4 border rounded-xl">
-            <textarea id="desc" placeholder="อธิบายรายละเอียดงาน..." class="w-full p-4 border rounded-xl h-32"></textarea>
+            <input type="text" id="title" placeholder="ชื่อหัวข้อประกาศงาน" class="w-full p-4 border rounded-xl outline-none">
+            <input type="number" id="price" placeholder="ราคาเริ่มต้น (บาท)" class="w-full p-4 border rounded-xl outline-none">
+            <textarea id="desc" placeholder="อธิบายงานเบื้องต้น..." class="w-full p-4 border rounded-xl h-32 outline-none"></textarea>
             <input type="file" id="img-file" accept="image/*" class="w-full">
-            <button onclick="handlePost()" id="btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold">ลงประกาศงานเลย</button>
+            <button onclick="handlePost()" id="btn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold">ยืนยันลงประกาศ</button>
         </div>
     </div>
-
     <script>
         const SUPABASE_URL = 'https://zxubzigylpalejienmzi.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dWJ6aWd5bHBhbGVqaWVubXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMjA2MzIsImV4cCI6MjA4NjY5NjYzMn0.3RMM9deY0Cu7y1QxphD2UllEnylAiOhTTftZelcKXYo';
@@ -29,36 +27,25 @@
         async function handlePost() {
             const btn = document.getElementById('btn');
             const file = document.getElementById('img-file').files[0];
-            if (!file) return alert("กรุณาเลือกรูปภาพ");
-
-            btn.disabled = true;
-            btn.innerText = "กำลังดำเนินการ...";
+            const price = document.getElementById('price').value;
+            if (!file || !price) return alert("กรุณากรอกข้อมูลให้ครบ");
+            btn.disabled = true; btn.innerText = "กำลังอัปโหลด...";
 
             try {
-                // 1. อัปโหลดรูปภาพ
-                const fileName = Date.now() + "_" + file.name;
-                const { data: uploadData, error: uploadErr } = await _supabase.storage
-                    .from('job-images').upload(fileName, file);
-                if (uploadErr) throw uploadErr;
+                const fileName = Date.now() + "_" + file.name.replace(/\s/g, '_');
+                const { error: upErr } = await _supabase.storage.from('job-images').upload(fileName, file);
+                if (upErr) throw upErr;
 
-                // 2. สร้างลิงก์ URL (ใช้โครงสร้าง Public URL โดยตรง)
-                const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/job-images/${fileName}`;
-
-                // 3. บันทึกลง Database (เช็คให้แน่ใจว่าชื่อคอลัมน์ในฐานข้อมูลคือ image_url)
+                const imgUrl = `${SUPABASE_URL}/storage/v1/object/public/job-images/${fileName}`;
                 const { error: dbErr } = await _supabase.from('jobs').insert([{
                     title: document.getElementById('title').value,
-                    price: document.getElementById('price').value,
+                    price: parseInt(price),
                     description: document.getElementById('desc').value,
-                    image_url: imageUrl
+                    image_url: imgUrl
                 }]);
                 if (dbErr) throw dbErr;
-
-                alert("สำเร็จ!");
-                window.location.href = "index.html";
-            } catch (err) {
-                alert("ผิดพลาด: " + err.message);
-                btn.disabled = false;
-            }
+                alert("ลงประกาศสำเร็จ!"); window.location.href = "index.html";
+            } catch (e) { alert(e.message); btn.disabled = false; }
         }
     </script>
 </body>
