@@ -2,28 +2,23 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Fastwork Clone - จัดการโพสต์</title>
+    <title>Fastwork Clone - หน้าแรก</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
     <style>body { font-family: 'Kanit', sans-serif; }</style>
 </head>
 <body class="bg-gray-50">
-    <nav class="bg-white p-4 shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
-            <div class="space-x-4">
-                <a href="admin.html" class="text-gray-500 font-bold">งานที่ได้รับ</a>
-                <a href="post-job2.html" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
-            </div>
+    <nav class="bg-white p-4 shadow-sm flex justify-between items-center sticky top-0 z-50">
+        <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
+        <div class="space-x-4">
+            <a href="admin.html" class="text-gray-500 font-bold">งานที่ได้รับ</a>
+            <a href="post-job.html" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
         </div>
     </nav>
-
     <main class="max-w-6xl mx-auto p-6">
-        <h2 class="text-xl font-bold mb-6 text-gray-800">งานดีไซน์ทั้งหมด</h2>
         <div id="job-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </main>
-
     <script>
         const SUPABASE_URL = 'https://zxubzigylpalejienmzi.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4dWJ6aWd5bHBhbGVqaWVubXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExMjA2MzIsImV4cCI6MjA4NjY5NjYzMn0.3RMM9deY0Cu7y1QxphD2UllEnylAiOhTTftZelcKXYo';
@@ -32,54 +27,25 @@
         async function fetchJobs() {
             const { data } = await _supabase.from('jobs').select('*').order('created_at', { ascending: false });
             const list = document.getElementById('job-list');
-            
-            if (!data || data.length === 0) {
-                list.innerHTML = "<p class='text-gray-400'>ยังไม่มีงานประกาศ</p>";
-                return;
-            }
-
             list.innerHTML = data.map(job => `
-                <div id="job-card-${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden border relative group">
-                    <button onclick="deleteJob(event, ${job.id})" 
-                        class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10 hover:bg-red-700"
-                        title="ลบโพสต์งานนี้">
-                        🗑️
-                    </button>
-
-                    <a href="service-detail.html?id=${job.id}" class="block">
+                <div class="bg-white rounded-2xl shadow-sm border relative group overflow-hidden">
+                    <button onclick="deleteJob(event, ${job.id})" class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition z-10">🗑️</button>
+                    <a href="service-detail.html?id=${job.id}">
                         <img src="${job.image_url}" class="w-full h-44 object-cover bg-gray-100">
                         <div class="p-4">
-                            <h3 class="font-bold text-sm h-10 line-clamp-2 text-gray-800">${job.title}</h3>
+                            <h3 class="font-bold text-sm h-10 line-clamp-2">${job.title}</h3>
                             <p class="text-blue-600 font-bold mt-4">฿${Number(job.price).toLocaleString()}</p>
                         </div>
                     </a>
                 </div>
             `).join('');
         }
-
-        async function deleteJob(event, id) {
-            // ป้องกันไม่ให้คลิกแล้วลิงก์พาไปหน้ารายละเอียด
-            event.preventDefault();
-            event.stopPropagation();
-
-            if (!confirm("คุณต้องการลบโพสต์งานนี้ออกจากระบบถาวรใช่หรือไม่? (การจ้างงานที่ค้างอยู่อาจมีปัญหา)")) return;
-
-            // ลบข้อมูลในตาราง jobs
-            const { error } = await _supabase.from('jobs').delete().eq('id', id);
-
-            if (error) {
-                alert("ลบโพสต์ไม่สำเร็จ: " + error.message);
-            } else {
-                // ลบการ์ดงานออกจากหน้าจอทันที
-                const card = document.getElementById(`job-card-${id}`);
-                card.style.transform = "scale(0.9)";
-                card.style.opacity = "0";
-                setTimeout(() => {
-                    fetchJobs(); // โหลดรายการใหม่
-                }, 300);
-            }
+        async function deleteJob(e, id) {
+            e.preventDefault(); e.stopPropagation();
+            if(!confirm("ลบประกาศนี้ถาวรใช่หรือไม่?")) return;
+            await _supabase.from('jobs').delete().eq('id', id);
+            fetchJobs();
         }
-
         fetchJobs();
     </script>
 </body>
