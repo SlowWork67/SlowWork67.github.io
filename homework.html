@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Fastwork Clone - หน้าแรก</title>
+    <title>Fastwork Clone - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
         <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
         <div class="space-x-4">
             <a href="admin.html" class="text-gray-500 font-bold">งานที่ได้รับ</a>
-            <a href="post-job2.html" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
+            <a href="post-job.html" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
         </div>
     </nav>
     <main class="max-w-6xl mx-auto p-6">
@@ -42,7 +42,7 @@
         }
         async function deleteJob(e, id) {
             e.preventDefault(); e.stopPropagation();
-            if(!confirm("ลบประกาศนี้ถาวรใช่หรือไม่?")) return;
+            if(!confirm("ลบโพสต์งานนี้ใช่หรือไม่?")) return;
             await _supabase.from('jobs').delete().eq('id', id);
             fetchJobs();
         }
