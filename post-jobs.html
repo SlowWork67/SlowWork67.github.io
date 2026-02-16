@@ -24,6 +24,10 @@
                 <input type="number" id="job-price" placeholder="500" class="w-full p-4 border rounded-xl outline-none focus:border-blue-500">
             </div>
             <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">รายละเอียดงาน</label>
+                <textarea id="job-desc" placeholder="อธิบายงานของคุณ..." class="w-full p-4 border rounded-xl outline-none focus:border-blue-500 h-32"></textarea>
+            </div>
+            <div>
                 <label class="block text-sm font-bold text-gray-700 mb-1">รูปหน้าปกงาน</label>
                 <input type="file" id="job-img" accept="image/*" class="w-full">
             </div>
@@ -41,34 +45,52 @@
         async function postJob() {
             const title = document.getElementById('job-title').value;
             const price = document.getElementById('job-price').value;
-            const file = document.getElementById('job-img').files[0];
+            const desc = document.getElementById('job-desc').value;
+            const fileInput = document.getElementById('job-img');
+            const file = fileInput.files[0];
             const btn = document.getElementById('btn-post');
 
             if(!title || !price || !file) return alert("กรุณากรอกข้อมูลและเลือกรูปภาพครับ");
 
             btn.disabled = true;
-            btn.innerText = "กำลังบันทึกข้อมูล...";
+            btn.innerText = "กำลังอัปโหลดรูปและบันทึกข้อมูล...";
 
             try {
-                // 1. อัปโหลดรูปภาพ
-                const fileName = Date.now() + "_" + file.name;
-                const { data: imgData, error: imgErr } = await _supabase.storage
-                    .from('job-images').upload(fileName, file);
+                // 1. สร้างชื่อไฟล์ใหม่เพื่อไม่ให้ซ้ำ
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}.${fileExt}`;
+                const filePath = `${fileName}`;
+
+                // 2. อัปโหลดรูปภาพไปยัง Bucket 'job-images'
+                const { data: uploadData, error: uploadError } = await _supabase.storage
+                    .from('job-images')
+                    .upload(filePath, file);
                 
-                if(imgErr) throw imgErr;
+                if (uploadError) throw uploadError;
 
-                const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/job-images/${fileName}`;
+                // 3. สร้าง Public URL ของรูปภาพด้วยตัวเอง (วิธีนี้ชัวร์ที่สุด)
+                const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/job-images/${filePath}`;
+                console.log("Image URL created:", imageUrl); // เช็กใน Console
 
-                // 2. บันทึกข้อมูลลงตาราง
-                const { error: dbErr } = await _supabase.from('jobs').insert([
-                    { title: title, price: price, image_url: imageUrl }
-                ]);
+                // 4. บันทึกทุกอย่างลงในตาราง 'jobs'
+                const { error: dbError } = await _supabase
+                    .from('jobs')
+                    .insert([
+                        { 
+                            title: title, 
+                            price: parseInt(price), 
+                            description: desc, 
+                            image_url: imageUrl // ใส่ URL ตรงนี้
+                        }
+                    ]);
 
-                if(dbErr) throw dbErr;
+                if (dbError) throw dbError;
 
                 alert("ลงประกาศงานสำเร็จ!");
                 window.location.href = "index.html";
+
             } catch (err) {
+                console.error(err);
                 alert("เกิดข้อผิดพลาด: " + err.message);
                 btn.disabled = false;
                 btn.innerText = "ลงประกาศงานเลย";
