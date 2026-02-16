@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>จัดการงานที่ได้รับ</title>
+    <title>จัดการงาน - ลบรายการ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 <body class="bg-gray-100 p-6">
     <div class="max-w-4xl mx-auto">
         <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold">งานที่จ้างเข้ามา 📬</h1>
+            <h1 class="text-3xl font-bold text-gray-800">รายการจ้างงานปัจจุบัน 📬</h1>
             <a href="index.html" class="text-blue-600 font-bold">← กลับหน้าหลัก</a>
         </div>
         
@@ -25,57 +25,51 @@
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         async function fetchOrders() {
+            // ดึงข้อมูล orders มาแสดง (เฉพาะงานที่ยังไม่ถูกลบ)
             const { data, error } = await _supabase
                 .from('orders')
                 .select('*, jobs(title)')
                 .order('created_at', { ascending: false });
 
             const list = document.getElementById('order-list');
-            if (error || !data) { list.innerHTML = "ไม่พบข้อมูล"; return; }
+            if (!data || data.length === 0) {
+                list.innerHTML = '<div class="text-center p-10 bg-white rounded-2xl border text-gray-400">ไม่มีรายการจ้างงานในขณะนี้</div>';
+                return;
+            }
 
-            list.innerHTML = data.map(ord => {
-                const isCancelled = ord.status === 'ยกเลิกแล้ว';
-                
-                return `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 ${isCancelled ? 'border-red-500' : 'border-blue-500'} flex justify-between items-center">
+            list.innerHTML = data.map(ord => `
+                <div id="order-${ord.id}" class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-blue-500 flex justify-between items-center transition-all">
                     <div>
-                        <div class="flex items-center gap-3 mb-2">
-                            <h3 class="font-bold text-xl">${ord.jobs?.title || 'ไม่พบชื่องาน'}</h3>
-                            <span class="px-3 py-1 rounded-full text-xs font-bold ${isCancelled ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'}">
-                                ${ord.status}
-                            </span>
-                        </div>
-                        <p class="text-gray-600 bg-gray-50 p-3 rounded-lg border text-sm italic mb-2">" ${ord.brief_text} "</p>
-                        <p class="text-[10px] text-gray-400">วันที่จ้าง: ${new Date(ord.created_at).toLocaleString('th-TH')}</p>
+                        <h3 class="font-bold text-xl mb-1">${ord.jobs?.title || 'ชื่องานไม่ระบุ'}</h3>
+                        <p class="text-gray-600 bg-gray-50 p-3 rounded-lg border text-sm italic mb-1">บรีฟ: ${ord.brief_text}</p>
+                        <p class="text-[10px] text-gray-400 font-medium">สั่งจ้างเมื่อ: ${new Date(ord.created_at).toLocaleString('th-TH')}</p>
                     </div>
-
-                    <div class="flex flex-col gap-2">
-                        ${!isCancelled ? `
-                            <button onclick="cancelOrder(${ord.id})" 
-                                class="bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-200 px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-sm">
-                                ❌ ยกเลิกงานนี้
-                            </button>
-                        ` : `
-                            <span class="text-gray-400 text-sm font-bold italic">งานถูกยกเลิกแล้ว</span>
-                        `}
-                    </div>
+                    <button onclick="deleteOrder(${ord.id})" 
+                        class="bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-100 px-4 py-3 rounded-xl font-bold text-sm transition-all active:scale-95 shadow-sm">
+                        🗑️ ยกเลิกและลบงาน
+                    </button>
                 </div>
-            `;}).join('');
+            `).join('');
         }
 
-        async function cancelOrder(id) {
-            if (!confirm("ยืนยันการยกเลิกงานจ้างชิ้นนี้ใช่หรือไม่?")) return;
+        async function deleteOrder(id) {
+            if (!confirm("คุณแน่ใจใช่ไหมที่จะลบงานนี้ออกถาวร?")) return;
 
+            // ส่งคำสั่งลบไปยัง Supabase
             const { error } = await _supabase
                 .from('orders')
-                .update({ status: 'ยกเลิกแล้ว' })
+                .delete()
                 .eq('id', id);
 
             if (error) {
-                alert("เกิดข้อผิดพลาด: " + error.message);
+                alert("ลบไม่สำเร็จ: " + error.message);
             } else {
-                alert("ยกเลิกงานเรียบร้อยครับ");
-                fetchOrders(); // รีโหลดข้อมูลใหม่ทันที
+                // ทำให้หายไปจากหน้าจอทันทีด้วย CSS หรือโหลดใหม่
+                const element = document.getElementById(`order-${id}`);
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    fetchOrders(); // โหลดข้อมูลใหม่เพื่อให้หน้าจออัปเดต
+                }, 300);
             }
         }
 
