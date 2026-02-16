@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>จัดการงาน - ลบรายการ</title>
+    <title>รายการจ้างงาน</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
@@ -11,12 +11,10 @@
 <body class="bg-gray-100 p-6">
     <div class="max-w-4xl mx-auto">
         <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">รายการจ้างงานปัจจุบัน 📬</h1>
-            <a href="index.html" class="text-blue-600 font-bold">← กลับหน้าหลัก</a>
+            <h1 class="text-3xl font-bold text-gray-800">งานที่ได้รับ 📬</h1>
+            <button onclick="window.history.back()" class="text-blue-600 font-bold hover:underline">← กลับ</button>
         </div>
-        
-        <div id="order-list" class="space-y-4">
-            </div>
+        <div id="order-list" class="space-y-4"></div>
     </div>
 
     <script>
@@ -25,54 +23,37 @@
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         async function fetchOrders() {
-            // ดึงข้อมูล orders มาแสดง (เฉพาะงานที่ยังไม่ถูกลบ)
-            const { data, error } = await _supabase
-                .from('orders')
-                .select('*, jobs(title)')
-                .order('created_at', { ascending: false });
-
+            const { data } = await _supabase.from('orders').select('*, jobs(title)').order('created_at', { ascending: false });
             const list = document.getElementById('order-list');
             if (!data || data.length === 0) {
-                list.innerHTML = '<div class="text-center p-10 bg-white rounded-2xl border text-gray-400">ไม่มีรายการจ้างงานในขณะนี้</div>';
+                list.innerHTML = '<div class="bg-white p-10 rounded-2xl text-center text-gray-400 border">ไม่มีรายการ</div>';
                 return;
             }
-
             list.innerHTML = data.map(ord => `
                 <div id="order-${ord.id}" class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-blue-500 flex justify-between items-center transition-all">
                     <div>
-                        <h3 class="font-bold text-xl mb-1">${ord.jobs?.title || 'ชื่องานไม่ระบุ'}</h3>
-                        <p class="text-gray-600 bg-gray-50 p-3 rounded-lg border text-sm italic mb-1">บรีฟ: ${ord.brief_text}</p>
-                        <p class="text-[10px] text-gray-400 font-medium">สั่งจ้างเมื่อ: ${new Date(ord.created_at).toLocaleString('th-TH')}</p>
+                        <h3 class="font-bold text-lg text-gray-800">${ord.jobs?.title || 'ชื่องานไม่ระบุ'}</h3>
+                        <p class="text-gray-600 bg-gray-50 p-3 rounded-lg text-sm italic mt-2 border">บรีฟ: ${ord.brief_text}</p>
+                        <p class="text-[10px] text-gray-400 mt-2 italic">เมื่อ: ${new Date(ord.created_at).toLocaleString('th-TH')}</p>
                     </div>
-                    <button onclick="deleteOrder(${ord.id})" 
-                        class="bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-100 px-4 py-3 rounded-xl font-bold text-sm transition-all active:scale-95 shadow-sm">
-                        🗑️ ยกเลิกและลบงาน
+                    <button onclick="deleteOrder(${ord.id})" class="bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-100 px-4 py-3 rounded-xl font-bold text-sm transition-all shadow-sm">
+                        🗑️ ลบงาน
                     </button>
                 </div>
             `).join('');
         }
 
         async function deleteOrder(id) {
-            if (!confirm("คุณแน่ใจใช่ไหมที่จะลบงานนี้ออกถาวร?")) return;
-
-            // ส่งคำสั่งลบไปยัง Supabase
-            const { error } = await _supabase
-                .from('orders')
-                .delete()
-                .eq('id', id);
-
-            if (error) {
-                alert("ลบไม่สำเร็จ: " + error.message);
-            } else {
-                // ทำให้หายไปจากหน้าจอทันทีด้วย CSS หรือโหลดใหม่
+            if (!confirm("ต้องการลบงานนี้ถาวรใช่หรือไม่?")) return;
+            const { error } = await _supabase.from('orders').delete().eq('id', id);
+            if (!error) {
                 const element = document.getElementById(`order-${id}`);
                 element.style.opacity = '0';
-                setTimeout(() => {
-                    fetchOrders(); // โหลดข้อมูลใหม่เพื่อให้หน้าจออัปเดต
-                }, 300);
+                setTimeout(fetchOrders, 300);
+            } else {
+                alert("ลบไม่สำเร็จ: " + error.message);
             }
         }
-
         fetchOrders();
     </script>
 </body>
