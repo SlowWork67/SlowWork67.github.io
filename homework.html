@@ -2,23 +2,22 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fastwork Clone - หน้าแรก</title>
+    <title>Fastwork Clone</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>body { font-family: 'Kanit', sans-serif; }</style>
 </head>
 <body class="bg-gray-50">
-    <nav class="bg-white p-4 shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
-            <a href="post-job2.html" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold hover:bg-blue-700 transition">ลงประกาศงาน</a>
+    <nav class="bg-white p-4 shadow-sm flex justify-between items-center max-w-6xl mx-auto rounded-b-2xl">
+        <h1 class="text-2xl font-bold text-blue-600">FastworkClone</h1>
+        <div class="space-x-2">
+            <a href="admin.html" class="text-gray-600 px-4 py-2">งานที่ได้รับ</a>
+            <a href="post-job.html" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold">ลงประกาศงาน</a>
         </div>
     </nav>
 
     <main class="max-w-6xl mx-auto p-6">
-        <h2 class="text-2xl font-bold mb-8">งานดีไซน์ล่าสุด</h2>
         <div id="job-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             </div>
     </main>
@@ -30,11 +29,10 @@
 
         async function fetchJobs() {
             const { data, error } = await _supabase.from('jobs').select('*').order('created_at', { ascending: false });
-            if (error) return console.error(error);
-
             const list = document.getElementById('job-list');
+            if (data.length === 0) list.innerHTML = '<p>ยังไม่มีงานประกาศในขณะนี้</p>';
             list.innerHTML = data.map(job => `
-                <a href="service-detail.html?id=${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden border">
+                <a href="service-detail.html?id=${job.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden border">
                     <img src="${job.image_url}" class="w-full h-40 object-cover bg-gray-100">
                     <div class="p-4">
                         <h3 class="font-bold text-sm h-10 line-clamp-2">${job.title}</h3>
