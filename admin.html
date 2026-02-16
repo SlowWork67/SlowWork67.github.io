@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>รายการจ้างงาน</title>
+    <title>จัดการงานที่ได้รับ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 <body class="bg-gray-100 p-6">
     <div class="max-w-4xl mx-auto">
         <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold">งานที่ได้รับ 📬</h1>
+            <h1 class="text-3xl font-bold">งานที่จ้างเข้ามา 📬</h1>
             <button onclick="window.history.back()" class="text-blue-600 font-bold">← กลับ</button>
         </div>
         <div id="order-list" class="space-y-4"></div>
@@ -25,20 +25,20 @@
             const { data } = await _supabase.from('orders').select('*, jobs(title)').order('created_at', { ascending: false });
             const list = document.getElementById('order-list');
             list.innerHTML = data.map(ord => `
-                <div id="order-${ord.id}" class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-blue-500 flex justify-between items-center">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-blue-500 flex justify-between items-center">
                     <div>
-                        <h3 class="font-bold text-lg">${ord.jobs?.title || 'โพสต์ถูกลบแล้ว'}</h3>
-                        <p class="text-gray-500 text-sm italic mt-1">บรีฟ: ${ord.brief_text}</p>
+                        <h3 class="font-bold text-lg">${ord.jobs?.title || 'งานนี้ถูกลบโพสต์แล้ว'}</h3>
+                        <p class="text-gray-500 text-sm">บรีฟ: ${ord.brief_text}</p>
                     </div>
                     <div class="flex gap-2">
-                        <a href="chat.html?order_id=${ord.id}" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold text-sm">💬 แชท</a>
-                        <button onclick="deleteOrder(${ord.id})" class="bg-red-50 text-red-600 border border-red-100 px-4 py-2 rounded-xl font-bold text-sm">🗑️ ลบ</button>
+                        <a href="chat.html?order_id=${ord.id}" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold text-sm">💬 แชท</a>
+                        <button onclick="deleteOrder(${ord.id})" class="bg-red-50 text-red-600 px-5 py-2 rounded-xl font-bold text-sm">🗑️ ลบ</button>
                     </div>
                 </div>
             `).join('');
         }
         async function deleteOrder(id) {
-            if(!confirm("ยกเลิกและลบงานจ้างนี้?")) return;
+            if(!confirm("ลบรายการจ้างนี้?")) return;
             await _supabase.from('orders').delete().eq('id', id);
             fetchOrders();
         }
