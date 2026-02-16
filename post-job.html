@@ -306,7 +306,7 @@ document.querySelector('.submit-btn').addEventListener('click', async () => {
   const budget = document.querySelector('input[type="number"]').value;
   const deadline = document.querySelector('input[type="date"]').value;
   const job_type = document.querySelector(
-    'input[name="jobtype"]:checked' 
+    'input[name="job_type"]:checked' 
   )?.nextElementSibling.innerText || "";
 console.log("job_type =", job_type);
   if (!title || !description || !category||!job_type) {
